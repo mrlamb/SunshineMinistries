@@ -10,13 +10,16 @@ namespace Transportation
 {
     public static class Transport
     {
+        public delegate void MessageReceived(StringBuilder sb, List<byte> lb);
+        public static event MessageReceived messageReceivedEvent;
+
         public static ConnectionManager Manager = new ConnectionManager();
 
 
         /// <summary>
         /// Method used by clients to connect up
         /// </summary>
-        public static void ConnectSocket()
+        public static Socket ConnectSocket()
         {
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint ipe = new IPEndPoint(IPAddress.Parse("192.168.1.127"), 22480);
@@ -27,6 +30,7 @@ namespace Transportation
 
                 StateObject so = new StateObject(socket);
                 WaitForData(so);
+                return socket;
             }
             catch (Exception e)
             {
@@ -78,12 +82,14 @@ namespace Transportation
 
 
             //Create a message to send including this connections ID
-            byte[] message = new byte[1];
+            byte[] message = new byte[1024];
             message[0] = (byte)TransportProtocol.SEND_GUID;
+            id.ToByteArray().CopyTo(message, 1);
+            
 
             //Send the message
             socket.Send(message);
-            
+
 
             Console.WriteLine("Client connected on: {0}", socket.RemoteEndPoint);
 
@@ -132,39 +138,27 @@ namespace Transportation
             {
                 //Collect what we have
                 so.sb.Append(Encoding.ASCII.GetString(so.buffer, 0, read));
+                so.lb.AddRange(so.buffer.Where(a => a != 0));
                 //If we read a full buffer's worth, send us back into the listen mode to get more
-                if (read == StateObject.BUFFER_SIZE)
+                if (so.workSocket.Available == 0)
                 {
-                    so.workSocket.BeginReceive(so.buffer, 0, StateObject.BUFFER_SIZE, 0, new AsyncCallback(OnReceive), so);
-                    return;
+                    if (so.sb.Length > 0)
+                    {
+                        if (messageReceivedEvent != null)
+                            messageReceivedEvent.Invoke(so.sb, so.lb);
+
+                        so.sb.Clear();
+                        so.lb.Clear();
+                    }
+
                 }
+
+                    so.workSocket.BeginReceive(so.buffer, 0, StateObject.BUFFER_SIZE, 0, new AsyncCallback(OnReceive), so);
+                                    
             }
 
             //After all above Asyncs we dump out here to handle the data
-            if (so.sb.Length > 0)
-            {
-
-                //STUCK HERE FOR NOW
-                //IDEA WAS TO SEND A CONTROL BYTE THROUGH THAT WOULD INDICATE WHAT KIND OF DATA WAS COMING
-                //It's either not being sent properly or not casting properly.
-                TransportProtocol tp = new TransportProtocol();
-                char[] message = new char[so.sb.Length];
-                byte b = (byte)message[0];
-                tp = (TransportProtocol)b;
-                switch (tp)
-                {
-                    case TransportProtocol.SEND_GUID:
-                        Console.WriteLine("Sent GUID:");
-                        break;
-                    default:
-                        Console.WriteLine("Cannot determine message type.");
-                        break;
-                }
-
-                //Handle the data
-                //Use the transport protocol enum to check against the first byte of the message
-                Console.WriteLine("Connected client sent: {0}", so.sb.ToString());
-            }
+            
         }
 
     }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Transportation
 {
-    public enum TransportProtocol : byte
+    public enum TransportProtocol
     {
-        SEND_GUID = 0x00000001,
+        SEND_GUID = 1,
+        SEND_LOGIN,
+        
         
     }
 }

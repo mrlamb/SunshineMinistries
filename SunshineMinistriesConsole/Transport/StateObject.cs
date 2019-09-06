@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 
 namespace Transportation
@@ -9,6 +10,7 @@ namespace Transportation
         public const int BUFFER_SIZE = 1024;
         public byte[] buffer = new byte[BUFFER_SIZE];
         public StringBuilder sb { get; private set; }
+        public List<byte> lb = new List<byte>();
 
 
         public StateObject(Socket socket)
