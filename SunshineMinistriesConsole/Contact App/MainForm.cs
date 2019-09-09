@@ -14,35 +14,26 @@ namespace Contact_App
 {
     public partial class MainForm : Form
     {
-
-
-        Socket mySocket;
-        Guid id;
+        public StateObject stateObject { get; set; }
         public MainForm()
         {
             InitializeComponent();
-            Transport.messageReceivedEvent += MessageReceivedEventHandler;
-            mySocket = Transport.ConnectSocket();
-
+            
         }
 
-        private void MessageReceivedEventHandler(StringBuilder sb, List<Byte> lb)
+        private void MessageReceivedEventHandler(Socket socket, StringBuilder sb, List<Byte> lb)
         {
-            TransportProtocol tp = new TransportProtocol();
+            MessageObj mo = new MessageObj();
+            mo = Transport.DeconstructMessage(lb);
 
-            byte[] message = new byte[lb.Count - 1];
-
-            tp = (TransportProtocol)lb.First();
-            lb.RemoveAt(0);
-            lb.CopyTo(message);
-
-            switch (tp)
+            switch (mo.Protocol)
             {
                 case TransportProtocol.SEND_GUID:
-                    id = new Guid(message);
-                    ThreadSafeControl.SetTextStatusLabel(this, statusLabel, "Connected with session id: " + id.ToString());
                     break;
-                case TransportProtocol.SEND_LOGIN:
+                case TransportProtocol.SEND_USER:
+                    break;
+                case TransportProtocol.MESSAGE_BOX:
+                    MessageBox.Show(mo.Message);
                     break;
                 default:
                     break;
@@ -77,6 +68,10 @@ namespace Contact_App
 
 
 
+        }
+
+        private void MainForm_OnLoad(object sender, EventArgs e) {
+            Transport.messageReceivedEvent += MessageReceivedEventHandler;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -155,21 +150,6 @@ namespace Contact_App
 
         }
 
-        private void btnLogIn_Click(object sender, EventArgs e)
-        {
-            if (txtUserName.Text.Equals(string.Empty))
-            {
-                lblLoginHelp.Text = "Username cannot be blank.";
-            }
-            else
-            {
-                lblLoginHelp.Text = string.Empty;
-                byte[] message = new byte[1 + txtUserName.Text.Length];
-                message[0] = (byte)TransportProtocol.SEND_LOGIN;
-                Encoding.ASCII.GetBytes(txtUserName.Text).CopyTo(message, 1);
-
-                mySocket.Send(message);
-            }
-        }
+      
     }
 }

@@ -56,10 +56,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.statusMainForm = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblUser = new System.Windows.Forms.Label();
-            this.txtUserName = new System.Windows.Forms.TextBox();
-            this.btnLogIn = new System.Windows.Forms.Button();
-            this.lblLoginHelp = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).BeginInit();
             this.statusMainForm.SuspendLayout();
             this.SuspendLayout();
@@ -348,46 +344,6 @@
             this.statusLabel.Size = new System.Drawing.Size(138, 17);
             this.statusLabel.Text = "Waiting for connection...";
             // 
-            // lblUser
-            // 
-            this.lblUser.AutoSize = true;
-            this.lblUser.BackColor = System.Drawing.SystemColors.Control;
-            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUser.ForeColor = System.Drawing.Color.Black;
-            this.lblUser.Location = new System.Drawing.Point(457, 87);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(85, 20);
-            this.lblUser.TabIndex = 22;
-            this.lblUser.Text = "UserName";
-            // 
-            // txtUserName
-            // 
-            this.txtUserName.Location = new System.Drawing.Point(549, 86);
-            this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(196, 20);
-            this.txtUserName.TabIndex = 23;
-            // 
-            // btnLogIn
-            // 
-            this.btnLogIn.Location = new System.Drawing.Point(549, 112);
-            this.btnLogIn.Name = "btnLogIn";
-            this.btnLogIn.Size = new System.Drawing.Size(99, 23);
-            this.btnLogIn.TabIndex = 24;
-            this.btnLogIn.Text = "Log In";
-            this.btnLogIn.UseVisualStyleBackColor = true;
-            this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
-            // 
-            // lblLoginHelp
-            // 
-            this.lblLoginHelp.AutoSize = true;
-            this.lblLoginHelp.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.lblLoginHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLoginHelp.ForeColor = System.Drawing.Color.Black;
-            this.lblLoginHelp.Location = new System.Drawing.Point(549, 142);
-            this.lblLoginHelp.Name = "lblLoginHelp";
-            this.lblLoginHelp.Size = new System.Drawing.Size(0, 16);
-            this.lblLoginHelp.TabIndex = 25;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,10 +352,6 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(916, 667);
-            this.Controls.Add(this.lblLoginHelp);
-            this.Controls.Add(this.btnLogIn);
-            this.Controls.Add(this.txtUserName);
-            this.Controls.Add(this.lblUser);
             this.Controls.Add(this.statusMainForm);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox4);
@@ -424,10 +376,10 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
             this.ForeColor = System.Drawing.Color.White;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.Text = "Contacts App";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainForm_OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).EndInit();
             this.statusMainForm.ResumeLayout(false);
             this.statusMainForm.PerformLayout();
@@ -462,10 +414,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.StatusStrip statusMainForm;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.TextBox txtUserName;
-        private System.Windows.Forms.Button btnLogIn;
-        private System.Windows.Forms.Label lblLoginHelp;
     }
 }
 

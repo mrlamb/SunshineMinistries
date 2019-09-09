@@ -11,7 +11,8 @@ namespace Transportation
     {
         internal Socket socket;
         internal Guid guid;
-        
+        internal string username;
+
         internal Connection(Socket socket)
         {
             this.socket = socket;
@@ -35,8 +36,32 @@ namespace Transportation
         {
             return connections.Find(a => a.socket.Equals(socket)).guid;
         }
+
+        public bool ConnectionExists(Socket socket)
+        {
+            if (connections.Any(a => a.socket == socket))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void SetUserForSocket(Socket socket, string name)
+        {
+            Connection c = connections.Find(a => a.socket == socket);
+            c.username = name;
+        }
+
+        public string GetUserNameFromSocket(Socket socket)
+        {
+            Connection c = connections.Find(a => a.socket == socket);
+            return c.username;
+        }
     }
 
 
-    
+
 }

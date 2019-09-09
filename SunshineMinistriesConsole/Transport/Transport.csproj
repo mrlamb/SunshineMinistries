@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionManager.cs" />
+    <Compile Include="MessageObj.cs" />
     <Compile Include="StateObject.cs" />
-    <Compile Include="Transport.cs" />
+    <Compile Include="TransportMessages.cs" />
+    <Compile Include="TransportConnections.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransportProtocol.cs" />
   </ItemGroup>

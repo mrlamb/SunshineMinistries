@@ -11,7 +11,7 @@ namespace Client
     class Program
     {
         static Socket mySocket;
-        static Guid myID;
+        //static Guid myID;
 
         static void Main(string[] args)
         {
@@ -23,7 +23,7 @@ namespace Client
             }
         }
 
-        private static void messageReceivedEventHandler(StringBuilder sb, List<byte> lb)
+        private static void messageReceivedEventHandler(Socket socket, StringBuilder sb, List<byte> lb)
         {
             Console.WriteLine("A Message Was Received");
             string messageBack = "A message Back to the server!";

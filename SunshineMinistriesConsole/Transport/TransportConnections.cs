@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Transportation
 {
-    public static class Transport
+    public static partial class Transport
     {
-        public delegate void MessageReceived(StringBuilder sb, List<byte> lb);
+        public delegate void MessageReceived(Socket socket, StringBuilder sb, List<byte> lb);
         public static event MessageReceived messageReceivedEvent;
 
         public static ConnectionManager Manager = new ConnectionManager();
@@ -38,6 +38,8 @@ namespace Transportation
             }
         }
 
+        
+
         /// <summary>
         /// Put server into listening mode
         /// </summary>
@@ -62,9 +64,6 @@ namespace Transportation
 
 
         }
-
-
-
         /// <summary>
         /// When a connection happens, do this
         /// </summary>
@@ -76,20 +75,6 @@ namespace Transportation
 
             //Client socket
             Socket socket = listener.EndAccept(ar);
-
-            //Add to connection manager, returning the generated id.
-            Guid id = Manager.AddConnection(socket);
-
-
-            //Create a message to send including this connections ID
-            byte[] message = new byte[1024];
-            message[0] = (byte)TransportProtocol.SEND_GUID;
-            id.ToByteArray().CopyTo(message, 1);
-            
-
-            //Send the message
-            socket.Send(message);
-
 
             Console.WriteLine("Client connected on: {0}", socket.RemoteEndPoint);
 
@@ -131,8 +116,15 @@ namespace Transportation
         private static void OnReceive(IAsyncResult ar)
         {
             StateObject so = (StateObject)ar.AsyncState;
-
-            int read = so.workSocket.EndReceive(ar);
+            int read = 0;
+            try
+            {
+                read = so.workSocket.EndReceive(ar);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine("Client disconnect: " + e.Message);
+            }
             //Some data was sent
             if (read > 0)
             {
@@ -145,10 +137,11 @@ namespace Transportation
                     if (so.sb.Length > 0)
                     {
                         if (messageReceivedEvent != null)
-                            messageReceivedEvent.Invoke(so.sb, so.lb);
+                            messageReceivedEvent.Invoke(so.workSocket, so.sb, so.lb);
 
                         so.sb.Clear();
                         so.lb.Clear();
+                        so.buffer = new byte[StateObject.BUFFER_SIZE];
                     }
 
                 }
