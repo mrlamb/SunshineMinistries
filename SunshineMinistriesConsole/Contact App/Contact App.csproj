@@ -95,6 +95,12 @@
     <Compile Include="Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrganizationRecord.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrganizationRecord.Designer.cs">
+      <DependentUpon>OrganizationRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateObject.cs" />
