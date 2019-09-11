@@ -1,4 +1,5 @@
-﻿using Transportation;
+﻿using Newtonsoft.Json;
+using Transportation;
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Server
     {
         static ConnectionManager manager = new ConnectionManager();
         static UserEntities UserContext = new UserEntities();
+        static ContactEntities ContactContext = new ContactEntities();
         static void Main(string[] args)
         {
             try
@@ -49,9 +51,64 @@ namespace Server
                 case TransportProtocol.SEND_PASSWORD:
                     AuthenticateUser(socket, message.Message);
                     break;
+                case TransportProtocol.SEND_RECORD:
+                    SendSingleRecord(socket, message.Message);
+                    break;
+                case TransportProtocol.BATCH_SEND_RECORD:
+                    BatchSend(socket, message);
+                    break;
+                case TransportProtocol.UPDATE_RECORD:
+                    UpdateRecord(message.Message);
+                    break;
+                case TransportProtocol.DELETE_RECORD:
+                    DeleteRecord(message.Message);
+                    break;
                 default:
                     break;
             }
+        }
+
+        private static void DeleteRecord(string message)
+        {
+            contact c = JsonConvert.DeserializeObject<contact>(message);
+            contact record = ContactContext.contacts.First(a => a.id == c.id);
+            ContactContext.contacts.Remove(record);
+            ContactContext.SaveChanges();
+        }
+
+        private static void UpdateRecord(string message)
+        {
+            contact c = new contact();
+            try
+            {
+                c = JsonConvert.DeserializeObject<contact>(message);
+                contact record = ContactContext.contacts.First(a => a.id == c.id);
+                record.firstname = c.firstname;
+                record.lastname = c.lastname;
+                ContactContext.SaveChanges();
+            }
+            catch (InvalidOperationException e)
+            {
+                ContactContext.contacts.Add(c);
+                ContactContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+           
+        }
+
+        private static void SendSingleRecord(Socket socket, string message)
+        {
+            contact record = ContactContext.contacts.First(a => a.id.ToString() == message);
+            socket.Send(Transport.ConstructMessage(TransportProtocol.SEND_RECORD, JsonConvert.SerializeObject(record)));
+        }
+
+        private static void BatchSend(Socket socket, MessageObj message)
+        {
+            string AllRecords = JsonConvert.SerializeObject(ContactContext.contacts);
+            socket.Send(Transport.ConstructMessage(TransportProtocol.BATCH_SEND_RECORD, AllRecords));
         }
 
         private static void AuthenticateUser(Socket socket, string message)

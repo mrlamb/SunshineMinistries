@@ -142,6 +142,7 @@ namespace Transportation
                         so.sb.Clear();
                         so.lb.Clear();
                         so.buffer = new byte[StateObject.BUFFER_SIZE];
+
                     }
 
                 }

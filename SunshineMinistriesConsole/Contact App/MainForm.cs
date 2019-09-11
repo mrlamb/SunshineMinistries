@@ -9,12 +9,13 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Net.Sockets;
+using Newtonsoft.Json;
 
 namespace Contact_App
 {
     public partial class MainForm : Form
     {
-        public StateObject stateObject { get; set; }
+        private contact FormContact;
         public MainForm()
         {
             InitializeComponent();
@@ -28,9 +29,11 @@ namespace Contact_App
 
             switch (mo.Protocol)
             {
-                case TransportProtocol.SEND_GUID:
+                case TransportProtocol.SEND_RECORD:
+                    SetFields(mo.Message);
                     break;
-                case TransportProtocol.SEND_USER:
+                case TransportProtocol.BATCH_SEND_RECORD:
+                    SetList(mo.Message);
                     break;
                 case TransportProtocol.MESSAGE_BOX:
                     MessageBox.Show(mo.Message);
@@ -41,33 +44,25 @@ namespace Contact_App
 
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void SetFields(string message)
         {
-            try
+            if (this.InvokeRequired)
             {
-                Reset();
-                FillDataGridView();
+                Invoke(new EventHandler(delegate { SetFields(message); }));
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message, "Error Message");
+                FormContact = JsonConvert.DeserializeObject<contact>(message);
+                txtFirstName.Text = FormContact.firstname;
+                txtLastName.Text = FormContact.lastname;
             }
-
         }
 
-
-        private void FillDataGridView()
+        private void SetList(string message)
         {
-            try
-            {
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error Message");
-            }
-
-
-
+            var result = JsonConvert.DeserializeObject<List<contact>>(message);
+            
+            lstRecordSelector.Invoke(new EventHandler(delegate { lstRecordSelector.DataSource = result; }));
         }
 
         private void MainForm_OnLoad(object sender, EventArgs e) {
@@ -76,69 +71,10 @@ namespace Contact_App
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            Program.stateObject.workSocket.Send(Transport.ConstructMessage(TransportProtocol.BATCH_SEND_RECORD));
         }
 
-        private void dgvContacts_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        void Reset()
-        {
-
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void TxtFirstName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DgvContacts_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void TxtLastName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TxtAddress_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DgvContacts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void btnReset_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Fax_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
 
@@ -150,6 +86,51 @@ namespace Contact_App
 
         }
 
-      
+        private void lstRecordSelector_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int index = this.lstRecordSelector.IndexFromPoint(e.Location);
+            if (index != System.Windows.Forms.ListBox.NoMatches)
+            {
+                Program.stateObject.workSocket.Send(Transport.ConstructMessage(TransportProtocol.SEND_RECORD, 
+                    (lstRecordSelector.Items[index] as contact).id.ToString()));
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            FormContact.firstname = txtFirstName.Text;
+            FormContact.lastname = txtLastName.Text;
+            Program.stateObject.workSocket.Send(Transport.ConstructMessage(TransportProtocol.UPDATE_RECORD,
+                JsonConvert.SerializeObject(FormContact)));
+
+           // btnSearch_Click(sender, e);
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            txtFirstName.Text = "";
+            txtLastName.Text = "";
+            FormContact = new Contact_App.contact();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult mbr = MessageBox.Show("Are you sure you want to delete this record?", "Really Delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            switch (mbr)
+            {
+                
+                case DialogResult.Yes:
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(TransportProtocol.DELETE_RECORD,
+                JsonConvert.SerializeObject(FormContact)));
+                    btnNew_Click(sender, e);
+                    //btnSearch_Click(sender, e);
+                    break;
+                default:
+                    break;
+            }
+
+            
+        }
     }
 }

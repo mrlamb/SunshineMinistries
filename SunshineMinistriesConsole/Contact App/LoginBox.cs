@@ -15,6 +15,8 @@ namespace Contact_App
     public partial class LoginBox : Form
     {
         public bool Authentication_Success = false;
+        private bool bypassLogin = true;
+
         public LoginBox()
         {
             InitializeComponent();
@@ -52,9 +54,13 @@ namespace Contact_App
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (wtrUserName.Text.Equals(string.Empty))
+            if (!bypassLogin)
             {
-                lblLoginStatus.Text = "Username cannot be blank.";
+                if (wtrUserName.Text.Equals(string.Empty))
+                {
+                    lblLoginStatus.Text = "Username cannot be blank.";
+                    return;
+                }
             }
             else
             {

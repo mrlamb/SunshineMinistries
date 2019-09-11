@@ -15,5 +15,9 @@ namespace Transportation
         SEND_PASSWORD,
         PASS_FAILED,
         AUTHENTICATED,
+        BATCH_SEND_RECORD,
+        SEND_RECORD,
+        UPDATE_RECORD,
+        DELETE_RECORD,
     }
 }
