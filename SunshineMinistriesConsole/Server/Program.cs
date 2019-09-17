@@ -74,6 +74,7 @@ namespace Server
             contact record = ContactContext.contacts.First(a => a.id == c.id);
             ContactContext.contacts.Remove(record);
             ContactContext.SaveChanges();
+            
         }
 
         private static void UpdateRecord(string message)

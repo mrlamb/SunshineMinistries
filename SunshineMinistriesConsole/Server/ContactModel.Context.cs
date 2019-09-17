@@ -26,5 +26,11 @@ namespace Server
         }
     
         public virtual DbSet<contact> contacts { get; set; }
+        public virtual DbSet<action> actions { get; set; }
+        public virtual DbSet<actiontype> actiontypes { get; set; }
+        public virtual DbSet<contacttype> contacttypes { get; set; }
+        public virtual DbSet<organization> organizations { get; set; }
+        public virtual DbSet<phonenumber> phonenumbers { get; set; }
+        public virtual DbSet<address> addresses { get; set; }
     }
 }

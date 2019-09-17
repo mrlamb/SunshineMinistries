@@ -37,14 +37,15 @@ namespace Contact_App
 
             protected override void OnMainFormClosed(object sender, EventArgs e)
             {
-                if (sender == firstForm){
+                if (sender == firstForm && (sender as LoginBox).Authentication_Success){
                     base.MainForm = secondForm;
                     base.MainForm.Show();
                 }
-                else if (sender == secondForm)
+                else 
                 {
                     base.OnMainFormClosed(sender, e);
                 }
+                
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Transportation
         public static Socket ConnectSocket()
         {
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint ipe = new IPEndPoint(IPAddress.Parse("192.168.75.224"), 22480);
+            IPEndPoint ipe = new IPEndPoint(IPAddress.Parse("192.168.1.127"), 22480);
 
             try
             {

@@ -76,6 +76,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="action.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actiontype.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="address.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="contact.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
@@ -93,6 +102,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="contacttype.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="organization.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="phonenumber.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,13 +134,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <EntityDeploy Include="ContactModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ContactModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.config" />
     <None Include="ContactModel.edmx.diagram">
       <DependentUpon>ContactModel.edmx</DependentUpon>
     </None>

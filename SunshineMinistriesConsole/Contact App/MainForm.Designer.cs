@@ -89,7 +89,7 @@
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(347, 85);
-            this.txtAddress.TabIndex = 5;
+            this.txtAddress.TabIndex = 2;
             // 
             // label2
             // 
@@ -107,12 +107,12 @@
             // txtLastName
             // 
             this.txtLastName.BackColor = System.Drawing.Color.White;
-            this.txtLastName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLastName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLastName.Location = new System.Drawing.Point(107, 304);
             this.txtLastName.Multiline = true;
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(345, 20);
-            this.txtLastName.TabIndex = 7;
+            this.txtLastName.TabIndex = 1;
             // 
             // label3
             // 
@@ -156,12 +156,12 @@
             // txtFirstName
             // 
             this.txtFirstName.BackColor = System.Drawing.Color.White;
-            this.txtFirstName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFirstName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFirstName.Location = new System.Drawing.Point(107, 276);
             this.txtFirstName.Multiline = true;
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(345, 20);
-            this.txtFirstName.TabIndex = 2;
+            this.txtFirstName.TabIndex = 0;
             // 
             // txtSearch
             // 
@@ -190,7 +190,7 @@
             this.textBox1.Location = new System.Drawing.Point(105, 456);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(345, 20);
-            this.textBox1.TabIndex = 11;
+            this.textBox1.TabIndex = 4;
             // 
             // Email
             // 
@@ -231,7 +231,7 @@
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(345, 20);
-            this.textBox2.TabIndex = 15;
+            this.textBox2.TabIndex = 5;
             // 
             // textBox3
             // 
@@ -241,7 +241,7 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(345, 20);
-            this.textBox3.TabIndex = 17;
+            this.textBox3.TabIndex = 3;
             // 
             // label5
             // 
@@ -263,7 +263,7 @@
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(345, 20);
-            this.textBox4.TabIndex = 19;
+            this.textBox4.TabIndex = 6;
             // 
             // label6
             // 

@@ -6,6 +6,15 @@
     <edmx:Diagrams>
       <Diagram DiagramId="fd3a6bb132ff4109815726204ccbe3ab" Name="Diagram1">
         <EntityTypeShape EntityType="ContactModel.contact" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContactModel.action" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="ContactModel.actiontype" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ContactModel.contacttype" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ContactModel.organization" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ContactModel.phonenumber" Width="1.5" PointX="3" PointY="4.625" />
+        <AssociationConnector Association="ContactModel.fk_actions" />
+        <AssociationConnector Association="ContactModel.fk_phoneNumbers" />
+        <AssociationConnector Association="ContactModel.fk_actionType" />
+        <EntityTypeShape EntityType="ContactModel.address" Width="1.5" PointX="5.375" PointY="1.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
