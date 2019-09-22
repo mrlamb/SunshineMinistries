@@ -10,5 +10,6 @@ namespace Transportation
     {
         public TransportProtocol Protocol { get; set; }
         public string Message { get; internal set; }
+        public byte ReturnTo { get; internal set; }
     }
 }

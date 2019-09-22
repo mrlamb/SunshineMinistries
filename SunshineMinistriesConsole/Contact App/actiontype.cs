@@ -12,25 +12,17 @@ namespace Contact_App
     using System;
     using System.Collections.Generic;
     
-    public partial class contact
+    public partial class actiontype
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public contact()
+        public actiontype()
         {
             this.actions = new HashSet<action>();
-            this.phonenumbers = new HashSet<phonenumber>();
         }
     
-        public int id { get; set; }
-        public string firstname { get; set; }
-        public string lastname { get; set; }
-        public sbyte financialsupport { get; set; }
-        public string phone { get; set; }
-        public string source { get; set; }
+        public string actionTypes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<action> actions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<phonenumber> phonenumbers { get; set; }
     }
 }

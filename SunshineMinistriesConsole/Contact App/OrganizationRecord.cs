@@ -12,6 +12,8 @@ namespace Contact_App
 {
     public partial class OrganizationRecord : UserControl
     {
+
+        public string OrgName { get { return this.wtrOrgName.Text; } set { this.wtrOrgName.Text = value; } }
         public OrganizationRecord()
         {
             InitializeComponent();

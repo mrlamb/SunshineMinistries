@@ -13,6 +13,7 @@ namespace Server
         static ConnectionManager manager = new ConnectionManager();
         static UserEntities UserContext = new UserEntities();
         static ContactEntities ContactContext = new ContactEntities();
+        private const int FormID = 1;
         static void Main(string[] args)
         {
             try
@@ -26,6 +27,8 @@ namespace Server
             {
                 Console.WriteLine(e);
             }
+
+            
 
             while (true)
             {
@@ -51,8 +54,8 @@ namespace Server
                 case TransportProtocol.SEND_PASSWORD:
                     AuthenticateUser(socket, message.Message);
                     break;
-                case TransportProtocol.SEND_RECORD:
-                    SendSingleRecord(socket, message.Message);
+                case TransportProtocol.SEND_INDIVIDUAL_RECORD:
+                    SendSingleRecord(socket, message);
                     break;
                 case TransportProtocol.BATCH_SEND_RECORD:
                     BatchSend(socket, message);
@@ -88,7 +91,7 @@ namespace Server
                 record.lastname = c.lastname;
                 ContactContext.SaveChanges();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 ContactContext.contacts.Add(c);
                 ContactContext.SaveChanges();
@@ -100,16 +103,18 @@ namespace Server
            
         }
 
-        private static void SendSingleRecord(Socket socket, string message)
+        private static void SendSingleRecord(Socket socket, MessageObj message)
         {
-            contact record = ContactContext.contacts.First(a => a.id.ToString() == message);
-            socket.Send(Transport.ConstructMessage(TransportProtocol.SEND_RECORD, JsonConvert.SerializeObject(record)));
+            contact record = ContactContext.contacts.First(a => a.id.ToString() == message.Message);
+            socket.Send(Transport.ConstructMessage(message.ReturnTo, TransportProtocol.SEND_INDIVIDUAL_RECORD, JsonConvert.SerializeObject(record, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })));
         }
 
         private static void BatchSend(Socket socket, MessageObj message)
         {
-            string AllRecords = JsonConvert.SerializeObject(ContactContext.contacts);
-            socket.Send(Transport.ConstructMessage(TransportProtocol.BATCH_SEND_RECORD, AllRecords));
+            string AllRecords = JsonConvert.SerializeObject(ContactContext.contacts.Select(con => new { con.id, con.firstname, con.lastname }));
+
+
+            socket.Send(Transport.ConstructMessage(message.ReturnTo, TransportProtocol.BATCH_SEND_RECORD, AllRecords));
         }
 
         private static void AuthenticateUser(Socket socket, string message)
@@ -121,11 +126,11 @@ namespace Server
                 user u = UserContext.users.First(a => a.username == name);
                 if (u.password == message)
                 {
-                    socket.Send(Transport.ConstructMessage(TransportProtocol.AUTHENTICATED));
+                    socket.Send(Transport.ConstructMessage(FormID, TransportProtocol.AUTHENTICATED));
                 }
                 else
                 {
-                    socket.Send(Transport.ConstructMessage(TransportProtocol.PASS_FAILED));
+                    socket.Send(Transport.ConstructMessage(FormID, TransportProtocol.PASS_FAILED));
                 }
             }
         }
@@ -140,11 +145,11 @@ namespace Server
             user u = UserContext.users.FirstOrDefault(a => a.username.Equals(v.ToLower()));
             if (null != u)
             {
-                socket.Send(Transport.ConstructMessage(TransportProtocol.SEND_PASSWORD));
+                socket.Send(Transport.ConstructMessage(FormID, TransportProtocol.SEND_PASSWORD));
             }
             else
             {
-                socket.Send(Transport.ConstructMessage(TransportProtocol.USER_NOT_FOUND));
+                socket.Send(Transport.ConstructMessage(FormID, TransportProtocol.USER_NOT_FOUND));
             }
 
         }

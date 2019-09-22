@@ -28,10 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.wtrOrgName = new Contact_App.WaterMarkTextBox();
+            this.SuspendLayout();
+            // 
+            // wtrOrgName
+            // 
+            this.wtrOrgName.Location = new System.Drawing.Point(0, 0);
+            this.wtrOrgName.Name = "wtrOrgName";
+            this.wtrOrgName.Password = false;
+            this.wtrOrgName.Size = new System.Drawing.Size(280, 20);
+            this.wtrOrgName.TabIndex = 0;
+            this.wtrOrgName.Tag = "Organization Name";
+            // 
+            // OrganizationRecord
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.Controls.Add(this.wtrOrgName);
+            this.Name = "OrganizationRecord";
+            this.Size = new System.Drawing.Size(292, 276);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private WaterMarkTextBox wtrOrgName;
     }
 }

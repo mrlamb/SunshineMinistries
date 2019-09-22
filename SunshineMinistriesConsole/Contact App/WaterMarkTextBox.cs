@@ -12,9 +12,9 @@ namespace Contact_App
 {
     public partial class WaterMarkTextBox : UserControl
     {
-        public override string Text { get { return wtrTextBox.Text; } }
+        public override string Text { get { return wtrTextBox.Text; } set { wtrTextBox.Text = value; } }
 
-        [Category("Appearance"),Description("Should we show the password character in this box.")]
+        [Category("Appearance"), Description("Should we show the password character in this box.")]
         public bool Password { get { return wtrTextBox.UseSystemPasswordChar; } set { wtrTextBox.UseSystemPasswordChar = value; } }
 
 
@@ -27,7 +27,13 @@ namespace Contact_App
         private void wtrLabel_Paint(object sender, PaintEventArgs e)
         {
             wtrLabel.BackColor = wtrTextBox.BackColor;
-            wtrLabel.Text = this.Tag.ToString();
+            if (!DesignMode)
+            {
+                if (wtrTextBox.Text != String.Empty)
+                    wtrLabel.Hide();
+                else
+                    wtrLabel.Text = this.Tag.ToString();
+            }
 
         }
 

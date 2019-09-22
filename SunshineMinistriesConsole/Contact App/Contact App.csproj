@@ -52,14 +52,51 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.Compatibility.Data" />
+    <Reference Include="MySql.Data, Version=8.0.17.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.17\lib\net452\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.EntityFramework, Version=8.0.17.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.EntityFramework.8.0.17\lib\net452\MySql.Data.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,7 +107,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="contact.cs" />
+    <Compile Include="action.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actiontype.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="address.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="contact.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="contacttype.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndividualContactTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LoginBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,11 +164,18 @@
     <Compile Include="Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModelHelper.cs" />
+    <Compile Include="organization.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrganizationRecord.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="OrganizationRecord.Designer.cs">
       <DependentUpon>OrganizationRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="phonenumber.cs">
+      <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +199,9 @@
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OrganizationRecord.resx">
+      <DependentUpon>OrganizationRecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -132,6 +211,13 @@
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <EntityDeploy Include="ContactModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ContactModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ContactModel.edmx.diagram">
+      <DependentUpon>ContactModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -159,6 +245,16 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ContactModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ContactModel.edmx</DependentUpon>
+      <LastGenOutput>ContactModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ContactModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ContactModel.edmx</DependentUpon>
+      <LastGenOutput>ContactModel.cs</LastGenOutput>
+    </Content>
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +262,9 @@
       <Project>{3820d51a-08a5-44e0-a520-9d852b8b3ae6}</Project>
       <Name>Transport</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,6 +9,7 @@ namespace Contact_App
     static class Program
     {
         public static StateObject stateObject = new StateObject();
+        private static byte nextID = 21;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -47,6 +48,11 @@ namespace Contact_App
                 }
                 
             }
+        }
+
+        internal static byte GetNextID()
+        {
+            return nextID++;
         }
     }
 }

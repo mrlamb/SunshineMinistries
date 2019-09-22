@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="ContactModel.actiontype" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="ContactModel.contacttype" Width="1.5" PointX="5.375" PointY="4.75" />
         <EntityTypeShape EntityType="ContactModel.organization" Width="1.5" PointX="7.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ContactModel.phonenumber" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="ContactModel.phonenumber" Width="1.5" PointX="3" PointY="3.125" />
         <AssociationConnector Association="ContactModel.fk_actions" />
         <AssociationConnector Association="ContactModel.fk_phoneNumbers" />
         <AssociationConnector Association="ContactModel.fk_actionType" />

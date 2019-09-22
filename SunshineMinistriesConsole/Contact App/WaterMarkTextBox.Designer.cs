@@ -34,6 +34,7 @@
             // 
             // wtrTextBox
             // 
+            this.wtrTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wtrTextBox.Location = new System.Drawing.Point(0, 0);
             this.wtrTextBox.Name = "wtrTextBox";
             this.wtrTextBox.Size = new System.Drawing.Size(150, 20);
@@ -44,11 +45,13 @@
             // wtrLabel
             // 
             this.wtrLabel.AutoSize = true;
+            this.wtrLabel.BackColor = System.Drawing.SystemColors.Window;
             this.wtrLabel.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.wtrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.wtrLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.wtrLabel.Location = new System.Drawing.Point(3, 3);
             this.wtrLabel.Name = "wtrLabel";
-            this.wtrLabel.Size = new System.Drawing.Size(35, 13);
+            this.wtrLabel.Size = new System.Drawing.Size(41, 13);
             this.wtrLabel.TabIndex = 1;
             this.wtrLabel.Text = "label1";
             this.wtrLabel.Click += new System.EventHandler(this.wtrLabel_Click);
