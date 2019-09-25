@@ -19,6 +19,7 @@ namespace Contact_App
         {
             this.actions = new HashSet<action>();
             this.phonenumbers = new HashSet<phonenumber>();
+            this.addresses = new HashSet<address>();
         }
     
         public int id { get; set; }
@@ -27,10 +28,13 @@ namespace Contact_App
         public sbyte financialsupport { get; set; }
         public string phone { get; set; }
         public string source { get; set; }
+        public string sunshineidl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<action> actions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<phonenumber> phonenumbers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<address> addresses { get; set; }
     }
 }

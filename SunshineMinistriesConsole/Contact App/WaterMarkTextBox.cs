@@ -13,6 +13,7 @@ namespace Contact_App
     public partial class WaterMarkTextBox : UserControl
     {
         public override string Text { get { return wtrTextBox.Text; } set { wtrTextBox.Text = value; } }
+        public event EventHandler WtrTextChanged;
 
         [Category("Appearance"), Description("Should we show the password character in this box.")]
         public bool Password { get { return wtrTextBox.UseSystemPasswordChar; } set { wtrTextBox.UseSystemPasswordChar = value; } }
@@ -56,6 +57,18 @@ namespace Contact_App
         private void wtrLabel_Click(object sender, EventArgs e)
         {
             wtrTextBox.Focus();
+        }
+
+        private void wtrTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!DesignMode)
+            {
+                if (wtrTextBox.Text != String.Empty)
+                    wtrLabel.Hide();
+                else
+                    wtrLabel.Text = this.Tag.ToString();
+            }
+            WtrTextChanged?.Invoke(sender, e);
         }
     }
 }

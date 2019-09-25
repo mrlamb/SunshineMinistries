@@ -20,7 +20,7 @@ namespace Server
             this.actions = new HashSet<action>();
         }
     
-        public string actionTypes { get; set; }
+        public string actionType1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<action> actions { get; set; }

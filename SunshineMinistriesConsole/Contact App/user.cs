@@ -12,15 +12,12 @@ namespace Contact_App
     using System;
     using System.Collections.Generic;
     
-    public partial class address
+    public partial class user
     {
-        public int ownerid { get; set; }
-        public string streetAddress { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string zip { get; set; }
-        public bool primary { get; set; }
-    
-        public virtual contact contact { get; set; }
+        public long id { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public byte accessflags { get; set; }
+        public string email { get; set; }
     }
 }

@@ -21,6 +21,5 @@ namespace Server
         public System.DateTime date { get; set; }
     
         public virtual contact contact { get; set; }
-        public virtual actiontype actiontype1 { get; set; }
     }
 }

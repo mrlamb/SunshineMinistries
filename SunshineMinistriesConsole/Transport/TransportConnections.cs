@@ -14,6 +14,7 @@ namespace Transportation
         public static event MessageReceived messageReceivedEvent;
 
         public static ConnectionManager Manager = new ConnectionManager();
+        
 
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace Transportation
         public static Socket ConnectSocket()
         {
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint ipe = new IPEndPoint(IPAddress.Parse("10.234.8.23"), 22480);
+            IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(RemoteIP), 22480);
 
             try
             {

@@ -8,6 +8,21 @@ namespace Contact_App
 {
     static class Program
     {
+        [FlagsAttribute]
+        public enum UserAccessOptions: byte
+        {
+            None = 0,
+            Create = 1,
+            Edit = 2,
+            View = 4,
+            UserControl = 8,
+
+        }
+
+        public static UserAccessOptions UserOptions { get; set; }
+
+
+
         public static StateObject stateObject = new StateObject();
         private static byte nextID = 21;
         /// <summary>

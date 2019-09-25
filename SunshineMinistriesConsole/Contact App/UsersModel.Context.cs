@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Server
+namespace Contact_App
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ContactEntities : DbContext
+    public partial class UserEntities : DbContext
     {
-        public ContactEntities()
-            : base("name=ContactEntities")
+        public UserEntities()
+            : base("name=UserEntities")
         {
         }
     
@@ -25,12 +25,6 @@ namespace Server
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<action> actions { get; set; }
-        public virtual DbSet<actiontype> actiontypes { get; set; }
-        public virtual DbSet<address> addresses { get; set; }
-        public virtual DbSet<contact> contacts { get; set; }
-        public virtual DbSet<contacttype> contacttypes { get; set; }
-        public virtual DbSet<organization> organizations { get; set; }
-        public virtual DbSet<phonenumber> phonenumbers { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

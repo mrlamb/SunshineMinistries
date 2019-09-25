@@ -37,6 +37,9 @@ namespace Contact_App
                     case TransportProtocol.MESSAGE_BOX:
                         MessageBox.Show(mo.Message);
                         break;
+                    case TransportProtocol.STATUS_UPDATE:
+
+                        break;
                     default:
                         break;
                 }
@@ -54,7 +57,13 @@ namespace Contact_App
         private void MainForm_OnLoad(object sender, EventArgs e)
         {
             Transport.messageReceivedEvent += MessageReceivedEventHandler;
-            
+
+            //Show Administrate if User Level Allows
+            if ((Program.UserOptions & Program.UserAccessOptions.UserControl) == Program.UserAccessOptions.UserControl)
+            {
+                administrateToolStripMenuItem.Visible = true;
+            }
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -67,7 +76,7 @@ namespace Contact_App
             int index = this.lstRecordSelector.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                IndividualContactTabPage icp = new IndividualContactTabPage(new OrganizationRecord());
+                IndividualContactTabPage icp = new IndividualContactTabPage(new DataInputForms.IndividualForm());
                 icp.ID = Program.GetNextID();
                 tabControl.TabPages.Add(icp);
 
@@ -76,6 +85,50 @@ namespace Contact_App
             }
         }
 
-       
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Form f = new UserAccessControl())
+            {
+                f.ShowDialog();
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            IndividualContactTabPage icp = new IndividualContactTabPage(new DataInputForms.IndividualForm());
+            icp.ID = Program.GetNextID();
+            tabControl.TabPages.Add(icp);
+
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab is IndividualContactTabPage)
+            {
+                byte saveID = (tabControl.SelectedTab as IndividualContactTabPage).ID;
+                contact c = (tabControl.SelectedTab as IndividualContactTabPage).GetContactFromData();
+                Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID, TransportProtocol.UPDATE_RECORD,
+                    JsonConvert.SerializeObject(c)));
+            }
+        }
+
+        private void tabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 10, e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 3, e.Bounds.Top + 4);
+            e.DrawFocusRectangle();
+        }
+
+        private void tabControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+            Rectangle r = tabControl.GetTabRect(this.tabControl.SelectedIndex);
+            Rectangle closeButton = new Rectangle(r.Right - 10, r.Top + 4, 9, 7);
+            if (closeButton.Contains(e.Location))
+            {
+                this.tabControl.TabPages.Remove(this.tabControl.SelectedTab);
+            }
+        }
+    
     }
 }

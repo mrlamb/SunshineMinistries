@@ -18,6 +18,7 @@ namespace Server
         public contact()
         {
             this.actions = new HashSet<action>();
+            this.addresses = new HashSet<address>();
             this.phonenumbers = new HashSet<phonenumber>();
         }
     
@@ -27,9 +28,12 @@ namespace Server
         public sbyte financialsupport { get; set; }
         public string phone { get; set; }
         public string source { get; set; }
+        public string sunshineidl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<action> actions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<address> addresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<phonenumber> phonenumbers { get; set; }
     }

@@ -19,5 +19,9 @@ namespace Transportation
         SEND_INDIVIDUAL_RECORD,
         UPDATE_RECORD,
         DELETE_RECORD,
+        SEND_USER_OPTIONS,
+        SEND_ALL_USERS,
+        UPDATE_USER,
+        STATUS_UPDATE,
     }
 }

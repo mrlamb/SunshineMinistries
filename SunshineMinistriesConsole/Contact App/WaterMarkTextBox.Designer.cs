@@ -37,8 +37,9 @@
             this.wtrTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wtrTextBox.Location = new System.Drawing.Point(0, 0);
             this.wtrTextBox.Name = "wtrTextBox";
-            this.wtrTextBox.Size = new System.Drawing.Size(150, 20);
+            this.wtrTextBox.Size = new System.Drawing.Size(255, 20);
             this.wtrTextBox.TabIndex = 0;
+            this.wtrTextBox.TextChanged += new System.EventHandler(this.wtrTextBox_TextChanged);
             this.wtrTextBox.Enter += new System.EventHandler(this.wtrTextBox_Enter);
             this.wtrTextBox.Leave += new System.EventHandler(this.wtrTextBox_Leave);
             // 
@@ -64,7 +65,7 @@
             this.Controls.Add(this.wtrLabel);
             this.Controls.Add(this.wtrTextBox);
             this.Name = "WaterMarkTextBox";
-            this.Size = new System.Drawing.Size(150, 20);
+            this.Size = new System.Drawing.Size(255, 20);
             this.ResumeLayout(false);
             this.PerformLayout();
 

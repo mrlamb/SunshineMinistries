@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using Newtonsoft.Json;
 
 namespace Contact_App
 {
@@ -40,13 +41,17 @@ namespace Contact_App
                     break;
                 case TransportProtocol.AUTHENTICATED:
                     ThreadSafeControl.SetText(this, lblLoginStatus, "User authenticated.");
-                    Transport.messageReceivedEvent -= MessageReceivedEventHandler;
-                    Authentication_Success = true;
-                    Invoke(new EventHandler (delegate { Close(); }));
                     
+                    Authentication_Success = true;
+                    socket.Send(Transport.ConstructMessage(FormID, TransportProtocol.SEND_USER_OPTIONS));                    
                     break;
                 case TransportProtocol.PASS_FAILED:
                     ThreadSafeControl.SetText(this, lblLoginStatus, "Password failed.");
+                    break;
+                case TransportProtocol.SEND_USER_OPTIONS:
+                    Transport.messageReceivedEvent -= MessageReceivedEventHandler;
+                    Program.UserOptions = (Program.UserAccessOptions)JsonConvert.DeserializeObject<byte>(message.Message);
+                    Invoke(new EventHandler(delegate { Close(); }));
                     break;
                 default:
                     break;

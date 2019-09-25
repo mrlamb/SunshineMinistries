@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginBox));
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblLoginStatus = new System.Windows.Forms.Label();
-            this.wtrPassword = new Contact_App.WaterMarkTextBox();
-            this.wtrUserName = new Contact_App.WaterMarkTextBox();
+            this.wtrPassword = new WaterMarkTextBox();
+            this.wtrUserName = new WaterMarkTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();

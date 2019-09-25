@@ -12,6 +12,8 @@
           <Property Name="id" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="45" />
           <Property Name="password" Type="varchar" MaxLength="45" />
+          <Property Name="accessflags" Type="utinyint" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityContainer Name="UserModelStoreContainer">
           <EntitySet Name="users" EntityType="Self.users" Schema="sunshinedata" store:Type="Tables" />
@@ -27,6 +29,8 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="accessflags" Type="Byte" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="UserEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="users" EntityType="Self.user" />
@@ -40,9 +44,11 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="UserModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="accessflags" ColumnName="accessflags" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

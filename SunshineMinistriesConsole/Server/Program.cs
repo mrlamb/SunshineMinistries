@@ -46,7 +46,14 @@ namespace Server
 
             switch (message.Protocol)
             {
-                case TransportProtocol.SEND_GUID:
+                case TransportProtocol.UPDATE_USER:
+                    UpdateUserRecord(socket, message);
+                    break;
+                case TransportProtocol.SEND_ALL_USERS:
+                    SendAllUsers(socket, message);
+                    break;
+                case TransportProtocol.SEND_USER_OPTIONS:
+                    SendUserOptions(socket, message);
                     break;
                 case TransportProtocol.SEND_USER:
                     ValidateUserName(socket, message.Message);
@@ -71,6 +78,54 @@ namespace Server
             }
         }
 
+        private static void UpdateUserRecord(Socket socket, MessageObj message)
+        {
+            user u = new user();
+            try
+            {
+                u = JsonConvert.DeserializeObject<user>(message.Message);
+                user record = UserContext.users.First(a => a.id == u.id);
+                record.username = u.username;
+                record.email = u.email;
+                record.accessflags = u.accessflags;
+                record.password = u.password;
+                
+                
+                UserContext.SaveChanges();
+            }
+            catch (InvalidOperationException)
+            {
+                UserContext.users.Add(u);
+                UserContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        private static void SendAllUsers(Socket socket, MessageObj message)
+        {
+            try
+            {
+                socket.Send(Transport.ConstructMessage(message.ReturnTo, TransportProtocol.SEND_ALL_USERS,
+                    JsonConvert.SerializeObject(UserContext.users)));
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private static void SendUserOptions(Socket socket, MessageObj message)
+        {
+            var name = manager.GetUserNameFromSocket(socket);
+            var record = UserContext.users.First(a => a.username == name);
+            if (null != record)
+            {
+                socket.Send(Transport.ConstructMessage(message.ReturnTo, TransportProtocol.SEND_USER_OPTIONS, record.accessflags.ToString()));
+            }
+        }
+
         private static void DeleteRecord(string message)
         {
             contact c = JsonConvert.DeserializeObject<contact>(message);
@@ -85,10 +140,18 @@ namespace Server
             contact c = new contact();
             try
             {
+               
                 c = JsonConvert.DeserializeObject<contact>(message);
                 contact record = ContactContext.contacts.First(a => a.id == c.id);
                 record.firstname = c.firstname;
                 record.lastname = c.lastname;
+                record.addresses = c.addresses;
+                record.phone = c.phone;
+                record.financialsupport = c.financialsupport;
+                record.actions = c.actions;
+                record.sunshineidl = c.sunshineidl;
+                record.source = c.source;
+
                 ContactContext.SaveChanges();
             }
             catch (InvalidOperationException)
@@ -98,7 +161,8 @@ namespace Server
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                //Console.WriteLine(e.ToString());
+                throw e;
             }
            
         }

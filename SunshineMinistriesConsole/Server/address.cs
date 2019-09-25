@@ -20,5 +20,7 @@ namespace Server
         public string state { get; set; }
         public string zip { get; set; }
         public bool primary { get; set; }
+    
+        public virtual contact contact { get; set; }
     }
 }

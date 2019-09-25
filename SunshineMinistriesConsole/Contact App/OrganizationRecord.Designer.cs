@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.wtrOrgName = new Contact_App.WaterMarkTextBox();
+            this.wtrOrgName = new WaterMarkTextBox();
             this.SuspendLayout();
             // 
             // wtrOrgName

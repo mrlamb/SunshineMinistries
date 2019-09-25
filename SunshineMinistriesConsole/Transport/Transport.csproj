@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionHelper.cs" />
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="MessageObj.cs" />
     <Compile Include="StateObject.cs" />

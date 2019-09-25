@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -110,6 +111,12 @@
     <Compile Include="action.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ActionDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionDetail.designer.cs">
+      <DependentUpon>ActionDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="actiontype.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
@@ -137,8 +144,15 @@
     <Compile Include="contacttype.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IActionListUpdatable.cs" />
     <Compile Include="IndividualContactTabPage.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IndividualForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IndividualForm.designer.cs">
+      <DependentUpon>IndividualForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginBox.cs">
       <SubType>Form</SubType>
@@ -152,21 +166,15 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
-    </Compile>
     <Compile Include="ModelHelper.cs" />
     <Compile Include="organization.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrganizationForm.designer.cs">
+      <DependentUpon>OrganizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="OrganizationRecord.cs">
       <SubType>UserControl</SubType>
@@ -181,23 +189,50 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateObject.cs" />
     <Compile Include="ThreadSafeControl.cs" />
+    <Compile Include="user.cs">
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserAccessControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserAccessControl.Designer.cs">
+      <DependentUpon>UserAccessControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UsersModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="WaterMarkTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WaterMarkTextBox.Designer.cs">
+    <Compile Include="WaterMarkTextBox.designer.cs">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ActionDetail.resx">
+      <DependentUpon>ActionDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IndividualForm.resx">
+      <DependentUpon>IndividualForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginBox.resx">
       <DependentUpon>LoginBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="OrganizationForm.resx">
+      <DependentUpon>OrganizationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrganizationRecord.resx">
       <DependentUpon>OrganizationRecord.cs</DependentUpon>
@@ -207,6 +242,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserAccessControl.resx">
+      <DependentUpon>UserAccessControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WaterMarkTextBox.resx">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,6 +253,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ContactModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
     <None Include="ContactModel.edmx.diagram">
       <DependentUpon>ContactModel.edmx</DependentUpon>
     </None>
@@ -233,6 +272,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EntityDeploy Include="UsersModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UsersModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UsersModel.edmx.diagram">
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -256,6 +302,16 @@
       <LastGenOutput>ContactModel.cs</LastGenOutput>
     </Content>
     <Content Include="TextFile1.txt" />
+    <Content Include="UsersModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+      <LastGenOutput>UsersModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="UsersModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+      <LastGenOutput>UsersModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Documents\Code\SunshineMinistries\SunshineMinistriesConsole\Transport\Transport.csproj">
