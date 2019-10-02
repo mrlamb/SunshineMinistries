@@ -7,14 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Contact_App
+namespace Contact_App.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class contacttype
+    public partial class address
     {
-        public int contacttypeid { get; set; }
-        public string typename { get; set; }
+        public int ownerid { get; set; }
+        public string streetAddress { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+        public string zip { get; set; }
+        public bool primary { get; set; }
+    
+        public virtual contact contact { get; set; }
     }
 }

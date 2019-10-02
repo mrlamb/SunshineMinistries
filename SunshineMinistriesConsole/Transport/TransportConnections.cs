@@ -33,9 +33,9 @@ namespace Transportation
                 WaitForData(so);
                 return socket;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 

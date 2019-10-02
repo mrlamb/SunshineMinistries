@@ -8,7 +8,7 @@ namespace Contact_App
 {
     static class Program
     {
-        [FlagsAttribute]
+        [Flags]
         public enum UserAccessOptions: byte
         {
             None = 0,

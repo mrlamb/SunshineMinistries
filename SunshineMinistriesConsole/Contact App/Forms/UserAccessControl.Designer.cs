@@ -40,8 +40,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.wtrEmail = new WaterMarkTextBox();
-            this.wtrUserName = new WaterMarkTextBox();
+            this.wtrPassword = new Contact_App.WaterMarkTextBox();
+            this.wtrUserName = new Contact_App.WaterMarkTextBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,14 +160,14 @@
             this.panel1.Size = new System.Drawing.Size(302, 124);
             this.panel1.TabIndex = 12;
             // 
-            // wtrEmail
+            // wtrPassword
             // 
-            this.wtrEmail.Location = new System.Drawing.Point(123, 40);
-            this.wtrEmail.Name = "wtrEmail";
-            this.wtrEmail.Password = false;
-            this.wtrEmail.Size = new System.Drawing.Size(157, 20);
-            this.wtrEmail.TabIndex = 4;
-            this.wtrEmail.Tag = "Email address";
+            this.wtrPassword.Location = new System.Drawing.Point(123, 40);
+            this.wtrPassword.Name = "wtrPassword";
+            this.wtrPassword.Password = true;
+            this.wtrPassword.Size = new System.Drawing.Size(157, 20);
+            this.wtrPassword.TabIndex = 4;
+            this.wtrPassword.Tag = "Password";
             // 
             // wtrUserName
             // 
@@ -191,7 +191,7 @@
             this.Controls.Add(this.chkAdmin);
             this.Controls.Add(this.chkView);
             this.Controls.Add(this.chkEditRecords);
-            this.Controls.Add(this.wtrEmail);
+            this.Controls.Add(this.wtrPassword);
             this.Controls.Add(this.wtrUserName);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnAdd);
@@ -217,7 +217,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnRemove;
         private WaterMarkTextBox wtrUserName;
-        private WaterMarkTextBox wtrEmail;
+        private WaterMarkTextBox wtrPassword;
         private System.Windows.Forms.CheckBox chkEditRecords;
         private System.Windows.Forms.CheckBox chkView;
         private System.Windows.Forms.CheckBox chkAdmin;

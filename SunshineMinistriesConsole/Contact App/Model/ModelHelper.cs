@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contact_App
+namespace Contact_App.Model
 {
     public partial class contact
     {
@@ -12,6 +12,20 @@ namespace Contact_App
         {
             return firstname + " " + lastname;
             
+        }
+
+        public contact DeepCopy()
+        {
+            contact other = (contact) this.MemberwiseClone();
+            other.firstname = string.Copy(firstname);
+            other.lastname = string.Copy(lastname);
+            other.phone = string.Copy(phone);
+            other.source = string.Copy(source);
+            other.sunshineidl = string.Copy(sunshineidl);
+            other.phonenumbers = new List<phonenumber>(phonenumbers);
+            other.actions = new List<action>(actions);
+
+            return other;
         }
     }
 
@@ -31,4 +45,6 @@ namespace Contact_App
                 Encoding.ASCII.GetString(this.Notes); 
         }
     }
+
+   
 }

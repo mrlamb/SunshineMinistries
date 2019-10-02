@@ -108,133 +108,134 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="action.cs">
+    <Compile Include="Interfaces\IRecordView.cs" />
+    <Compile Include="Model\action.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ActionDetail.cs">
+    <Compile Include="Forms\ActionDetail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ActionDetail.designer.cs">
+    <Compile Include="Forms\ActionDetail.designer.cs">
       <DependentUpon>ActionDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="actiontype.cs">
+    <Compile Include="Model\actiontype.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="address.cs">
+    <Compile Include="Model\address.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="contact.cs">
+    <Compile Include="Model\contact.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ContactModel.Context.cs">
+    <Compile Include="Model\ContactModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ContactModel.cs">
+    <Compile Include="Model\ContactModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ContactModel.Designer.cs">
+    <Compile Include="Model\ContactModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="contacttype.cs">
+    <Compile Include="Model\contacttype.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="IActionListUpdatable.cs" />
-    <Compile Include="IndividualContactTabPage.cs">
+    <Compile Include="UserControls\RecordViewTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IndividualForm.cs">
+    <Compile Include="UserControls\IndividualForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IndividualForm.designer.cs">
+    <Compile Include="UserControls\IndividualForm.designer.cs">
       <DependentUpon>IndividualForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoginBox.cs">
+    <Compile Include="Interfaces\IHasActionList.cs" />
+    <Compile Include="Forms\LoginBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginBox.Designer.cs">
+    <Compile Include="Forms\LoginBox.Designer.cs">
       <DependentUpon>LoginBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModelHelper.cs" />
-    <Compile Include="organization.cs">
+    <Compile Include="Model\ModelHelper.cs" />
+    <Compile Include="Model\organization.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationForm.cs">
+    <Compile Include="UserControls\OrganizationForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrganizationForm.designer.cs">
+    <Compile Include="UserControls\OrganizationForm.designer.cs">
       <DependentUpon>OrganizationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationRecord.cs">
+    <Compile Include="UserControls\OrganizationRecord.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrganizationRecord.Designer.cs">
+    <Compile Include="UserControls\OrganizationRecord.Designer.cs">
       <DependentUpon>OrganizationRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="phonenumber.cs">
+    <Compile Include="Model\phonenumber.cs">
       <DependentUpon>ContactModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateObject.cs" />
     <Compile Include="ThreadSafeControl.cs" />
-    <Compile Include="user.cs">
+    <Compile Include="Model\user.cs">
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserAccessControl.cs">
+    <Compile Include="Forms\UserAccessControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserAccessControl.Designer.cs">
+    <Compile Include="Forms\UserAccessControl.Designer.cs">
       <DependentUpon>UserAccessControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UsersModel.Context.cs">
+    <Compile Include="Model\UsersModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="UsersModel.cs">
+    <Compile Include="Model\UsersModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UsersModel.Designer.cs">
+    <Compile Include="Model\UsersModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="WaterMarkTextBox.cs">
+    <Compile Include="UserControls\WaterMarkTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WaterMarkTextBox.designer.cs">
+    <Compile Include="UserControls\WaterMarkTextBox.designer.cs">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ActionDetail.resx">
+    <EmbeddedResource Include="Forms\ActionDetail.resx">
       <DependentUpon>ActionDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IndividualForm.resx">
+    <EmbeddedResource Include="UserControls\IndividualForm.resx">
       <DependentUpon>IndividualForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoginBox.resx">
+    <EmbeddedResource Include="Forms\LoginBox.resx">
       <DependentUpon>LoginBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrganizationForm.resx">
+    <EmbeddedResource Include="UserControls\OrganizationForm.resx">
       <DependentUpon>OrganizationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrganizationRecord.resx">
+    <EmbeddedResource Include="UserControls\OrganizationRecord.resx">
       <DependentUpon>OrganizationRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -242,19 +243,18 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserAccessControl.resx">
+    <EmbeddedResource Include="Forms\UserAccessControl.resx">
       <DependentUpon>UserAccessControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WaterMarkTextBox.resx">
+    <EmbeddedResource Include="UserControls\WaterMarkTextBox.resx">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <EntityDeploy Include="ContactModel.edmx">
+    <EntityDeploy Include="Model\ContactModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ContactModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ContactModel.edmx.diagram">
+    <None Include="Model\ContactModel.edmx.diagram">
       <DependentUpon>ContactModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -272,11 +272,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EntityDeploy Include="UsersModel.edmx">
+    <EntityDeploy Include="Model\UsersModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UsersModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="UsersModel.edmx.diagram">
+    <None Include="Model\UsersModel.edmx.diagram">
       <DependentUpon>UsersModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
@@ -291,23 +291,22 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ContactModel.Context.tt">
+    <Content Include="Model\ContactModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ContactModel.edmx</DependentUpon>
       <LastGenOutput>ContactModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ContactModel.tt">
+    <Content Include="Model\ContactModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ContactModel.edmx</DependentUpon>
       <LastGenOutput>ContactModel.cs</LastGenOutput>
     </Content>
-    <Content Include="TextFile1.txt" />
-    <Content Include="UsersModel.Context.tt">
+    <Content Include="Model\UsersModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UsersModel.edmx</DependentUpon>
       <LastGenOutput>UsersModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="UsersModel.tt">
+    <Content Include="Model\UsersModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UsersModel.edmx</DependentUpon>
       <LastGenOutput>UsersModel.cs</LastGenOutput>

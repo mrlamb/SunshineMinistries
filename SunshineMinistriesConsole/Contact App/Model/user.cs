@@ -7,16 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Contact_App
+namespace Contact_App.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class organization
+    public partial class user
     {
-        public int orgid { get; set; }
-        public string orgsunshineid { get; set; }
-        public string name { get; set; }
-        public string phone { get; set; }
+        public long id { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public byte accessflags { get; set; }
+        public string email { get; set; }
     }
 }

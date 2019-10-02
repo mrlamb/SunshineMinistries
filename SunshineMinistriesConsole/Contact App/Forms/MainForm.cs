@@ -1,13 +1,10 @@
 ﻿using Transportation;
+using Contact_App.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using System.Net.Sockets;
 using Newtonsoft.Json;
 
@@ -15,7 +12,6 @@ namespace Contact_App
 {
     public partial class MainForm : Form
     {
-        private contact FormContact;
         private byte FormID = 20;
         public MainForm()
         {
@@ -23,6 +19,7 @@ namespace Contact_App
 
         }
 
+        //Handle incoming messages from the server
         private void MessageReceivedEventHandler(Socket socket, StringBuilder sb, List<Byte> lb)
         {
             MessageObj mo = new MessageObj();
@@ -31,12 +28,15 @@ namespace Contact_App
             {
                 switch (mo.Protocol)
                 {
+                    //A list of contacts was sent
                     case TransportProtocol.BATCH_SEND_RECORD:
                         SetList(mo.Message);
                         break;
+                    //A request for a message box was sent (for testing)
                     case TransportProtocol.MESSAGE_BOX:
                         MessageBox.Show(mo.Message);
                         break;
+                    //A request to update the status bar was sent (for user feedback)
                     case TransportProtocol.STATUS_UPDATE:
 
                         break;
@@ -47,6 +47,7 @@ namespace Contact_App
 
         }
 
+        //Populate the list box with the contents of the message (a list of contacts)
         private void SetList(string message)
         {
             var result = JsonConvert.DeserializeObject<List<contact>>(message);
@@ -54,8 +55,10 @@ namespace Contact_App
             lstRecordSelector.Invoke(new EventHandler(delegate { lstRecordSelector.DataSource = result; }));
         }
 
+
         private void MainForm_OnLoad(object sender, EventArgs e)
         {
+            //Set our event handler for receiving messages
             Transport.messageReceivedEvent += MessageReceivedEventHandler;
 
             //Show Administrate if User Level Allows
@@ -66,17 +69,19 @@ namespace Contact_App
 
         }
 
+        //Really misnamed, currently just sends a request to the server for the whole contact list.
         private void btnSearch_Click(object sender, EventArgs e)
         {
             Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID, TransportProtocol.BATCH_SEND_RECORD));
         }
 
+        //Generates an individual record form
         private void lstRecordSelector_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int index = this.lstRecordSelector.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                IndividualContactTabPage icp = new IndividualContactTabPage(new DataInputForms.IndividualForm());
+                RecordViewTabPage icp = new RecordViewTabPage(new DataInputForms.IndividualForm());
                 icp.ID = Program.GetNextID();
                 tabControl.TabPages.Add(icp);
 
@@ -95,7 +100,7 @@ namespace Contact_App
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            IndividualContactTabPage icp = new IndividualContactTabPage(new DataInputForms.IndividualForm());
+            RecordViewTabPage icp = new RecordViewTabPage(new DataInputForms.IndividualForm());
             icp.ID = Program.GetNextID();
             tabControl.TabPages.Add(icp);
 
@@ -103,12 +108,19 @@ namespace Contact_App
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            if (tabControl.SelectedTab is IndividualContactTabPage)
+            if (tabControl.SelectedTab is RecordViewTabPage)
             {
-                byte saveID = (tabControl.SelectedTab as IndividualContactTabPage).ID;
-                contact c = (tabControl.SelectedTab as IndividualContactTabPage).GetContactFromData();
-                Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID, TransportProtocol.UPDATE_RECORD,
-                    JsonConvert.SerializeObject(c)));
+                byte saveID = (tabControl.SelectedTab as RecordViewTabPage).ID;
+                object r = (tabControl.SelectedTab as RecordViewTabPage).GetContactFromData();
+                if (r is contact)
+                {
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_RECORD ,
+                        JsonConvert.SerializeObject(r as contact)));
+                }
+                else
+                {
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_ORG_RECORD , "Nothing here yet"));
+                }
             }
         }
 

@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+﻿using Contact_App.Interfaces;
+using Contact_App.Model;
+using System;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DataInputForms
 {
     public partial class ActionDetail : Form
     {
-        public Contact_App.action myAction { get; set; }
-        public IActionListUpdatable form { get; set; }
+        public action myAction { get; set; }
+        public IHasActionList form { get; set; }
         public ActionDetail()
         {
             InitializeComponent();
 
         }
 
-        public ActionDetail(Contact_App.action a)
+        public ActionDetail(action a)
         {
             InitializeComponent();
             
@@ -35,7 +31,7 @@ namespace DataInputForms
         {
             if (null == myAction)
             {
-                myAction = new Contact_App.action();
+                myAction = new action();
 
             }
             
@@ -44,7 +40,7 @@ namespace DataInputForms
                 myAction.date = dtpWhen.Value;
                 myAction.Notes = Encoding.ASCII.GetBytes(txtHow.Text);
 
-            form.AddActionToList(myAction);
+            form.SaveActionToList(myAction);
 
         }
     }

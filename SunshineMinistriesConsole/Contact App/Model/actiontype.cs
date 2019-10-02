@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Contact_App
+namespace Contact_App.Model
 {
     using System;
     using System.Collections.Generic;

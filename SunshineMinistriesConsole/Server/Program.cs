@@ -89,7 +89,7 @@ namespace Server
                 record.email = u.email;
                 record.accessflags = u.accessflags;
                 record.password = u.password;
-                
+                socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.STATUS_UPDATE , $"User: {u.username} updated."));
                 
                 UserContext.SaveChanges();
             }
@@ -97,6 +97,7 @@ namespace Server
             {
                 UserContext.users.Add(u);
                 UserContext.SaveChanges();
+                socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.STATUS_UPDATE , $"User: {u.username} added."));  
             }
             catch (Exception e)
             {
@@ -159,10 +160,10 @@ namespace Server
                 ContactContext.contacts.Add(c);
                 ContactContext.SaveChanges();
             }
-            catch (Exception e)
+            catch
             {
                 //Console.WriteLine(e.ToString());
-                throw e;
+                throw;
             }
            
         }

@@ -1,14 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Contact_App.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Transportation;
 
@@ -40,6 +36,9 @@ namespace Contact_App
                     users = JsonConvert.DeserializeObject<List<user>>(message.Message);
                     lstUsers.Invoke(new EventHandler(delegate{ lstUsers.DataSource = users; }));
                     break;
+                case TransportProtocol.STATUS_UPDATE:
+                    toolStripStatusLabel.Text = message.Message;
+                    break;
                 default:
                     break;
             }
@@ -49,7 +48,7 @@ namespace Contact_App
         {
             var selectedUser = (user)lstUsers.SelectedItem;
             wtrUserName.Text = selectedUser.username;
-            wtrEmail.Text = selectedUser.email;
+            wtrPassword.Text = selectedUser.password;
             Program.UserAccessOptions uac = (Program.UserAccessOptions)selectedUser.accessflags;
             if((uac & Program.UserAccessOptions.Edit) == Program.UserAccessOptions.Edit)
             {
@@ -94,7 +93,7 @@ namespace Contact_App
         {
             user u = (user)lstUsers.SelectedItem;
             u.username = wtrUserName.Text;
-            u.email = wtrEmail.Text;
+            u.email = wtrPassword.Text;
             Program.UserAccessOptions uao = new Program.UserAccessOptions();
             if (chkAdmin.Checked)
             {

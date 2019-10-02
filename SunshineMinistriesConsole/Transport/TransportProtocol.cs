@@ -23,5 +23,6 @@ namespace Transportation
         SEND_ALL_USERS,
         UPDATE_USER,
         STATUS_UPDATE,
+        UPDATE_ORG_RECORD,
     }
 }

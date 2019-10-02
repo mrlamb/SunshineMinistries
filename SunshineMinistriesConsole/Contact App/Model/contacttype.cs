@@ -7,20 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Contact_App
+namespace Contact_App.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class action
+    public partial class contacttype
     {
-        public int ownerID { get; set; }
-        public string actionType { get; set; }
-        public string completedBy { get; set; }
-        public byte[] Notes { get; set; }
-        public System.DateTime date { get; set; }
-    
-        public virtual contact contact { get; set; }
-        public virtual actiontype actiontype1 { get; set; }
+        public int contacttypeid { get; set; }
+        public string typename { get; set; }
     }
 }
