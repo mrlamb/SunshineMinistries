@@ -313,7 +313,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Documents\Code\SunshineMinistries\SunshineMinistriesConsole\Transport\Transport.csproj">
+    <ProjectReference Include="..\Transport\Transport.csproj">
       <Project>{3820d51a-08a5-44e0-a520-9d852b8b3ae6}</Project>
       <Name>Transport</Name>
     </ProjectReference>
