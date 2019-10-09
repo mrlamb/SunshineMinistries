@@ -10,11 +10,13 @@ namespace Transportation
 {
     public static partial class Transport
     {
-        public delegate void MessageReceived(Socket socket, StringBuilder sb, List<byte> lb);
+        public delegate void MessageReceived(Socket socket , StringBuilder sb , List<byte> lb);
         public static event MessageReceived messageReceivedEvent;
+        public delegate void ClientDisconnect(Socket socket);
+        public static event ClientDisconnect clientDisconnectedEvent;
 
         public static ConnectionManager Manager = new ConnectionManager();
-        
+
 
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace Transportation
             }
         }
 
-        
+
 
         /// <summary>
         /// Put server into listening mode
@@ -53,15 +55,15 @@ namespace Transportation
 
             //Setting up a new socket with those specs
             Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            listener.Bind(new IPEndPoint(Array.Find(localAddress, a => a.AddressFamily == AddressFamily.InterNetwork), 22480));
+            listener.Bind(new IPEndPoint(Array.Find(localAddress , a => a.AddressFamily == AddressFamily.InterNetwork) , 22480));
             listener.Listen(100);
 
 
-            Console.WriteLine("IP Address: {0}", Array.Find(localAddress, a => a.AddressFamily == AddressFamily.InterNetwork));
+            Console.WriteLine("IP Address: {0}" , Array.Find(localAddress , a => a.AddressFamily == AddressFamily.InterNetwork));
             Console.WriteLine("Server started, awaiting connections.");
 
             //Putting socket into accept mode
-            listener.BeginAccept(new AsyncCallback(OnConnectCallback), listener);
+            listener.BeginAccept(new AsyncCallback(OnConnectCallback) , listener);
 
 
         }
@@ -77,14 +79,14 @@ namespace Transportation
             //Client socket
             Socket socket = listener.EndAccept(ar);
 
-            Console.WriteLine("Client connected on: {0}", socket.RemoteEndPoint);
+            Console.WriteLine("Client connected on: {0}" , socket.RemoteEndPoint);
 
             //Setup this socket for passing data.
             StateObject so = new StateObject(socket);
             WaitForData(so);
 
             //Put listener back in new connection mode
-            listener.BeginAccept(new AsyncCallback(OnConnectCallback), listener);
+            listener.BeginAccept(new AsyncCallback(OnConnectCallback) , listener);
 
 
         }
@@ -101,7 +103,7 @@ namespace Transportation
             if (so.workSocket.Connected)
             {
                 AsyncCallback receiveData = new AsyncCallback(OnReceive);
-                so.workSocket.BeginReceive(so.buffer, 0, StateObject.BUFFER_SIZE, SocketFlags.None, receiveData, so);
+                so.workSocket.BeginReceive(so.buffer , 0 , StateObject.BUFFER_SIZE , SocketFlags.None , receiveData , so);
 
             }
             else
@@ -125,20 +127,24 @@ namespace Transportation
             catch (SocketException e)
             {
                 Console.WriteLine("Client disconnect: " + e.Message);
+                if (clientDisconnectedEvent != null)
+                {
+                    clientDisconnectedEvent.Invoke(so.workSocket);
+                }
             }
             //Some data was sent
             if (read > 0)
             {
                 //Collect what we have
-                so.sb.Append(Encoding.ASCII.GetString(so.buffer, 0, read));
-                so.lb.AddRange(so.buffer.Where(a => a != 0));
+                so.sb.Append(Encoding.ASCII.GetString(so.buffer , 0 , read));
+                so.lb.AddRange(so.buffer.Where(a => a != 0x00));
                 //If we read a full buffer's worth, send us back into the listen mode to get more
                 if (so.workSocket.Available == 0)
                 {
                     if (so.sb.Length > 0)
                     {
                         if (messageReceivedEvent != null)
-                            messageReceivedEvent.Invoke(so.workSocket, so.sb, so.lb);
+                            messageReceivedEvent.Invoke(so.workSocket , so.sb , so.lb);
 
                         so.sb.Clear();
                         so.lb.Clear();
@@ -147,13 +153,14 @@ namespace Transportation
                     }
 
                 }
+                Array.Clear(so.buffer , 0 , so.buffer.Length);
 
-                    so.workSocket.BeginReceive(so.buffer, 0, StateObject.BUFFER_SIZE, 0, new AsyncCallback(OnReceive), so);
-                                    
+                so.workSocket.BeginReceive(so.buffer , 0 , StateObject.BUFFER_SIZE , 0 , new AsyncCallback(OnReceive) , so);
+
             }
 
             //After all above Asyncs we dump out here to handle the data
-            
+
         }
 
     }

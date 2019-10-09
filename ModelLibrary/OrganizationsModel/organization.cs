@@ -17,7 +17,7 @@ namespace ModelLibrary.OrganizationsModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public organization()
         {
-            this.actions = new HashSet<IAction>();
+            this.actions = new HashSet<action>();
             this.addresses = new HashSet<address>();
             this.phonenumbers = new HashSet<phonenumber>();
         }
@@ -29,7 +29,7 @@ namespace ModelLibrary.OrganizationsModel
         public Nullable<bool> financialsupport { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IAction> actions { get; set; }
+        public virtual ICollection<action> actions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<address> addresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -49,7 +49,17 @@ namespace Transportation
             }
         }
 
-        public void SetUserForSocket(Socket socket, string name)
+        public int GetNumConnections()
+        {
+            return connections.Count;
+        }
+
+        public void RemoveConnection(Socket socket)
+        {
+            connections.Remove(connections.FirstOrDefault(a => a.socket == socket));
+        }
+
+        public void SetUserForSocket(Socket socket , string name)
         {
             Connection c = connections.Find(a => a.socket == socket);
             c.username = name;

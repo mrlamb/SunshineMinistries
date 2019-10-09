@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using Newtonsoft.Json;
 using ModelLibrary;
 using ModelLibrary.IndividualsModel;
+using ModelLibrary.OrganizationsModel;
 
 namespace Contact_App
 {
@@ -21,7 +22,7 @@ namespace Contact_App
         }
 
         //Handle incoming messages from the server
-        private void MessageReceivedEventHandler(Socket socket, StringBuilder sb, List<Byte> lb)
+        private void MessageReceivedEventHandler(Socket socket , StringBuilder sb , List<Byte> lb)
         {
             MessageObj mo = new MessageObj();
             mo = Transport.DeconstructMessage(lb);
@@ -51,13 +52,38 @@ namespace Contact_App
         //Populate the list box with the contents of the message (a list of contacts)
         private void SetList(string message)
         {
-            var result = JsonConvert.DeserializeObject<List<individual>>(message);
+            
+            var result = JsonConvert.DeserializeObject<List<object>>(message);
+            object tmpResult;
+            for (int i = 0; i < result.Count; i++)
+            {
+                try
+                {
+                    tmpResult = JsonConvert.DeserializeObject<individual>(JsonConvert.SerializeObject(result[i]));
+                    if ((tmpResult as individual).firstname == null)
+                    {
+                        throw new Exception("Not an individual");
+                    }
+                    result[i] = tmpResult;
+                } catch (Exception e)
+                {
+                    try
+                    {
+                        result[i] = JsonConvert.DeserializeObject<organization>(JsonConvert.SerializeObject(result[i]));
+                    } catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+
+            
 
             lstRecordSelector.Invoke(new EventHandler(delegate { lstRecordSelector.DataSource = result; }));
         }
 
 
-        private void MainForm_OnLoad(object sender, EventArgs e)
+        private void MainForm_OnLoad(object sender , EventArgs e)
         {
             //Set our event handler for receiving messages
             Transport.messageReceivedEvent += MessageReceivedEventHandler;
@@ -71,27 +97,46 @@ namespace Contact_App
         }
 
         //Really misnamed, currently just sends a request to the server for the whole contact list.
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender , EventArgs e)
         {
-            Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID, TransportProtocol.BATCH_SEND_RECORD));
+            Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID , TransportProtocol.BATCH_SEND_RECORD));
         }
 
         //Generates an individual record form
-        private void lstRecordSelector_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void lstRecordSelector_MouseDoubleClick(object sender , MouseEventArgs e)
         {
             int index = this.lstRecordSelector.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                RecordViewTabPage icp = new RecordViewTabPage(new DataInputForms.IndividualForm());
+                RecordViewTabPage icp;
+                if (lstRecordSelector.Items[index] is individual)
+                {
+                    icp = new RecordViewTabPage(new DataInputForms.IndividualForm()); 
+                }
+                else
+                {
+                    icp = new RecordViewTabPage(new DataInputForms.OrganizationForm());
+                }
+
+
                 icp.ID = Program.GetNextID();
                 tabControl.TabPages.Add(icp);
+                tabControl.SelectedTab = icp;
 
-                Program.stateObject.workSocket.Send(Transport.ConstructMessage(icp.ID, TransportProtocol.SEND_INDIVIDUAL_RECORD,
-                    (lstRecordSelector.Items[index] as individual).id.ToString()));
+                if (lstRecordSelector.Items[index] is individual)
+                {
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(icp.ID , TransportProtocol.SEND_INDIVIDUAL_RECORD ,
+                                (lstRecordSelector.Items[index] as individual).id.ToString())); 
+                }
+                else
+                {
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(icp.ID , TransportProtocol.SEND_ORG_RECORD ,
+                                (lstRecordSelector.Items[index] as organization).orgid.ToString()));
+                }
             }
         }
 
-        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void usersToolStripMenuItem_Click(object sender , EventArgs e)
         {
             using (Form f = new UserAccessControl())
             {
@@ -99,15 +144,13 @@ namespace Contact_App
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void toolStripButton1_Click(object sender , EventArgs e)
         {
-            RecordViewTabPage icp = new RecordViewTabPage(new DataInputForms.IndividualForm());
-            icp.ID = Program.GetNextID();
-            tabControl.TabPages.Add(icp);
+
 
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void toolStripButton2_Click(object sender , EventArgs e)
         {
             if (tabControl.SelectedTab is RecordViewTabPage)
             {
@@ -115,26 +158,27 @@ namespace Contact_App
                 object r = (tabControl.SelectedTab as RecordViewTabPage).GetContactFromData();
                 if (r is individual)
                 {
-                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_RECORD ,
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_INDIVIDUAL_RECORD ,
                         JsonConvert.SerializeObject(r as individual)));
                 }
                 else
                 {
-                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_ORG_RECORD , "Nothing here yet"));
+                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_ORG_RECORD ,
+                        JsonConvert.SerializeObject(r as organization)));
                 }
             }
         }
 
-        private void tabControl_DrawItem(object sender, DrawItemEventArgs e)
+        private void tabControl_DrawItem(object sender , DrawItemEventArgs e)
         {
-            e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 10, e.Bounds.Top + 4);
-            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 3, e.Bounds.Top + 4);
+            e.Graphics.DrawString("x" , e.Font , Brushes.Black , e.Bounds.Right - 10 , e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text , e.Font , Brushes.Black , e.Bounds.Left + 3 , e.Bounds.Top + 4);
             e.DrawFocusRectangle();
         }
 
-        private void tabControl_MouseDown(object sender, MouseEventArgs e)
+        private void tabControl_MouseDown(object sender , MouseEventArgs e)
         {
-            
+
             Rectangle r = tabControl.GetTabRect(this.tabControl.SelectedIndex);
             Rectangle closeButton = new Rectangle(r.Right - 10, r.Top + 4, 9, 7);
             if (closeButton.Contains(e.Location))
@@ -142,6 +186,30 @@ namespace Contact_App
                 this.tabControl.TabPages.Remove(this.tabControl.SelectedTab);
             }
         }
-    
+
+        private void individualToolStripMenuItem_Click(object sender , EventArgs e)
+        {
+            RecordViewTabPage icp = new RecordViewTabPage(new DataInputForms.IndividualForm());
+            icp.ID = Program.GetNextID();
+            tabControl.TabPages.Add(icp);
+            tabControl.SelectedTab = icp;
+        }
+
+        private void organizationToolStripMenuItem_Click(object sender , EventArgs e)
+        {
+            RecordViewTabPage icp = new RecordViewTabPage(new DataInputForms.OrganizationForm());
+            icp.ID = Program.GetNextID();
+            tabControl.TabPages.Add(icp);
+            tabControl.SelectedTab = icp;
+        }
+
+        private void toolStripButtonSearch_Click(object sender , EventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(toolStripTextBox.Text))
+            {
+                Program.stateObject.workSocket.Send(Transport.ConstructMessage(
+                    this.FormID , TransportProtocol.SEARCH_WITH_TERM , toolStripTextBox.Text));
+            }
+        }
     }
 }

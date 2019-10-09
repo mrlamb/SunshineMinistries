@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 
@@ -31,11 +32,26 @@ namespace ModelLibrary.IndividualsModel
    
     public partial class action : IAction
     {
+        public action()
+        {
+                
+        }
+        public action(long ownerID, string actionType, string completedBy, byte[] Notes, DateTime date)
+        {
+            this.ownerID = ownerID;
+            this.actionType = actionType;
+            this.completedBy = completedBy;
+            this.Notes = Notes;
+            this.date = date;
+        }
         public override string ToString()
         {
             return this.date.ToString() + "\t" + this.actionType + "\t" + this.completedBy + "\t" + 
                 Encoding.ASCII.GetString(this.Notes); 
         }
+
+        public static explicit operator action(OrganizationsModel.action d) => new action(d.ownerID, d.actionType, d.completedBy, d.Notes, d.date);
+        
     }
 
    public class officer : individual
@@ -63,10 +79,35 @@ namespace ModelLibrary.OrganizationsModel
     public partial class organization
     {
         //Any needed helper stuff goes here
+        public override string ToString()
+        {
+            return name;
+
+        }
     }
 
     public partial class action : IAction
     {
+        public action()
+        {
+
+        }
+        public action(long ownerID , string actionType , string completedBy , byte[] Notes , DateTime date)
+        {
+            this.ownerID = ownerID;
+            this.actionType = actionType;
+            this.completedBy = completedBy;
+            this.Notes = Notes;
+            this.date = date;
+        }
+
+        public override string ToString()
+        {
+            return this.date.ToString() + "\t" + this.actionType + "\t" + this.completedBy + "\t" +
+                Encoding.ASCII.GetString(this.Notes);
+        }
+
+        public static explicit operator action(IndividualsModel.action d) => new action(d.ownerID, d.actionType, d.completedBy, d.Notes, d.date);
 
     }
 }

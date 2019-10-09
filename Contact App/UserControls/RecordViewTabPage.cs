@@ -8,6 +8,7 @@ using Transportation;
 using Contact_App.Interfaces;
 using ModelLibrary;
 using ModelLibrary.IndividualsModel;
+using ModelLibrary.OrganizationsModel;
 
 namespace Contact_App
 {
@@ -41,16 +42,20 @@ namespace Contact_App
                 
                 switch (mo.Protocol)
                 {
-                    case TransportProtocol.SEND_INDIVIDUAL_RECORD:
-                        individual record = JsonConvert.DeserializeObject<individual>(mo.Message);
-                        savedContact = record;
-                        uc.SetData(record);
-                        if (this.InvokeRequired)
+                    case TransportProtocol.SEND_ORG_RECORD:
                         {
-                            this.Invoke(new EventHandler(delegate { this.Text = record.firstname + " " + record.lastname + "   "; }));
+                            organization record = JsonConvert.DeserializeObject<organization>(mo.Message);
+                            savedContact = record;
+                            uc.SetData(record);
+                            break;
                         }
-                        
-                        break;
+                    case TransportProtocol.SEND_INDIVIDUAL_RECORD:
+                        {
+                            individual record = JsonConvert.DeserializeObject<individual>(mo.Message);
+                            savedContact = record;
+                            uc.SetData(record);
+                            break;
+                        }
                     default:
                         break;
                 }
@@ -61,8 +66,9 @@ namespace Contact_App
         {
             if (null == savedContact)
             {
-                savedContact = uc.GetData();
+                savedContact = new object();
             }
+            savedContact = uc.GetData();
             return savedContact; 
         }
     }

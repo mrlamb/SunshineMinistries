@@ -41,7 +41,7 @@ namespace DataInputForms
                 myAction.Notes = Encoding.ASCII.GetBytes(txtHow.Text);
 
             form.SaveActionToList(myAction);
-
+            this.Close();
         }
     }
 }

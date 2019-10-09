@@ -235,6 +235,10 @@ namespace DataInputForms
 
         public object GetData()
         {
+            if (null == workingRecord)
+            {
+                workingRecord = new individual();
+            }
             workingRecord.firstname = FirstName;
             workingRecord.lastname = LastName;
             workingRecord.sunshineidl = ID;
@@ -264,7 +268,7 @@ namespace DataInputForms
             a.state = StateSecondary;
             a.zip = ZipSecondary;
             a.ownerid = workingRecord.id;
-            a.primary = true;
+            a.primary = false;
 
             return a;
         }

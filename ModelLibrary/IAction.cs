@@ -10,4 +10,6 @@ namespace ModelLibrary
         byte[] Notes { get; set; }
         System.DateTime date { get; set; }
     }
+
+    
 }

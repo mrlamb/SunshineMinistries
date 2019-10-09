@@ -17,12 +17,14 @@ namespace Transportation
         AUTHENTICATED,
         BATCH_SEND_RECORD,
         SEND_INDIVIDUAL_RECORD,
-        UPDATE_RECORD,
+        UPDATE_INDIVIDUAL_RECORD,
         DELETE_RECORD,
         SEND_USER_OPTIONS,
         SEND_ALL_USERS,
         UPDATE_USER,
         STATUS_UPDATE,
         UPDATE_ORG_RECORD,
+        SEARCH_WITH_TERM,
+        SEND_ORG_RECORD,
     }
 }
