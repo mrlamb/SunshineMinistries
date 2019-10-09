@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Contact_App.Model;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -7,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Transportation;
+using ModelLibrary;
 
 namespace Contact_App
 {

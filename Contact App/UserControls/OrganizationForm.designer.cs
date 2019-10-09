@@ -316,7 +316,7 @@
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.ShowCheckBox = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(1505, 29);
+            this.dateTimePicker1.Size = new System.Drawing.Size(1471, 29);
             this.dateTimePicker1.TabIndex = 247;
             // 
             // txtIdentifier
@@ -533,7 +533,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.txtOrganization);
             this.Name = "OrganizationForm";
-            this.Size = new System.Drawing.Size(1505, 1032);
+            this.Size = new System.Drawing.Size(1471, 1032);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);

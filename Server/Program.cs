@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using ModelLibrary;
 using Transportation;
 using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Linq;
+using ModelLibrary.IndividualsModel;
 
 namespace Server
 {
@@ -12,7 +14,7 @@ namespace Server
     {
         static ConnectionManager manager = new ConnectionManager();
         static UserEntities UserContext = new UserEntities();
-        static ContactEntities ContactContext = new ContactEntities();
+        static IndividualEntities IndividualContext = new IndividualEntities();
         private const int FormID = 1;
         static void Main(string[] args)
         {
@@ -83,6 +85,7 @@ namespace Server
             user u = new user();
             try
             {
+                
                 u = JsonConvert.DeserializeObject<user>(message.Message);
                 user record = UserContext.users.First(a => a.id == u.id);
                 record.username = u.username;
@@ -129,21 +132,21 @@ namespace Server
 
         private static void DeleteRecord(string message)
         {
-            contact c = JsonConvert.DeserializeObject<contact>(message);
-            contact record = ContactContext.contacts.First(a => a.id == c.id);
-            ContactContext.contacts.Remove(record);
-            ContactContext.SaveChanges();
+            individual c = JsonConvert.DeserializeObject<individual>(message);
+            individual record = IndividualContext.individuals.First(a => a.id == c.id);
+            IndividualContext.individuals.Remove(record);
+            IndividualContext.SaveChanges();
             
         }
 
         private static void UpdateRecord(string message)
         {
-            contact c = new contact();
+            individual c = new individual();
             try
             {
                
-                c = JsonConvert.DeserializeObject<contact>(message);
-                contact record = ContactContext.contacts.First(a => a.id == c.id);
+                c = JsonConvert.DeserializeObject<individual>(message);
+                individual record = IndividualContext.individuals.First(a => a.id == c.id);
                 record.firstname = c.firstname;
                 record.lastname = c.lastname;
                 record.addresses = c.addresses;
@@ -153,12 +156,12 @@ namespace Server
                 record.sunshineidl = c.sunshineidl;
                 record.source = c.source;
 
-                ContactContext.SaveChanges();
+                IndividualContext.SaveChanges();
             }
             catch (InvalidOperationException)
             {
-                ContactContext.contacts.Add(c);
-                ContactContext.SaveChanges();
+                IndividualContext.individuals.Add(c);
+                IndividualContext.SaveChanges();
             }
             catch
             {
@@ -170,13 +173,13 @@ namespace Server
 
         private static void SendSingleRecord(Socket socket, MessageObj message)
         {
-            contact record = ContactContext.contacts.First(a => a.id.ToString() == message.Message);
+            individual record = IndividualContext.individuals.First(a => a.id.ToString() == message.Message);
             socket.Send(Transport.ConstructMessage(message.ReturnTo, TransportProtocol.SEND_INDIVIDUAL_RECORD, JsonConvert.SerializeObject(record, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })));
         }
 
         private static void BatchSend(Socket socket, MessageObj message)
         {
-            string AllRecords = JsonConvert.SerializeObject(ContactContext.contacts.Select(con => new { con.id, con.firstname, con.lastname }));
+            string AllRecords = JsonConvert.SerializeObject(IndividualContext.individuals.Select(con => new { con.id, con.firstname, con.lastname }));
 
 
             socket.Send(Transport.ConstructMessage(message.ReturnTo, TransportProtocol.BATCH_SEND_RECORD, AllRecords));

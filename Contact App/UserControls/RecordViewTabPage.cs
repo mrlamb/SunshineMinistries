@@ -1,5 +1,4 @@
-﻿using Contact_App.Model;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -7,6 +6,8 @@ using System.Text;
 using System.Windows.Forms;
 using Transportation;
 using Contact_App.Interfaces;
+using ModelLibrary;
+using ModelLibrary.IndividualsModel;
 
 namespace Contact_App
 {
@@ -41,7 +42,7 @@ namespace Contact_App
                 switch (mo.Protocol)
                 {
                     case TransportProtocol.SEND_INDIVIDUAL_RECORD:
-                        contact record = JsonConvert.DeserializeObject<contact>(mo.Message);
+                        individual record = JsonConvert.DeserializeObject<individual>(mo.Message);
                         savedContact = record;
                         uc.SetData(record);
                         if (this.InvokeRequired)

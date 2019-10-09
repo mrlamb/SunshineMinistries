@@ -1,14 +1,14 @@
 ﻿using Contact_App.Interfaces;
-using Contact_App.Model;
 using System;
 using System.Text;
 using System.Windows.Forms;
+using ModelLibrary;
 
 namespace DataInputForms
 {
     public partial class ActionDetail : Form
     {
-        public action myAction { get; set; }
+        public IAction myAction { get; set; }
         public IHasActionList form { get; set; }
         public ActionDetail()
         {
@@ -16,7 +16,7 @@ namespace DataInputForms
 
         }
 
-        public ActionDetail(action a)
+        public ActionDetail(IAction a)
         {
             InitializeComponent();
             
@@ -31,7 +31,7 @@ namespace DataInputForms
         {
             if (null == myAction)
             {
-                myAction = new action();
+                myAction = new ModelLibrary.IndividualsModel.action();
 
             }
             

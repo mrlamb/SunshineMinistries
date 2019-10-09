@@ -1,5 +1,4 @@
 ﻿using Transportation;
-using Contact_App.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,6 +6,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using Newtonsoft.Json;
+using ModelLibrary;
+using ModelLibrary.IndividualsModel;
 
 namespace Contact_App
 {
@@ -50,7 +51,7 @@ namespace Contact_App
         //Populate the list box with the contents of the message (a list of contacts)
         private void SetList(string message)
         {
-            var result = JsonConvert.DeserializeObject<List<contact>>(message);
+            var result = JsonConvert.DeserializeObject<List<individual>>(message);
 
             lstRecordSelector.Invoke(new EventHandler(delegate { lstRecordSelector.DataSource = result; }));
         }
@@ -86,7 +87,7 @@ namespace Contact_App
                 tabControl.TabPages.Add(icp);
 
                 Program.stateObject.workSocket.Send(Transport.ConstructMessage(icp.ID, TransportProtocol.SEND_INDIVIDUAL_RECORD,
-                    (lstRecordSelector.Items[index] as contact).id.ToString()));
+                    (lstRecordSelector.Items[index] as individual).id.ToString()));
             }
         }
 
@@ -112,10 +113,10 @@ namespace Contact_App
             {
                 byte saveID = (tabControl.SelectedTab as RecordViewTabPage).ID;
                 object r = (tabControl.SelectedTab as RecordViewTabPage).GetContactFromData();
-                if (r is contact)
+                if (r is individual)
                 {
                     Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_RECORD ,
-                        JsonConvert.SerializeObject(r as contact)));
+                        JsonConvert.SerializeObject(r as individual)));
                 }
                 else
                 {

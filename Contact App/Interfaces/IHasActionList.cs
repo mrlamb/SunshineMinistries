@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using Contact_App.Model;
+using ModelLibrary;
+
 namespace Contact_App.Interfaces
 {
     public interface IHasActionList
     {
-        void InitializeActionList(ICollection<action> actions);
-        void SaveActionToList(action a);
+        void InitializeActionList(ICollection<IAction> actions);
+        void SaveActionToList(IAction a);
     }
 }

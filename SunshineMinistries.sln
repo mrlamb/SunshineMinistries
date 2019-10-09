@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transport", "Transport\Tran
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact App", "Contact App\Contact App.csproj", "{1C141F5F-0DC6-4100-8A82-8E11CD372FE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLibrary", "ModelLibrary\ModelLibrary.csproj", "{088ECE6B-E4B4-4990-94AA-B9671882BD2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,14 @@ Global
 		{1C141F5F-0DC6-4100-8A82-8E11CD372FE1}.Release|Any CPU.ActiveCfg = Release|x86
 		{1C141F5F-0DC6-4100-8A82-8E11CD372FE1}.Release|x86.ActiveCfg = Release|x86
 		{1C141F5F-0DC6-4100-8A82-8E11CD372FE1}.Release|x86.Build.0 = Release|x86
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Debug|x86.Build.0 = Debug|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{088ECE6B-E4B4-4990-94AA-B9671882BD2B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
