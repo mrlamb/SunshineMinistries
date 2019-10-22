@@ -1,0 +1,855 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SunshineDataModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="actions_individual">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="ownerID" Type="int" Nullable="false" />
+          <Property Name="actionType" Type="varchar" MaxLength="45" />
+          <Property Name="completedBy" Type="varchar" MaxLength="45" />
+          <Property Name="Notes" Type="blob" />
+          <Property Name="date" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="actions_organization">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="ownerID" Type="int" Nullable="false" />
+          <Property Name="actionType" Type="varchar" MaxLength="45" />
+          <Property Name="completedBy" Type="varchar" MaxLength="45" />
+          <Property Name="Notes" Type="blob" />
+          <Property Name="date" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="addresses_individual">
+          <Key>
+            <PropertyRef Name="contactid" />
+            <PropertyRef Name="primary" />
+          </Key>
+          <Property Name="contactid" Type="int" Nullable="false" />
+          <Property Name="streetAddress" Type="varchar" MaxLength="45" />
+          <Property Name="city" Type="varchar" MaxLength="45" />
+          <Property Name="state" Type="varchar" MaxLength="45" />
+          <Property Name="zip" Type="varchar" MaxLength="45" />
+          <Property Name="primary" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="addresses_organization">
+          <Key>
+            <PropertyRef Name="orgid" />
+            <PropertyRef Name="primary" />
+          </Key>
+          <Property Name="orgid" Type="int" Nullable="false" />
+          <Property Name="streetAddress" Type="varchar" MaxLength="45" />
+          <Property Name="city" Type="varchar" MaxLength="45" />
+          <Property Name="state" Type="varchar" MaxLength="45" />
+          <Property Name="zip" Type="varchar" MaxLength="45" />
+          <Property Name="primary" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="individuals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="financialsupport" Type="bool" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="45" />
+          <Property Name="source" Type="varchar" MaxLength="45" />
+          <Property Name="sunshineid" Type="varchar" MaxLength="45" />
+          <Property Name="notes" Type="blob" />
+        </EntityType>
+        <EntityType Name="officers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orgid" Type="int" />
+          <Property Name="indid" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="organizations">
+          <Key>
+            <PropertyRef Name="orgid" />
+          </Key>
+          <Property Name="orgid" Type="int" Nullable="false" />
+          <Property Name="orgsunshineid" Type="varchar" MaxLength="45" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="phone" Type="varchar" MaxLength="45" />
+          <Property Name="financialsupport" Type="bool" />
+          <Property Name="notes" Type="blob" />
+        </EntityType>
+        <EntityType Name="phonenumbers_individual">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="phonenumber" />
+          </Key>
+          <Property Name="ownerID" Type="int" Nullable="false" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="primary" Type="bool" />
+        </EntityType>
+        <EntityType Name="phonenumbers_organization">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="phonenumber" />
+          </Key>
+          <Property Name="ownerID" Type="int" Nullable="false" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="primary" Type="bool" />
+        </EntityType>
+        <EntityType Name="sm_types">
+          <Key>
+            <PropertyRef Name="sm_type_id" />
+          </Key>
+          <Property Name="sm_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sm_type_name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="social_media_individual">
+          <Key>
+            <PropertyRef Name="sm_ind_id" />
+          </Key>
+          <Property Name="sm_ind_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="indid" Type="int" Nullable="false" />
+          <Property Name="sm_type" Type="int" Nullable="false" />
+          <Property Name="sm_link" Type="blob" Nullable="false" />
+          <Property Name="sm_title" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="social_media_organization">
+          <Key>
+            <PropertyRef Name="sm_org_id" />
+          </Key>
+          <Property Name="sm_org_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orgid" Type="int" Nullable="false" />
+          <Property Name="sm_type" Type="int" Nullable="false" />
+          <Property Name="sm_link" Type="blob" Nullable="false" />
+          <Property Name="sm_title" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_actions_organization">
+          <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
+          <End Role="actions_organization" Type="Self.actions_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="actions_organization">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_actions_to_Ind">
+          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
+          <End Role="actions_individual" Type="Self.actions_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_individual">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_addresses_individual">
+          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
+          <End Role="addresses_individual" Type="Self.addresses_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="addresses_individual">
+              <PropertyRef Name="contactid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_addresses_organization">
+          <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
+          <End Role="addresses_organization" Type="Self.addresses_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="addresses_organization">
+              <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_officers_to_ind">
+          <End Role="individuals" Type="Self.individuals" Multiplicity="0..1" />
+          <End Role="officers" Type="Self.officers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="officers">
+              <PropertyRef Name="indid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_officers_to_org">
+          <End Role="organizations" Type="Self.organizations" Multiplicity="0..1" />
+          <End Role="officers" Type="Self.officers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="officers">
+              <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_phone_individual">
+          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
+          <End Role="phonenumbers_individual" Type="Self.phonenumbers_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phonenumbers_individual">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_phone_org">
+          <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
+          <End Role="phonenumbers_organization" Type="Self.phonenumbers_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="phonenumbers_organization">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sm_to_ind">
+          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
+          <End Role="social_media_individual" Type="Self.social_media_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="social_media_individual">
+              <PropertyRef Name="indid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sm_to_org">
+          <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
+          <End Role="social_media_organization" Type="Self.social_media_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="social_media_organization">
+              <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sm_to_sm_type">
+          <End Role="sm_types" Type="Self.sm_types" Multiplicity="1" />
+          <End Role="social_media_organization" Type="Self.social_media_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sm_types">
+              <PropertyRef Name="sm_type_id" />
+            </Principal>
+            <Dependent Role="social_media_organization">
+              <PropertyRef Name="sm_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_smi_to_sm_type">
+          <End Role="sm_types" Type="Self.sm_types" Multiplicity="1" />
+          <End Role="social_media_individual" Type="Self.social_media_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sm_types">
+              <PropertyRef Name="sm_type_id" />
+            </Principal>
+            <Dependent Role="social_media_individual">
+              <PropertyRef Name="sm_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SunshineDataModelStoreContainer">
+          <EntitySet Name="actions_individual" EntityType="Self.actions_individual" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="actions_organization" EntityType="Self.actions_organization" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="addresses_individual" EntityType="Self.addresses_individual" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="addresses_organization" EntityType="Self.addresses_organization" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="individuals" EntityType="Self.individuals" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="officers" EntityType="Self.officers" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="organizations" EntityType="Self.organizations" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="phonenumbers_individual" EntityType="Self.phonenumbers_individual" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="phonenumbers_organization" EntityType="Self.phonenumbers_organization" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="sm_types" EntityType="Self.sm_types" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="social_media_individual" EntityType="Self.social_media_individual" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="social_media_organization" EntityType="Self.social_media_organization" Schema="sunshinedata" store:Type="Tables" />
+          <AssociationSet Name="fk_actions_organization" Association="Self.fk_actions_organization">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="actions_organization" EntitySet="actions_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_actions_to_Ind" Association="Self.fk_actions_to_Ind">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="actions_individual" EntitySet="actions_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_addresses_individual" Association="Self.fk_addresses_individual">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="addresses_individual" EntitySet="addresses_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_addresses_organization" Association="Self.fk_addresses_organization">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="addresses_organization" EntitySet="addresses_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_officers_to_ind" Association="Self.fk_officers_to_ind">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="officers" EntitySet="officers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_officers_to_org" Association="Self.fk_officers_to_org">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="officers" EntitySet="officers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_phone_individual" Association="Self.fk_phone_individual">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="phonenumbers_individual" EntitySet="phonenumbers_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_phone_org" Association="Self.fk_phone_org">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="phonenumbers_organization" EntitySet="phonenumbers_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sm_to_ind" Association="Self.fk_sm_to_ind">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="social_media_individual" EntitySet="social_media_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sm_to_org" Association="Self.fk_sm_to_org">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="social_media_organization" EntitySet="social_media_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sm_to_sm_type" Association="Self.fk_sm_to_sm_type">
+            <End Role="sm_types" EntitySet="sm_types" />
+            <End Role="social_media_organization" EntitySet="social_media_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_smi_to_sm_type" Association="Self.fk_smi_to_sm_type">
+            <End Role="sm_types" EntitySet="sm_types" />
+            <End Role="social_media_individual" EntitySet="social_media_individual" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SunshineDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="actions_individual">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="ownerID" Type="Int32" Nullable="false" />
+          <Property Name="actionType" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="completedBy" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="individual" Relationship="Self.fk_actions_to_Ind" FromRole="actions_individual" ToRole="individuals" />
+        </EntityType>
+        <EntityType Name="actions_organization">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="ownerID" Type="Int32" Nullable="false" />
+          <Property Name="actionType" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="completedBy" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="organization" Relationship="Self.fk_actions_organization" FromRole="actions_organization" ToRole="organizations" />
+        </EntityType>
+        <EntityType Name="addresses_individual">
+          <Key>
+            <PropertyRef Name="contactid" />
+            <PropertyRef Name="primary" />
+          </Key>
+          <Property Name="contactid" Type="Int32" Nullable="false" />
+          <Property Name="streetAddress" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="primary" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="individual" Relationship="Self.fk_addresses_individual" FromRole="addresses_individual" ToRole="individuals" />
+        </EntityType>
+        <EntityType Name="addresses_organization">
+          <Key>
+            <PropertyRef Name="orgid" />
+            <PropertyRef Name="primary" />
+          </Key>
+          <Property Name="orgid" Type="Int32" Nullable="false" />
+          <Property Name="streetAddress" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="primary" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="organization" Relationship="Self.fk_addresses_organization" FromRole="addresses_organization" ToRole="organizations" />
+        </EntityType>
+        <EntityType Name="individual">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="financialsupport" Type="Boolean" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="source" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="actions_individual" Relationship="Self.fk_actions_to_Ind" FromRole="individuals" ToRole="actions_individual" />
+          <NavigationProperty Name="addresses_individual" Relationship="Self.fk_addresses_individual" FromRole="individuals" ToRole="addresses_individual" />
+          <NavigationProperty Name="officers" Relationship="Self.fk_officers_to_ind" FromRole="individuals" ToRole="officers" />
+          <NavigationProperty Name="phonenumbers_individual" Relationship="Self.fk_phone_individual" FromRole="individuals" ToRole="phonenumbers_individual" />
+          <NavigationProperty Name="social_media_individual" Relationship="SunshineDataModel.fk_sm_to_ind" FromRole="individual" ToRole="social_media_individual" />
+          <Property Name="sunshineid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="notes" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="officer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orgid" Type="Int32" />
+          <Property Name="indid" Type="Int32" />
+          <NavigationProperty Name="individual" Relationship="Self.fk_officers_to_ind" FromRole="officers" ToRole="individuals" />
+          <NavigationProperty Name="organization" Relationship="Self.fk_officers_to_org" FromRole="officers" ToRole="organizations" />
+          <Property Name="title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="orgid" />
+          </Key>
+          <Property Name="orgid" Type="Int32" Nullable="false" />
+          <Property Name="orgsunshineid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="financialsupport" Type="Boolean" />
+          <NavigationProperty Name="actions_organization" Relationship="Self.fk_actions_organization" FromRole="organizations" ToRole="actions_organization" />
+          <NavigationProperty Name="addresses_organization" Relationship="Self.fk_addresses_organization" FromRole="organizations" ToRole="addresses_organization" />
+          <NavigationProperty Name="officers" Relationship="Self.fk_officers_to_org" FromRole="organizations" ToRole="officers" />
+          <NavigationProperty Name="phonenumbers_organization" Relationship="Self.fk_phone_org" FromRole="organizations" ToRole="phonenumbers_organization" />
+          <NavigationProperty Name="social_media_organization" Relationship="SunshineDataModel.fk_sm_to_org" FromRole="organization" ToRole="social_media_organization" />
+          <Property Name="notes" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="phonenumbers_individual">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="phonenumber" />
+          </Key>
+          <Property Name="ownerID" Type="Int32" Nullable="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="primary" Type="Boolean" />
+          <NavigationProperty Name="individual" Relationship="Self.fk_phone_individual" FromRole="phonenumbers_individual" ToRole="individuals" />
+        </EntityType>
+        <EntityType Name="phonenumbers_organization">
+          <Key>
+            <PropertyRef Name="ownerID" />
+            <PropertyRef Name="phonenumber" />
+          </Key>
+          <Property Name="ownerID" Type="Int32" Nullable="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="primary" Type="Boolean" />
+          <NavigationProperty Name="organization" Relationship="Self.fk_phone_org" FromRole="phonenumbers_organization" ToRole="organizations" />
+        </EntityType>
+        <Association Name="fk_actions_to_Ind">
+          <End Role="individuals" Type="Self.individual" Multiplicity="1" />
+          <End Role="actions_individual" Type="Self.actions_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="actions_individual">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_actions_organization">
+          <End Role="organizations" Type="Self.organization" Multiplicity="1" />
+          <End Role="actions_organization" Type="Self.actions_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="actions_organization">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_addresses_individual">
+          <End Role="individuals" Type="Self.individual" Multiplicity="1" />
+          <End Role="addresses_individual" Type="Self.addresses_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="addresses_individual">
+              <PropertyRef Name="contactid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_addresses_organization">
+          <End Role="organizations" Type="Self.organization" Multiplicity="1" />
+          <End Role="addresses_organization" Type="Self.addresses_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="addresses_organization">
+              <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_officers_to_ind">
+          <End Role="individuals" Type="Self.individual" Multiplicity="0..1" />
+          <End Role="officers" Type="Self.officer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="officers">
+              <PropertyRef Name="indid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_phone_individual">
+          <End Role="individuals" Type="Self.individual" Multiplicity="1" />
+          <End Role="phonenumbers_individual" Type="Self.phonenumbers_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phonenumbers_individual">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_officers_to_org">
+          <End Role="organizations" Type="Self.organization" Multiplicity="0..1" />
+          <End Role="officers" Type="Self.officer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="officers">
+              <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_phone_org">
+          <End Role="organizations" Type="Self.organization" Multiplicity="1" />
+          <End Role="phonenumbers_organization" Type="Self.phonenumbers_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="phonenumbers_organization">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sunshinedataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="actions_individual" EntityType="Self.actions_individual" />
+          <EntitySet Name="actions_organization" EntityType="Self.actions_organization" />
+          <EntitySet Name="addresses_individual" EntityType="Self.addresses_individual" />
+          <EntitySet Name="addresses_organization" EntityType="Self.addresses_organization" />
+          <EntitySet Name="individuals" EntityType="Self.individual" />
+          <EntitySet Name="officers" EntityType="Self.officer" />
+          <EntitySet Name="organizations" EntityType="Self.organization" />
+          <EntitySet Name="phonenumbers_individual" EntityType="Self.phonenumbers_individual" />
+          <EntitySet Name="phonenumbers_organization" EntityType="Self.phonenumbers_organization" />
+          <AssociationSet Name="fk_actions_to_Ind" Association="Self.fk_actions_to_Ind">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="actions_individual" EntitySet="actions_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_actions_organization" Association="Self.fk_actions_organization">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="actions_organization" EntitySet="actions_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_addresses_individual" Association="Self.fk_addresses_individual">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="addresses_individual" EntitySet="addresses_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_addresses_organization" Association="Self.fk_addresses_organization">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="addresses_organization" EntitySet="addresses_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_officers_to_ind" Association="Self.fk_officers_to_ind">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="officers" EntitySet="officers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_phone_individual" Association="Self.fk_phone_individual">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="phonenumbers_individual" EntitySet="phonenumbers_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_officers_to_org" Association="Self.fk_officers_to_org">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="officers" EntitySet="officers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_phone_org" Association="Self.fk_phone_org">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="phonenumbers_organization" EntitySet="phonenumbers_organization" />
+          </AssociationSet>
+          <EntitySet Name="sm_types" EntityType="SunshineDataModel.sm_types" />
+          <EntitySet Name="social_media_individual" EntityType="SunshineDataModel.social_media_individual" />
+          <EntitySet Name="social_media_organization" EntityType="SunshineDataModel.social_media_organization" />
+          <AssociationSet Name="fk_sm_to_ind" Association="SunshineDataModel.fk_sm_to_ind">
+            <End Role="individual" EntitySet="individuals" />
+            <End Role="social_media_individual" EntitySet="social_media_individual" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sm_to_org" Association="SunshineDataModel.fk_sm_to_org">
+            <End Role="organization" EntitySet="organizations" />
+            <End Role="social_media_organization" EntitySet="social_media_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sm_to_sm_type" Association="SunshineDataModel.fk_sm_to_sm_type">
+            <End Role="sm_types" EntitySet="sm_types" />
+            <End Role="social_media_organization" EntitySet="social_media_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_smi_to_sm_type" Association="SunshineDataModel.fk_smi_to_sm_type">
+            <End Role="sm_types" EntitySet="sm_types" />
+            <End Role="social_media_individual" EntitySet="social_media_individual" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sm_types">
+          <Key>
+            <PropertyRef Name="sm_type_id" />
+          </Key>
+          <Property Name="sm_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sm_type_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="social_media_organization" Relationship="SunshineDataModel.fk_sm_to_sm_type" FromRole="sm_types" ToRole="social_media_organization" />
+          <NavigationProperty Name="social_media_individual" Relationship="SunshineDataModel.fk_smi_to_sm_type" FromRole="sm_types" ToRole="social_media_individual" />
+        </EntityType>
+        <EntityType Name="social_media_individual">
+          <Key>
+            <PropertyRef Name="sm_ind_id" />
+          </Key>
+          <Property Name="sm_ind_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="indid" Type="Int32" Nullable="false" />
+          <Property Name="sm_type" Type="Int32" Nullable="false" />
+          <Property Name="sm_link" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="sm_title" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="individual" Relationship="SunshineDataModel.fk_sm_to_ind" FromRole="social_media_individual" ToRole="individual" />
+          <NavigationProperty Name="sm_types" Relationship="SunshineDataModel.fk_smi_to_sm_type" FromRole="social_media_individual" ToRole="sm_types" />
+        </EntityType>
+        <EntityType Name="social_media_organization">
+          <Key>
+            <PropertyRef Name="sm_org_id" />
+          </Key>
+          <Property Name="sm_org_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orgid" Type="Int32" Nullable="false" />
+          <Property Name="sm_type" Type="Int32" Nullable="false" />
+          <Property Name="sm_link" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="sm_title" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="organization" Relationship="SunshineDataModel.fk_sm_to_org" FromRole="social_media_organization" ToRole="organization" />
+          <NavigationProperty Name="sm_types" Relationship="SunshineDataModel.fk_sm_to_sm_type" FromRole="social_media_organization" ToRole="sm_types" />
+        </EntityType>
+        <Association Name="fk_sm_to_ind">
+          <End Type="SunshineDataModel.individual" Role="individual" Multiplicity="1" />
+          <End Type="SunshineDataModel.social_media_individual" Role="social_media_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individual">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="social_media_individual">
+              <PropertyRef Name="indid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sm_to_org">
+          <End Type="SunshineDataModel.organization" Role="organization" Multiplicity="1" />
+          <End Type="SunshineDataModel.social_media_organization" Role="social_media_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="social_media_organization">
+              <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sm_to_sm_type">
+          <End Type="SunshineDataModel.sm_types" Role="sm_types" Multiplicity="1" />
+          <End Type="SunshineDataModel.social_media_organization" Role="social_media_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sm_types">
+              <PropertyRef Name="sm_type_id" />
+            </Principal>
+            <Dependent Role="social_media_organization">
+              <PropertyRef Name="sm_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_smi_to_sm_type">
+          <End Type="SunshineDataModel.sm_types" Role="sm_types" Multiplicity="1" />
+          <End Type="SunshineDataModel.social_media_individual" Role="social_media_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sm_types">
+              <PropertyRef Name="sm_type_id" />
+            </Principal>
+            <Dependent Role="social_media_individual">
+              <PropertyRef Name="sm_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SunshineDataModelStoreContainer" CdmEntityContainer="sunshinedataEntities">
+          <EntitySetMapping Name="actions_individual">
+            <EntityTypeMapping TypeName="SunshineDataModel.actions_individual">
+              <MappingFragment StoreEntitySet="actions_individual">
+                <ScalarProperty Name="ownerID" ColumnName="ownerID" />
+                <ScalarProperty Name="actionType" ColumnName="actionType" />
+                <ScalarProperty Name="completedBy" ColumnName="completedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="actions_organization">
+            <EntityTypeMapping TypeName="SunshineDataModel.actions_organization">
+              <MappingFragment StoreEntitySet="actions_organization">
+                <ScalarProperty Name="ownerID" ColumnName="ownerID" />
+                <ScalarProperty Name="actionType" ColumnName="actionType" />
+                <ScalarProperty Name="completedBy" ColumnName="completedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="addresses_individual">
+            <EntityTypeMapping TypeName="SunshineDataModel.addresses_individual">
+              <MappingFragment StoreEntitySet="addresses_individual">
+                <ScalarProperty Name="contactid" ColumnName="contactid" />
+                <ScalarProperty Name="streetAddress" ColumnName="streetAddress" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="primary" ColumnName="primary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="addresses_organization">
+            <EntityTypeMapping TypeName="SunshineDataModel.addresses_organization">
+              <MappingFragment StoreEntitySet="addresses_organization">
+                <ScalarProperty Name="orgid" ColumnName="orgid" />
+                <ScalarProperty Name="streetAddress" ColumnName="streetAddress" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="primary" ColumnName="primary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="individuals">
+            <EntityTypeMapping TypeName="SunshineDataModel.individual">
+              <MappingFragment StoreEntitySet="individuals">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="sunshineid" ColumnName="sunshineid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="financialsupport" ColumnName="financialsupport" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="source" ColumnName="source" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="officers">
+            <EntityTypeMapping TypeName="SunshineDataModel.officer">
+              <MappingFragment StoreEntitySet="officers">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="orgid" ColumnName="orgid" />
+                <ScalarProperty Name="indid" ColumnName="indid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizations">
+            <EntityTypeMapping TypeName="SunshineDataModel.organization">
+              <MappingFragment StoreEntitySet="organizations">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="orgid" ColumnName="orgid" />
+                <ScalarProperty Name="orgsunshineid" ColumnName="orgsunshineid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="financialsupport" ColumnName="financialsupport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="phonenumbers_individual">
+            <EntityTypeMapping TypeName="SunshineDataModel.phonenumbers_individual">
+              <MappingFragment StoreEntitySet="phonenumbers_individual">
+                <ScalarProperty Name="ownerID" ColumnName="ownerID" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="primary" ColumnName="primary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="phonenumbers_organization">
+            <EntityTypeMapping TypeName="SunshineDataModel.phonenumbers_organization">
+              <MappingFragment StoreEntitySet="phonenumbers_organization">
+                <ScalarProperty Name="ownerID" ColumnName="ownerID" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="primary" ColumnName="primary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sm_types">
+            <EntityTypeMapping TypeName="SunshineDataModel.sm_types">
+              <MappingFragment StoreEntitySet="sm_types">
+                <ScalarProperty Name="sm_type_name" ColumnName="sm_type_name" />
+                <ScalarProperty Name="sm_type_id" ColumnName="sm_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="social_media_individual">
+            <EntityTypeMapping TypeName="SunshineDataModel.social_media_individual">
+              <MappingFragment StoreEntitySet="social_media_individual">
+                <ScalarProperty Name="sm_title" ColumnName="sm_title" />
+                <ScalarProperty Name="sm_link" ColumnName="sm_link" />
+                <ScalarProperty Name="sm_type" ColumnName="sm_type" />
+                <ScalarProperty Name="indid" ColumnName="indid" />
+                <ScalarProperty Name="sm_ind_id" ColumnName="sm_ind_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="social_media_organization">
+            <EntityTypeMapping TypeName="SunshineDataModel.social_media_organization">
+              <MappingFragment StoreEntitySet="social_media_organization">
+                <ScalarProperty Name="sm_title" ColumnName="sm_title" />
+                <ScalarProperty Name="sm_link" ColumnName="sm_link" />
+                <ScalarProperty Name="sm_type" ColumnName="sm_type" />
+                <ScalarProperty Name="orgid" ColumnName="orgid" />
+                <ScalarProperty Name="sm_org_id" ColumnName="sm_org_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

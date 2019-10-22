@@ -7,19 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelLibrary.OrganizationsModel
+namespace ModelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class action
+    public partial class social_media_organization
     {
-        public long ownerID { get; set; }
-        public string actionType { get; set; }
-        public string completedBy { get; set; }
-        public byte[] Notes { get; set; }
-        public System.DateTime date { get; set; }
+        public int sm_org_id { get; set; }
+        public int orgid { get; set; }
+        public int sm_type { get; set; }
+        public byte[] sm_link { get; set; }
+        public string sm_title { get; set; }
     
         public virtual organization organization { get; set; }
+        public virtual sm_types sm_types { get; set; }
     }
 }

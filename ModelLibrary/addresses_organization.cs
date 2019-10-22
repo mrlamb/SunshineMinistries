@@ -7,19 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelLibrary.IndividualsModel
+namespace ModelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class action
+    public partial class addresses_organization
     {
-        public long ownerID { get; set; }
-        public string actionType { get; set; }
-        public string completedBy { get; set; }
-        public byte[] Notes { get; set; }
-        public System.DateTime date { get; set; }
+        public int orgid { get; set; }
+        public string streetAddress { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+        public string zip { get; set; }
+        public bool primary { get; set; }
     
-        public virtual individual individual { get; set; }
+        public virtual organization organization { get; set; }
     }
 }

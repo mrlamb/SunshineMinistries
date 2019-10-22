@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Contact_App.Interfaces;
 using ModelLibrary;
-using ModelLibrary.OrganizationsModel;
 using Newtonsoft.Json;
 
 namespace DataInputForms
@@ -11,7 +10,7 @@ namespace DataInputForms
     public partial class OrganizationForm : UserControl, IRecordView, IHasActionList
     {
 
-        private List<action> actions;
+        private List<actions_organization> actions;
         private organization savedRecord, workingRecord;
 
         //Hate this need a workaround
@@ -60,8 +59,8 @@ namespace DataInputForms
 
         public void InitializeActionList(ICollection<IAction> recordActions)
         {
-            actions = new List<action>();
-            foreach (action a in recordActions)
+            actions = new List<actions_organization>();
+            foreach (actions_organization a in recordActions)
             {
                 actions.Add(a);
             }
@@ -73,7 +72,7 @@ namespace DataInputForms
             //This means it's been saved before
             if (a.ownerID != 0)
             {
-                foreach (action action in actions)
+                foreach (actions_organization action in actions)
                 {
                     if (action.ownerID == a.ownerID)
                     {
@@ -87,7 +86,7 @@ namespace DataInputForms
             else
             {
                 a.ownerID = savedRecord.orgid;
-                action tmp = new action(a.ownerID, a.actionType, a.completedBy, a.Notes, a.date);
+                actions_organization tmp = new actions_organization(a.ownerID, a.actionType, a.completedBy, a.Notes, a.date);
                 actions.Add(tmp);
             }
             CurrencyManager cm = (CurrencyManager)BindingContext[actions];
@@ -117,17 +116,17 @@ namespace DataInputForms
                 wtrOrgName.Text = savedRecord.name;
                 wtrPhone.Text = savedRecord.phone;
                 SetFinancialSupport(savedRecord.financialsupport);
-                if (null != savedRecord.actions)
+                if (null != savedRecord.actions_organization)
                 {
                     ICollection<IAction> items = new List<IAction>();
-                    foreach (var item in savedRecord.actions)
+                    foreach (var item in savedRecord.actions_organization)
                     {
                         items.Add(item);
                     }
                     InitializeActionList(items);
                 }
 
-                foreach (var x in savedRecord.addresses)
+                foreach (var x in savedRecord.addresses_organization)
                 {
                     if (x.primary)
                     {
@@ -161,7 +160,7 @@ namespace DataInputForms
             int index = this.lstActions.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                ActionDetail ad = new ActionDetail(lstActions.SelectedItem as action);
+                ActionDetail ad = new ActionDetail(lstActions.SelectedItem as actions_organization);
                 ad.form = this;
                 ad.ShowDialog();
             }
@@ -180,47 +179,47 @@ namespace DataInputForms
             workingRecord.name = wtrOrgName.Text;
             workingRecord.orgsunshineid = wtrID.Text;
             workingRecord.phone = wtrPhone.Text;
-            workingRecord.addresses.Clear();
-            AddAddressToRecord(workingRecord.addresses , GetPrimaryAddress());
-            AddAddressToRecord(workingRecord.addresses , GetSecondaryAddress());
+            workingRecord.addresses_organization.Clear();
+            AddAddressToRecord(workingRecord.addresses_organization , GetPrimaryAddress());
+            AddAddressToRecord(workingRecord.addresses_organization , GetSecondaryAddress());
 
-            if (null != workingRecord.actions)
+            if (null != workingRecord.actions_organization)
             {
-                workingRecord.actions.Clear();
+                workingRecord.actions_organization.Clear();
             }
-            workingRecord.actions = actions;
+            workingRecord.actions_organization = actions;
 
 
             workingRecord.financialsupport = GetFinancialSupport();
             return workingRecord;
         }
 
-        private void AddAddressToRecord(ICollection<address> addresses , address v)
+        private void AddAddressToRecord(ICollection<addresses_organization> addresses , addresses_organization v)
         {
             addresses.Add(v);
         }
 
-        private address GetSecondaryAddress()
+        private addresses_organization GetSecondaryAddress()
         {
-            address a = new address();
+            addresses_organization a = new addresses_organization();
             a.streetAddress = wtrStreetAddress.Text;
             a.city = wtrCity.Text;
             a.state = cmbState2.SelectedItem == null ? cmbState2.Text : cmbState2.SelectedText;
             a.zip = wtrZip.Text;
-            a.ownerid = workingRecord.orgid;
+            a.orgid = workingRecord.orgid;
             a.primary = false;
 
             return a;
         }
 
-        private address GetPrimaryAddress()
+        private addresses_organization GetPrimaryAddress()
         {
-            address a = new address();
+            addresses_organization a = new addresses_organization();
             a.streetAddress = wtrStreetAddress2.Text;
             a.city = wtrCity2.Text;
             a.state = cmbState2.SelectedItem == null ? cmbState2.Text : cmbState2.SelectedText;
             a.zip = wtrZip2.Text;
-            a.ownerid = workingRecord.orgid;
+            a.orgid = workingRecord.orgid;
             a.primary = true;
 
             return a;

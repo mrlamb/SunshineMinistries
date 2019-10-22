@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelLibrary.OrganizationsModel
+namespace ModelLibrary
 {
     using System;
     using System.Collections.Generic;
@@ -17,22 +17,29 @@ namespace ModelLibrary.OrganizationsModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public organization()
         {
-            this.actions = new HashSet<action>();
-            this.addresses = new HashSet<address>();
-            this.phonenumbers = new HashSet<phonenumber>();
+            this.actions_organization = new HashSet<actions_organization>();
+            this.addresses_organization = new HashSet<addresses_organization>();
+            this.officers = new HashSet<officer>();
+            this.phonenumbers_organization = new HashSet<phonenumbers_organization>();
+            this.social_media_organization = new HashSet<social_media_organization>();
         }
     
-        public long orgid { get; set; }
+        public int orgid { get; set; }
         public string orgsunshineid { get; set; }
         public string name { get; set; }
         public string phone { get; set; }
         public Nullable<bool> financialsupport { get; set; }
+        public byte[] notes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<action> actions { get; set; }
+        public virtual ICollection<actions_organization> actions_organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<address> addresses { get; set; }
+        public virtual ICollection<addresses_organization> addresses_organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<phonenumber> phonenumbers { get; set; }
+        public virtual ICollection<officer> officers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<phonenumbers_organization> phonenumbers_organization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<social_media_organization> social_media_organization { get; set; }
     }
 }

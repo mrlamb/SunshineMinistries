@@ -7,16 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelLibrary.OrganizationsModel
+namespace ModelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class phonenumber
+    public partial class actions_organization
     {
-        public long ownerID { get; set; }
-        public string phone { get; set; }
-        public bool primary { get; set; }
+        public int ownerID { get; set; }
+        public string actionType { get; set; }
+        public string completedBy { get; set; }
+        public byte[] Notes { get; set; }
+        public System.DateTime date { get; set; }
     
         public virtual organization organization { get; set; }
     }

@@ -7,8 +7,6 @@ using System.Windows.Forms;
 using Transportation;
 using Contact_App.Interfaces;
 using ModelLibrary;
-using ModelLibrary.IndividualsModel;
-using ModelLibrary.OrganizationsModel;
 
 namespace Contact_App
 {

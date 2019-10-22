@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using Contact_App.Interfaces;
 using ModelLibrary;
-using ModelLibrary.IndividualsModel;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -49,7 +48,7 @@ namespace DataInputForms
             "Texas","Utah","Vermont","Virginia","Washington","West Virgina","Wisconsin","Wyoming"};
 
         private string[] states2;
-        private List<action> actions;
+        private List<actions_individual> actions;
         private individual savedRecord, workingRecord;
 
         public IndividualForm()
@@ -88,17 +87,17 @@ namespace DataInputForms
                 LastName = savedRecord.lastname;
                 Phone = savedRecord.phone;
                 SetFinancialSupport(savedRecord.financialsupport);
-                if (null != savedRecord.actions)
+                if (null != savedRecord.actions_individual)
                 {
                     ICollection<IAction> items = new List<IAction>();
-                    foreach (var item in savedRecord.actions)
+                    foreach (var item in savedRecord.actions_individual)
                     {
                         items.Add(item);
                     }
                     InitializeActionList(items);
                 }
 
-                foreach (var x in savedRecord.addresses)
+                foreach (var x in savedRecord.addresses_individual)
                 {
                     if (x.primary)
                     {
@@ -155,7 +154,7 @@ namespace DataInputForms
             int index = this.lstActions.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                ActionDetail ad = new ActionDetail(lstActions.SelectedItem as action);
+                ActionDetail ad = new ActionDetail(lstActions.SelectedItem as actions_individual);
                 ad.form = this;
                 ad.ShowDialog();
             }
@@ -167,8 +166,8 @@ namespace DataInputForms
         /// <param name="actions">the passed in collection</param>
         public void InitializeActionList(ICollection<IAction> recordActions)
         {
-            actions = new List<action>();
-            foreach (action a in recordActions)
+            actions = new List<actions_individual>();
+            foreach (actions_individual a in recordActions)
             {
                 actions.Add(a);
             }
@@ -184,7 +183,7 @@ namespace DataInputForms
             //This means it's been saved before
             if (a.ownerID != 0)
             {
-                foreach (action action in actions)
+                foreach (actions_individual action in actions)
                 {
                     if (action.ownerID == a.ownerID)
                     {
@@ -197,7 +196,7 @@ namespace DataInputForms
             }
             else
             {
-                actions.Add(a as action);
+                actions.Add(a as actions_individual);
             }
             CurrencyManager cm = (CurrencyManager)BindingContext[actions];
 
@@ -208,7 +207,7 @@ namespace DataInputForms
         /// Unused?
         /// </summary>
         /// <returns></returns>
-        public ICollection<action> GetActionList()
+        public ICollection<actions_individual> GetActionList()
         {
             return actions;
         }
@@ -241,46 +240,46 @@ namespace DataInputForms
             }
             workingRecord.firstname = FirstName;
             workingRecord.lastname = LastName;
-            workingRecord.sunshineidl = ID;
+            workingRecord.sunshineid = ID;
             workingRecord.phone = Phone;
-            workingRecord.addresses.Clear();
-            AddAddressToRecord(workingRecord.addresses , GetPrimaryAddress());
-            AddAddressToRecord(workingRecord.addresses , GetSecondaryAddress());
+            workingRecord.addresses_individual.Clear();
+            AddAddressToRecord(workingRecord.addresses_individual , GetPrimaryAddress());
+            AddAddressToRecord(workingRecord.addresses_individual , GetSecondaryAddress());
 
-            workingRecord.actions.Clear();
-            workingRecord.actions = actions;
+            workingRecord.actions_individual.Clear();
+            workingRecord.actions_individual = actions;
 
 
             workingRecord.financialsupport = GetFinancialSupport();
             return workingRecord;
         }
 
-        private void AddAddressToRecord(ICollection<address> addresses , address v)
+        private void AddAddressToRecord(ICollection<addresses_individual> addresses , addresses_individual v)
         {
             addresses.Add(v);
         }
 
-        private address GetSecondaryAddress()
+        private addresses_individual GetSecondaryAddress()
         {
-            address a = new address();
+            addresses_individual a = new addresses_individual();
             a.streetAddress = StreetSecondary;
             a.city = CitySecondary;
             a.state = StateSecondary;
             a.zip = ZipSecondary;
-            a.ownerid = workingRecord.id;
+            a.contactid = workingRecord.id;
             a.primary = false;
 
             return a;
         }
 
-        private address GetPrimaryAddress()
+        private addresses_individual GetPrimaryAddress()
         {
-            address a = new address();
+            addresses_individual a = new addresses_individual();
             a.streetAddress = StreetPrimary;
             a.city = CityPrimary;
             a.state = StatePrimary;
             a.zip = ZipPrimary;
-            a.ownerid = workingRecord.id;
+            a.contactid = workingRecord.id;
             a.primary = true;
 
             return a;

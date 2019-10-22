@@ -82,64 +82,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="actions_individual.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="actions_organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="addresses_individual.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="addresses_organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
     <Compile Include="IAction.cs" />
+    <Compile Include="individual.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
     <Compile Include="KnownTypesBinder.cs" />
-    <Compile Include="OrganizationsModel\action.cs">
-      <DependentUpon>OrganizationsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OrganizationsModel\address.cs">
-      <DependentUpon>OrganizationsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IndividualsModel\action.cs">
-      <DependentUpon>IndividualsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IndividualsModel\address.cs">
-      <DependentUpon>IndividualsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IndividualsModel\individual.cs">
-      <DependentUpon>IndividualsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IndividualsModel\IndividualsModel.Context.cs">
-      <DependentUpon>IndividualsModel.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="IndividualsModel\IndividualsModel.cs">
-      <DependentUpon>IndividualsModel.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="IndividualsModel\IndividualsModel.Designer.cs">
-      <DependentUpon>IndividualsModel.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="IndividualsModel\phonenumber.cs">
-      <DependentUpon>IndividualsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ModelHelper.cs" />
-    <Compile Include="OrganizationsModel\organization.cs">
-      <DependentUpon>OrganizationsModel.tt</DependentUpon>
+    <Compile Include="officer.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationsModel\OrganizationsModel.Context.cs">
-      <DependentUpon>OrganizationsModel.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationsModel\OrganizationsModel.cs">
-      <DependentUpon>OrganizationsModel.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="phonenumbers_individual.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationsModel\OrganizationsModel.Designer.cs">
-      <DependentUpon>OrganizationsModel.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="OrganizationsModel\phonenumber.cs">
-      <DependentUpon>OrganizationsModel.tt</DependentUpon>
+    <Compile Include="phonenumbers_organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sm_types.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="social_media_individual.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="social_media_organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SunshineData.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SunshineData.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SunshineData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SunshineData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SunshineData.edmx</DependentUpon>
+    </Compile>
     <Compile Include="user.cs">
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
@@ -160,31 +157,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="IndividualsModel\IndividualsModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>IndividualsModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="IndividualsModel\IndividualsModel.Context.tt">
+    <Content Include="SunshineData.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IndividualsModel.edmx</DependentUpon>
-      <LastGenOutput>IndividualsModel.Context.cs</LastGenOutput>
+      <DependentUpon>SunshineData.edmx</DependentUpon>
+      <LastGenOutput>SunshineData.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="IndividualsModel\IndividualsModel.tt">
+    <Content Include="SunshineData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IndividualsModel.edmx</DependentUpon>
-      <LastGenOutput>IndividualsModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="OrganizationsModel\OrganizationsModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OrganizationsModel.edmx</DependentUpon>
-      <LastGenOutput>OrganizationsModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="OrganizationsModel\OrganizationsModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OrganizationsModel.edmx</DependentUpon>
-      <LastGenOutput>OrganizationsModel.cs</LastGenOutput>
+      <DependentUpon>SunshineData.edmx</DependentUpon>
+      <LastGenOutput>SunshineData.cs</LastGenOutput>
     </Content>
     <Content Include="UsersModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -199,21 +180,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="IndividualsModel\IndividualsModel.edmx.diagram">
-      <DependentUpon>IndividualsModel.edmx</DependentUpon>
-    </None>
-    <EntityDeploy Include="OrganizationsModel\OrganizationsModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OrganizationsModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="OrganizationsModel\OrganizationsModel.edmx.diagram">
-      <DependentUpon>OrganizationsModel.edmx</DependentUpon>
-    </None>
     <EntityDeploy Include="UsersModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UsersModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="packages.config" />
+    <EntityDeploy Include="SunshineData.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SunshineData.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SunshineData.edmx.diagram">
+      <DependentUpon>SunshineData.edmx</DependentUpon>
+    </None>
     <None Include="UsersModel.edmx.diagram">
       <DependentUpon>UsersModel.edmx</DependentUpon>
     </None>

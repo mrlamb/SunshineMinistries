@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelLibrary.IndividualsModel
+namespace ModelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class address
+    public partial class social_media_individual
     {
-        public long ownerid { get; set; }
-        public string streetAddress { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string zip { get; set; }
-        public bool primary { get; set; }
+        public int sm_ind_id { get; set; }
+        public int indid { get; set; }
+        public int sm_type { get; set; }
+        public byte[] sm_link { get; set; }
+        public string sm_title { get; set; }
     
         public virtual individual individual { get; set; }
+        public virtual sm_types sm_types { get; set; }
     }
 }

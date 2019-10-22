@@ -6,8 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Linq;
-using ModelLibrary.IndividualsModel;
-using ModelLibrary.OrganizationsModel;
+
 
 namespace Server
 {
@@ -15,8 +14,7 @@ namespace Server
     {
         static ConnectionManager manager = new ConnectionManager();
         static UserEntities UserContext = new UserEntities();
-        static IndividualEntities IndividualContext = new IndividualEntities();
-        static OrganizationEntities OrganizationContext = new OrganizationEntities();
+        static sunshinedataEntities Entities = new sunshinedataEntities();
         private const int FormID = 1;
         static void Main(string[] args)
         {
@@ -46,8 +44,7 @@ namespace Server
             if (manager.GetNumConnections() == 0)
             {
                 Console.WriteLine("All clients disconnected. Saving database changes.");
-                IndividualContext.SaveChanges();
-                OrganizationContext.SaveChanges();
+                Entities.SaveChanges();
             }
         }
 
@@ -105,7 +102,8 @@ namespace Server
 
         private static void SendOrgRecord(Socket socket , MessageObj message)
         {
-            organization record = OrganizationContext.organizations.First(a => a.orgid.ToString() == message.Message);
+
+            organization record = Entities.organizations.First(a => a.orgid.ToString() == message.Message);
             socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.SEND_ORG_RECORD , 
                 JsonConvert.SerializeObject(record , new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })));
         }
@@ -117,21 +115,21 @@ namespace Server
             {
 
                 o = JsonConvert.DeserializeObject<organization>(message.Message);
-                organization record = OrganizationContext.organizations.First(a => a.orgid == o.orgid);
+                organization record = Entities.organizations.First(a => a.orgid == o.orgid);
                 record.name = o.name;
-                record.addresses = o.addresses;
+                record.addresses_organization = o.addresses_organization;
                 record.phone = o.phone;
                 record.financialsupport = o.financialsupport;
-                record.actions = o.actions;
+                record.actions_organization = o.actions_organization;
                 record.orgsunshineid = o.orgsunshineid;
                 
 
-                //IndividualContext.SaveChanges();
+                Entities.SaveChanges();
             }
             catch (InvalidOperationException)
             {
-                OrganizationContext.organizations.Add(o);
-                //IndividualContext.SaveChanges();
+                Entities.organizations.Add(o);
+                Entities.SaveChanges();
             }
             catch
             {
@@ -150,17 +148,17 @@ namespace Server
                 for (int i = 0; i < searchTerms.Length; i++)
                 {
                     var tmp = searchTerms[i];
-                    List<object> results = (from e in IndividualContext.individuals
+                    List<object> results = (from e in Entities.individuals
                                             where (e.firstname.Contains(tmp)
                                   || e.lastname.Contains(tmp)
-                                  || e.sunshineidl.Contains(tmp))
+                                  || e.sunshineid.Contains(tmp))
                                             select e).ToList<object>();
 
                     foreach (var item in results)
                     {
                         objects.Add(item);
                     }
-                    List<object> results2 = (from e in OrganizationContext.organizations
+                    List<object> results2 = (from e in Entities.organizations
                                              where (e.name.Contains(tmp)
                                   || e.orgsunshineid.Contains(tmp))
                                              select e).ToList<object>();
@@ -249,8 +247,8 @@ namespace Server
         private static void DeleteRecord(string message)
         {
             individual c = JsonConvert.DeserializeObject<individual>(message);
-            individual record = IndividualContext.individuals.First(a => a.id == c.id);
-            IndividualContext.individuals.Remove(record);
+            individual record = Entities.individuals.First(a => a.id == c.id);
+            Entities.individuals.Remove(record);
             //IndividualContext.SaveChanges();
 
         }
@@ -262,22 +260,22 @@ namespace Server
             {
 
                 c = JsonConvert.DeserializeObject<individual>(message);
-                individual record = IndividualContext.individuals.First(a => a.id == c.id);
+                individual record = Entities.individuals.First(a => a.id == c.id);
                 record.firstname = c.firstname;
                 record.lastname = c.lastname;
-                record.addresses = c.addresses;
+                record.addresses_individual = c.addresses_individual;
                 record.phone = c.phone;
                 record.financialsupport = c.financialsupport;
-                record.actions = c.actions;
-                record.sunshineidl = c.sunshineidl;
+                record.actions_individual = c.actions_individual;
+                record.sunshineid = c.sunshineid;
                 record.source = c.source;
 
-                //IndividualContext.SaveChanges();
+                Entities.SaveChanges();
             }
             catch (InvalidOperationException)
             {
-                IndividualContext.individuals.Add(c);
-                //IndividualContext.SaveChanges();
+                Entities.individuals.Add(c);
+                Entities.SaveChanges();
             }
             catch
             {
@@ -289,13 +287,13 @@ namespace Server
 
         private static void SendSingleRecord(Socket socket , MessageObj message)
         {
-            individual record = IndividualContext.individuals.First(a => a.id.ToString() == message.Message);
+            individual record = Entities.individuals.First(a => a.id.ToString() == message.Message);
             socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.SEND_INDIVIDUAL_RECORD , JsonConvert.SerializeObject(record , new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })));
         }
 
         private static void BatchSend(Socket socket , MessageObj message)
         {
-            string AllRecords = JsonConvert.SerializeObject(IndividualContext.individuals.Select(con => new { con.id, con.firstname, con.lastname }));
+            string AllRecords = JsonConvert.SerializeObject(Entities.individuals.Select(con => new { con.id, con.firstname, con.lastname }));
 
 
             socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.BATCH_SEND_RECORD , AllRecords));

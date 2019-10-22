@@ -4,7 +4,7 @@ namespace ModelLibrary
 {
     public interface IAction 
     {
-        long ownerID { get; set; }
+        int ownerID { get; set; }
         string actionType { get; set; }
         string completedBy { get; set; }
         byte[] Notes { get; set; }

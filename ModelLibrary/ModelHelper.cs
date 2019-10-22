@@ -4,7 +4,7 @@ using System.Text;
 
 
 //Individual Model Namespace
-namespace ModelLibrary.IndividualsModel
+namespace ModelLibrary
 {
     public partial class individual
     {
@@ -21,22 +21,22 @@ namespace ModelLibrary.IndividualsModel
             other.lastname = string.Copy(lastname);
             other.phone = string.Copy(phone);
             other.source = string.Copy(source);
-            other.sunshineidl = string.Copy(sunshineidl);
-            other.phonenumbers = new List<phonenumber>(phonenumbers);
-            other.actions = new List<action>(actions);
+            other.sunshineid = string.Copy(sunshineid);
+            other.phonenumbers_individual = new List<phonenumbers_individual>();
+            other.actions_individual = new List<actions_individual>(actions_individual);
 
             return other;
         }
     }
 
    
-    public partial class action : IAction
+    public partial class actions_individual : IAction
     {
-        public action()
+        public actions_individual()
         {
                 
         }
-        public action(long ownerID, string actionType, string completedBy, byte[] Notes, DateTime date)
+        public actions_individual(int ownerID, string actionType, string completedBy, byte[] Notes, DateTime date)
         {
             this.ownerID = ownerID;
             this.actionType = actionType;
@@ -50,14 +50,11 @@ namespace ModelLibrary.IndividualsModel
                 Encoding.ASCII.GetString(this.Notes); 
         }
 
-        public static explicit operator action(OrganizationsModel.action d) => new action(d.ownerID, d.actionType, d.completedBy, d.Notes, d.date);
+        public static explicit operator actions_individual(actions_organization d) => new actions_individual(d.ownerID, d.actionType, d.completedBy, d.Notes, d.date);
         
     }
 
-   public class officer : individual
-    {
-        public string Title { get; set; }
-    }
+ 
 }
 
 //User Model Namespace
@@ -74,7 +71,7 @@ namespace ModelLibrary
 }
 
 //Organization Model Namespace
-namespace ModelLibrary.OrganizationsModel
+namespace ModelLibrary
 {
     public partial class organization
     {
@@ -86,13 +83,13 @@ namespace ModelLibrary.OrganizationsModel
         }
     }
 
-    public partial class action : IAction
+    public partial class actions_organization : IAction
     {
-        public action()
+        public actions_organization()
         {
 
         }
-        public action(long ownerID , string actionType , string completedBy , byte[] Notes , DateTime date)
+        public actions_organization(int ownerID , string actionType , string completedBy , byte[] Notes , DateTime date)
         {
             this.ownerID = ownerID;
             this.actionType = actionType;
@@ -107,7 +104,7 @@ namespace ModelLibrary.OrganizationsModel
                 Encoding.ASCII.GetString(this.Notes);
         }
 
-        public static explicit operator action(IndividualsModel.action d) => new action(d.ownerID, d.actionType, d.completedBy, d.Notes, d.date);
+        public static explicit operator actions_organization(actions_individual d) => new actions_organization(d.ownerID, d.actionType, d.completedBy, d.Notes, d.date);
 
     }
 }

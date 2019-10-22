@@ -7,17 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelLibrary.IndividualsModel
+namespace ModelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class phonenumber
+    public partial class officer
     {
-        public long ownerID { get; set; }
-        public string phone { get; set; }
-        public bool primary { get; set; }
+        public int id { get; set; }
+        public Nullable<int> orgid { get; set; }
+        public Nullable<int> indid { get; set; }
+        public string title { get; set; }
     
         public virtual individual individual { get; set; }
+        public virtual organization organization { get; set; }
     }
 }

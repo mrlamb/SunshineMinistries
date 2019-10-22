@@ -7,8 +7,6 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using Newtonsoft.Json;
 using ModelLibrary;
-using ModelLibrary.IndividualsModel;
-using ModelLibrary.OrganizationsModel;
 
 namespace Contact_App
 {
