@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginBox));
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblLoginStatus = new System.Windows.Forms.Label();
-            this.wtrPassword = new WaterMarkTextBox();
-            this.wtrUserName = new WaterMarkTextBox();
+            this.wtrPassword = new Contact_App.WaterMarkTextBox();
+            this.wtrUserName = new Contact_App.WaterMarkTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -95,6 +95,7 @@
             this.Controls.Add(this.wtrPassword);
             this.Controls.Add(this.wtrUserName);
             this.Name = "LoginBox";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Contact App - Login";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

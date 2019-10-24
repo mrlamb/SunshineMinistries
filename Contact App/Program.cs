@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using ModelLibrary;
 
 namespace Contact_App
 {
@@ -20,7 +21,8 @@ namespace Contact_App
         }
 
         public static UserAccessOptions UserOptions { get; set; }
-
+        public static sunshinedataEntities Entities = new sunshinedataEntities();
+        public static user user;
 
 
         public static StateObject stateObject = new StateObject();

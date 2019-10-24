@@ -49,7 +49,7 @@
             this.wtrLabel.BackColor = System.Drawing.SystemColors.Window;
             this.wtrLabel.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.wtrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wtrLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.wtrLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.wtrLabel.Location = new System.Drawing.Point(3, 3);
             this.wtrLabel.Name = "wtrLabel";
             this.wtrLabel.Size = new System.Drawing.Size(41, 13);

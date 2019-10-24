@@ -1,5 +1,4 @@
-﻿using Transportation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -8,54 +7,25 @@ using System.Net.Sockets;
 using Newtonsoft.Json;
 using ModelLibrary;
 using Contact_App.UserControls;
+using System.Linq;
+using Contact_App.Controller;
 
 namespace Contact_App
 {
     public partial class MainForm : Form
     {
-        private byte FormID = 20;
+        private sunshinedataEntities Entities = new sunshinedataEntities();
         public MainForm()
         {
             InitializeComponent();
 
         }
 
-        //Handle incoming messages from the server
-        private void MessageReceivedEventHandler(Socket socket , StringBuilder sb , List<Byte> lb)
-        {
-            MessageObj mo = new MessageObj();
-            mo = Transport.DeconstructMessage(lb);
-            if (mo.ReturnTo == FormID)
-            {
-                switch (mo.Protocol)
-                {
-                    //A list of contacts was sent
-                    case TransportProtocol.BATCH_SEND_RECORD:
-                        SetList(mo.Message);
-                        break;
-                    //A request for a message box was sent (for testing)
-                    case TransportProtocol.MESSAGE_BOX:
-                        MessageBox.Show(mo.Message);
-                        break;
-                    //A request to update the status bar was sent (for user feedback)
-                    case TransportProtocol.STATUS_UPDATE:
-                        Invoke(new EventHandler(delegate { tsslMainForm.Text = mo.Message; }));
-                        break;
-                    //A request to update the social media types came in
-                    case TransportProtocol.SEND_SOCIAL_MEDIA_TYPES:
-                        UtilityData.SocialMediaTypes = JsonConvert.DeserializeObject<List<sm_types>>(mo.Message);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-        }
 
         //Populate the list box with the contents of the message (a list of contacts)
         private void SetList(string message)
         {
-            
+
             var result = JsonConvert.DeserializeObject<List<object>>(message);
             object tmpResult;
             for (int i = 0; i < result.Count; i++)
@@ -65,34 +35,36 @@ namespace Contact_App
                     tmpResult = JsonConvert.DeserializeObject<individual>(JsonConvert.SerializeObject(result[i]));
                     if ((tmpResult as individual).firstname == null)
                     {
-                        throw new Exception("Not an individual");
+                        try
+                        {
+                            result[i] = JsonConvert.DeserializeObject<organization>(JsonConvert.SerializeObject(result[i]));
+                        }
+                        catch (Exception e)
+                        {
+                            throw e;
+                        }
+                    }else
+                    {
+                        result[i] = tmpResult;
                     }
-                    result[i] = tmpResult;
-                } catch (Exception e)
+                    
+                }
+                catch (Exception e)
                 {
-                    try
-                    {
-                        result[i] = JsonConvert.DeserializeObject<organization>(JsonConvert.SerializeObject(result[i]));
-                    } catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    throw e;
                 }
             }
-
-            
-
-            lstRecordSelector.Invoke(new EventHandler(delegate { lstRecordSelector.DataSource = result; }));
+            lstSearchResults.Invoke(new EventHandler(delegate { lstSearchResults.DataSource = result; }));
         }
 
 
         private void MainForm_OnLoad(object sender , EventArgs e)
         {
             //Set our event handler for receiving messages
-            Transport.messageReceivedEvent += MessageReceivedEventHandler;
+
 
             //Populate Utility Data
-            Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID , TransportProtocol.SEND_SOCIAL_MEDIA_TYPES));
+
             //Show Administrate if User Level Allows
             if ((Program.UserOptions & Program.UserAccessOptions.UserControl) == Program.UserAccessOptions.UserControl)
             {
@@ -104,30 +76,34 @@ namespace Contact_App
         //Really misnamed, currently just sends a request to the server for the whole contact list.
         private void btnSearch_Click(object sender , EventArgs e)
         {
-            Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID , TransportProtocol.BATCH_SEND_RECORD));
+            
+            lstSearchResults.DataSource = Entities.individuals.ToList();
         }
 
         //Generates an individual record form
-        private void lstRecordSelector_MouseDoubleClick(object sender , MouseEventArgs e)
+        private void lstSearchResults_MouseDoubleClick(object sender , MouseEventArgs e)
         {
-            int index = this.lstRecordSelector.IndexFromPoint(e.Location);
+            int index = this.lstSearchResults.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
                 RecordViewTabPage icp;
-                if (lstRecordSelector.Items[index] is individual)
+                if (lstSearchResults.Items[index] is individual)
                 {
                     foreach (TabPage item in tabControl.TabPages)
                     {
                         if (item is RecordViewTabPage)
                         {
-                            if ((item as RecordViewTabPage).RecordID == (lstRecordSelector.Items[index] as individual).id)
+                            if ((item as RecordViewTabPage).RecordID == (lstSearchResults.Items[index] as individual).id)
                             {
                                 tabControl.SelectedTab = item;
                                 return;
-                            } 
+                            }
                         }
                     }
-                    icp = new RecordViewTabPage(new DataInputForms.IndividualForm()); 
+                    icp = new RecordViewTabPage(new DataInputForms.IndividualForm()
+                    {
+                        savedRecord = ( individual ) lstSearchResults.Items[index]
+                    });
                 }
                 else
                 {
@@ -135,31 +111,23 @@ namespace Contact_App
                     {
                         if (item is RecordViewTabPage)
                         {
-                            if ((item as RecordViewTabPage).RecordID == (lstRecordSelector.Items[index] as organization).orgid)
+                            if ((item as RecordViewTabPage).RecordID == (lstSearchResults.Items[index] as organization).orgid)
                             {
                                 tabControl.SelectedTab = item;
                                 return;
-                            } 
+                            }
                         }
                     }
-                    icp = new RecordViewTabPage(new DataInputForms.OrganizationForm());
+                    icp = new RecordViewTabPage(new DataInputForms.OrganizationForm()
+                    {
+                        savedRecord = ( organization ) lstSearchResults.Items[index]
+                    });
                 }
 
-
-                icp.ID = Program.GetNextID();
                 tabControl.TabPages.Add(icp);
                 tabControl.SelectedTab = icp;
 
-                if (lstRecordSelector.Items[index] is individual)
-                {
-                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(icp.ID , TransportProtocol.SEND_INDIVIDUAL_RECORD ,
-                                (lstRecordSelector.Items[index] as individual).id.ToString())); 
-                }
-                else
-                {
-                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(icp.ID , TransportProtocol.SEND_ORG_RECORD ,
-                                (lstRecordSelector.Items[index] as organization).orgid.ToString()));
-                }
+            
             }
         }
 
@@ -186,13 +154,60 @@ namespace Contact_App
                 object r = (tabControl.SelectedTab as RecordViewTabPage).GetContactFromData();
                 if (r is individual)
                 {
-                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_INDIVIDUAL_RECORD ,
-                        JsonConvert.SerializeObject(r as individual)));
+                    //Replace with UpdateIndividualRecord
+                    individual c = (individual)r;
+                    try
+                    {
+                        individual record = Entities.individuals.First(a => a.id == c.id);
+                        record.firstname = c.firstname;
+                        record.lastname = c.lastname;
+                        record.addresses_individual = c.addresses_individual;
+                        record.phone = c.phone;
+                        record.phonenumbers_individual = c.phonenumbers_individual;
+                        record.financialsupport = c.financialsupport;
+                        record.actions_individual = c.actions_individual;
+                        record.social_media_individual = c.social_media_individual;
+                        record.sunshineid = c.sunshineid;
+                        record.source = c.source;
+
+
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Entities.individuals.Add(c);
+
+                    }
+                    finally
+                    {
+                        Entities.SaveChanges();
+                        tsslMainForm.Text = $"{c.ToString()} has been saved.";
+                    }
                 }
                 else
                 {
-                    Program.stateObject.workSocket.Send(Transport.ConstructMessage(saveID , TransportProtocol.UPDATE_ORG_RECORD ,
-                        JsonConvert.SerializeObject(r as organization)));
+                    //Replace with UpdateOrgRecord
+                    organization o = (organization)r;
+                    try
+                    {
+                        organization record = Entities.organizations.First(a => a.orgid == o.orgid);
+                        record.name = o.name;
+                        record.addresses_organization = o.addresses_organization;
+                        record.phonenumbers_organization = o.phonenumbers_organization;
+                        record.phone = o.phone;
+                        record.financialsupport = o.financialsupport;
+                        record.actions_organization = o.actions_organization;
+                        record.social_media_organization = o.social_media_organization;
+                        record.orgsunshineid = o.orgsunshineid;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Entities.organizations.Add(o);
+                    }
+                    finally
+                    {
+                        Entities.SaveChanges();
+                        tsslMainForm.Text = $"{o.name} has been saved.";
+                    }
                 }
             }
         }
@@ -205,7 +220,7 @@ namespace Contact_App
                 return;
             }
             e.Graphics.DrawString("x" , e.Font , Brushes.Black , e.Bounds.Right - 16 , e.Bounds.Top + 4);
-            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text, e.Font , Brushes.Black , e.Bounds.Left + 3 , e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text , e.Font , Brushes.Black , e.Bounds.Left + 3 , e.Bounds.Top + 4);
             e.DrawFocusRectangle();
         }
 
@@ -240,8 +255,7 @@ namespace Contact_App
         {
             if (!String.IsNullOrWhiteSpace(toolStripTextBox.Text))
             {
-                Program.stateObject.workSocket.Send(Transport.ConstructMessage(
-                    this.FormID , TransportProtocol.SEARCH_WITH_TERM , toolStripTextBox.Text));
+                QueryBuilder.SearchWithKeywords(lstSearchResults , toolStripTextBox.Text);
             }
         }
 

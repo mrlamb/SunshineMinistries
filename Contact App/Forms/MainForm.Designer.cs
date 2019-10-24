@@ -38,8 +38,9 @@
             this.individualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.socialMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabDashboard = new System.Windows.Forms.TabPage();
-            this.lstRecordSelector = new System.Windows.Forms.ListBox();
+            this.lstSearchResults = new System.Windows.Forms.ListBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -48,7 +49,6 @@
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
-            this.socialMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusMainForm.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabDashboard.SuspendLayout();
@@ -126,14 +126,21 @@
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.usersToolStripMenuItem.Text = "Users";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
+            // 
+            // socialMediaToolStripMenuItem
+            // 
+            this.socialMediaToolStripMenuItem.Name = "socialMediaToolStripMenuItem";
+            this.socialMediaToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.socialMediaToolStripMenuItem.Text = "Social Media";
+            this.socialMediaToolStripMenuItem.Click += new System.EventHandler(this.socialMediaToolStripMenuItem_Click);
             // 
             // tabDashboard
             // 
             this.tabDashboard.AutoScroll = true;
-            this.tabDashboard.Controls.Add(this.lstRecordSelector);
+            this.tabDashboard.Controls.Add(this.lstSearchResults);
             this.tabDashboard.Controls.Add(this.btnSearch);
             this.tabDashboard.Location = new System.Drawing.Point(4, 22);
             this.tabDashboard.Name = "tabDashboard";
@@ -143,14 +150,14 @@
             this.tabDashboard.Text = "Dashboard";
             this.tabDashboard.UseVisualStyleBackColor = true;
             // 
-            // lstRecordSelector
+            // lstSearchResults
             // 
-            this.lstRecordSelector.FormattingEnabled = true;
-            this.lstRecordSelector.Location = new System.Drawing.Point(6, 6);
-            this.lstRecordSelector.Name = "lstRecordSelector";
-            this.lstRecordSelector.Size = new System.Drawing.Size(354, 173);
-            this.lstRecordSelector.TabIndex = 43;
-            this.lstRecordSelector.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstRecordSelector_MouseDoubleClick);
+            this.lstSearchResults.FormattingEnabled = true;
+            this.lstSearchResults.Location = new System.Drawing.Point(6, 6);
+            this.lstSearchResults.Name = "lstSearchResults";
+            this.lstSearchResults.Size = new System.Drawing.Size(354, 173);
+            this.lstSearchResults.TabIndex = 43;
+            this.lstSearchResults.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstSearchResults_MouseDoubleClick);
             // 
             // btnSearch
             // 
@@ -242,13 +249,6 @@
             this.toolStripLabelSearch.Size = new System.Drawing.Size(72, 22);
             this.toolStripLabelSearch.Text = "Search";
             // 
-            // socialMediaToolStripMenuItem
-            // 
-            this.socialMediaToolStripMenuItem.Name = "socialMediaToolStripMenuItem";
-            this.socialMediaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.socialMediaToolStripMenuItem.Text = "Social Media";
-            this.socialMediaToolStripMenuItem.Click += new System.EventHandler(this.socialMediaToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -264,7 +264,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Contacts App";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_OnLoad);
             this.statusMainForm.ResumeLayout(false);
             this.statusMainForm.PerformLayout();
@@ -286,7 +288,7 @@
         private System.Windows.Forms.ToolStripMenuItem administrateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
         private System.Windows.Forms.TabPage tabDashboard;
-        private System.Windows.Forms.ListBox lstRecordSelector;
+        private System.Windows.Forms.ListBox lstSearchResults;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.ToolStrip toolStrip1;

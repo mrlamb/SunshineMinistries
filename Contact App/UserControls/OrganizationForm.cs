@@ -14,7 +14,8 @@ namespace DataInputForms
     {
 
         private List<actions_organization> actions;
-        private organization savedRecord, workingRecord;
+        public organization savedRecord;
+        private organization workingRecord;
         public int RecordID { get { return savedRecord.orgid; } }
 
         //Hate this need a workaround

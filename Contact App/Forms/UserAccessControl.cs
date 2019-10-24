@@ -1,19 +1,18 @@
 ﻿using Newtonsoft.Json;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Transportation;
 using ModelLibrary;
+using static Contact_App.Program;
 
 namespace Contact_App
 {
     public partial class UserAccessControl : Form
-    {
-        private byte formID = 19;
-        private List<user> users;
+    { 
 
         public UserAccessControl()
         {
@@ -22,59 +21,23 @@ namespace Contact_App
 
         private void UserAccessControl_Load(object sender, EventArgs e)
         {
-            Transport.messageReceivedEvent += MessageReceivedEventHandler;
-            Program.stateObject.workSocket.Send(Transport.ConstructMessage(formID, TransportProtocol.SEND_ALL_USERS));
+            lstUsers.DataSource = Program.Entities.users.ToList();
         }
 
-        private void MessageReceivedEventHandler(Socket socket, StringBuilder sb, List<byte> lb)
-        {
-            MessageObj message = Transport.DeconstructMessage(lb);
-
-            switch (message.Protocol)
-            {
-                case TransportProtocol.SEND_ALL_USERS:
-                    users = JsonConvert.DeserializeObject<List<user>>(message.Message);
-                    lstUsers.Invoke(new EventHandler(delegate{ lstUsers.DataSource = users; }));
-                    break;
-                case TransportProtocol.STATUS_UPDATE:
-                    toolStripStatusLabel.Text = message.Message;
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        
         private void lstUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedUser = (user)lstUsers.SelectedItem;
             wtrUserName.Text = selectedUser.username;
             wtrPassword.Text = selectedUser.password;
             Program.UserAccessOptions uac = (Program.UserAccessOptions)selectedUser.accessflags;
-            if((uac & Program.UserAccessOptions.Edit) == Program.UserAccessOptions.Edit)
-            {
-                chkEditRecords.Checked = true;
-            }
-            else
-            {
-                chkEditRecords.Checked = false;
-            }
-            if ((uac & Program.UserAccessOptions.View) == Program.UserAccessOptions.View)
-            {
-                chkView.Checked = true;
-            }
-            else
-            {
-                chkView.Checked = false;
-            }
-            if ((uac & Program.UserAccessOptions.UserControl) == Program.UserAccessOptions.UserControl)
-            {
-                chkAdmin.Checked = true;
-            }
-            else
-            {
-                chkAdmin.Checked = false;
-            }
 
+            chkEditRecords.Checked = ((uac & Program.UserAccessOptions.Edit) == Program.UserAccessOptions.Edit);
+
+            chkView.Checked = ((uac & Program.UserAccessOptions.View) == Program.UserAccessOptions.View);
+
+            chkAdmin.Checked = ((uac & Program.UserAccessOptions.UserControl) == Program.UserAccessOptions.UserControl);
+            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -84,9 +47,48 @@ namespace Contact_App
             {
                 return;
             }
-            user record = CollectSettings();
-            Program.stateObject.workSocket.Send(Transport.ConstructMessage(formID, TransportProtocol.UPDATE_USER,
-                JsonConvert.SerializeObject(record)));
+
+            user u = CollectSettings();
+            if (u.username.Equals(Program.user.username)){
+                UserAccessOptions uac = (UserAccessOptions)u.accessflags;
+                if (!((uac & UserAccessOptions.UserControl) == UserAccessOptions.UserControl))
+                {
+                    toolStripStatusLabel.Text = "Cannot remove Administrative options from self.";
+                    chkAdmin.Checked = true;
+                    return;
+                }
+            }
+
+
+            try
+            {
+                user record = Program.Entities.users.First(a => a.id == u.id);
+                record.username = u.username;
+                record.email = u.email;
+                record.accessflags = u.accessflags;
+                record.password = u.password;
+                toolStripStatusLabel.Text = $"User: {u.username} updated.";
+            }
+            catch (InvalidOperationException)
+            {
+                toolStripStatusLabel.Text = $"User: {u.username} added.";
+                Program.Entities.users.Add(u);   
+            }
+            catch (Exception)
+            {
+                toolStripStatusLabel.Text = "Unknown error happened.";
+            }
+            finally
+            {
+                try
+                {
+                    Program.Entities.SaveChanges();
+                }catch
+                {
+                    toolStripStatusLabel.Text = "Error saving changes to database.";
+                }
+            }
+            
         }
 
         private user CollectSettings()
@@ -129,7 +131,10 @@ namespace Contact_App
             {
                 errorMessage.Append("User name contains invalid characters. ");
             }
-            
+            if (wtrPassword.Text.Equals(string.Empty))
+            {
+                errorMessage.Append("Password cannot be empty. ");
+            }
 
             if (errorMessage.Length > 0)
             {
@@ -137,6 +142,31 @@ namespace Contact_App
                 return false;
             }
             return true;
+        }
+
+        private void btnAdd_Click(object sender , EventArgs e)
+        {
+            wtrPassword.Text = string.Empty;
+            wtrUserName.Text = string.Empty;
+            foreach (var item in this.Controls)
+            {
+                if (item is CheckBox)
+                {
+                    (item as CheckBox).Checked = false;
+                }
+
+            }
+        }
+
+        private void btnRemove_Click(object sender , EventArgs e)
+        {
+            if (lstUsers.SelectedItem != null)
+            {
+                if ((lstUsers.SelectedItem as user).Equals(Program.user))
+                {
+                    toolStripStatusLabel.Text = "Cannot remove own user.";
+                }
+            }
         }
     }
 }

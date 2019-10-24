@@ -21,7 +21,7 @@ namespace Contact_App.Forms
         {
             InitializeComponent();
 
-            cmbSMTypes.DataSource = UtilityData.SocialMediaTypes;
+            cmbSMTypes.DataSource = Program.Entities.sm_types.ToList();
         }
 
         private void btnSave_Click(object sender , EventArgs e)
@@ -53,7 +53,7 @@ namespace Contact_App.Forms
 
         private bool ValidateType(ComboBox cmbSMTypes , out string errormsg)
         {
-            if (!UtilityData.SocialMediaTypes.Any(a => a.sm_type_name == cmbSMTypes.Text))
+            if (!Program.Entities.sm_types.Any(a => a.sm_type_name == cmbSMTypes.Text))
             {
                 errormsg = "Value must exist in the list.";
                 return false;
@@ -69,11 +69,11 @@ namespace Contact_App.Forms
                 errormsg = "Link empty.";
                 return false;
             }
-            if (!text.Contains("http"))
+            /*if (!text.Contains("http"))
             {
                 errormsg = "Protocol missing, add full url (e.g. http://www.google.com";
                 return false;
-            }
+            }*/
             errormsg = "";
             return true;
         }

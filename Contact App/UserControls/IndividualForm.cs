@@ -22,7 +22,6 @@ namespace DataInputForms
     {
         public event EventHandler FormNameUpdated;
 
-        public Color dynamicDTPCalendarMonthBackgournd { get; private set; }
         private string ID { get { return wtrID.Text; } set { wtrID.Text = value; } }
         private string FirstName { get { return wtrFirstName.Text; } set { wtrFirstName.Text = value; } }
         private string LastName { get { return wtrLastName.Text; } set { wtrLastName.Text = value; } }
@@ -52,7 +51,8 @@ namespace DataInputForms
 
         private string[] states2;
         private List<actions_individual> actions;
-        private individual savedRecord, workingRecord;
+        public individual savedRecord;
+        private individual workingRecord;
         public int RecordID { get { return savedRecord.id; } }
 
         public IndividualForm()
@@ -62,7 +62,7 @@ namespace DataInputForms
             cmbState.DataSource = states;
             //Copy array to second array for combo 2
             states2 = new string[states.Length];
-            states.CopyTo(states2, 0);
+            states.CopyTo(states2 , 0);
             //Set second combo box
             cmbState2.DataSource = states2;
             //Set event handler for WtrmarkTextBox.WtrTextChanged 
@@ -70,15 +70,16 @@ namespace DataInputForms
             wtrFirstName.WtrTextChanged += TextChangedEventHandler;
             wtrLastName.WtrTextChanged += TextChangedEventHandler;
 
-            
-            
+
+
 
         }
 
         public void SetData(object o)
         {
-            savedRecord = (individual) o;
-            workingRecord = JsonConvert.DeserializeObject<individual>(JsonConvert.SerializeObject(savedRecord));
+            savedRecord = ( individual ) o;
+            workingRecord = JsonConvert.DeserializeObject<individual>(JsonConvert.SerializeObject(savedRecord,
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
 
             if (this.InvokeRequired)
@@ -148,9 +149,9 @@ namespace DataInputForms
         /// Used in updating the tab controls title with the contents of the WaterMarkTextBoxes for
         /// first name and last name.
         /// </summary>
-        private void TextChangedEventHandler(object sender, EventArgs e)
+        private void TextChangedEventHandler(object sender , EventArgs e)
         {
-            FormNameUpdated?.Invoke(sender, e);
+            FormNameUpdated?.Invoke(sender , e);
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace DataInputForms
         public void SetFinancialSupport(bool state)
         {
             rdoFinYes.Checked = state;
-            rdoFinNo.Checked = !state;          
+            rdoFinNo.Checked = !state;
         }
 
         public bool GetFinancialSupport()
@@ -172,7 +173,7 @@ namespace DataInputForms
         /// <summary>
         /// Creates a new instance of ActionDetail and passes in the action located at the selected index.
         /// </summary>
-        private void lstActions_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void lstActions_MouseDoubleClick(object sender , MouseEventArgs e)
         {
             int index = this.lstActions.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
@@ -248,7 +249,7 @@ namespace DataInputForms
         /// <summary>
         /// Opens a new form of ActionDetail for entry.
         /// </summary>
-        private void btnAddAction_Click(object sender, EventArgs e)
+        private void btnAddAction_Click(object sender , EventArgs e)
         {
             ActionDetail ad = new ActionDetail();
             ad.form = this;
@@ -351,7 +352,15 @@ namespace DataInputForms
             a.primary = true;
 
             return a;
-            
+
+        }
+
+        private void IndividualForm_Load(object sender , EventArgs e)
+        {
+            if (null != savedRecord)
+            {
+                SetData(savedRecord);
+            }
         }
     }
 }

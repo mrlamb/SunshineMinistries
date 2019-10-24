@@ -108,6 +108,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\QueryBuilder.cs" />
     <Compile Include="Forms\AddSocialMedia.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,7 +235,7 @@
     <EmbeddedResource Include="UserControls\WaterMarkTextBox.resx">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -262,10 +263,6 @@
     <ProjectReference Include="..\ModelLibrary\ModelLibrary.csproj">
       <Project>{088ece6b-e4b4-4990-94aa-b9671882bd2b}</Project>
       <Name>ModelLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Transport\Transport.csproj">
-      <Project>{3820d51a-08a5-44e0-a520-9d852b8b3ae6}</Project>
-      <Name>Transport</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
