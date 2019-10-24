@@ -27,6 +27,12 @@
           <Property Name="Notes" Type="blob" />
           <Property Name="date" Type="datetime" Precision="0" Nullable="false" />
         </EntityType>
+        <EntityType Name="actiontype">
+          <Key>
+            <PropertyRef Name="actionType" />
+          </Key>
+          <Property Name="actionType" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
         <EntityType Name="addresses_individual">
           <Key>
             <PropertyRef Name="contactid" />
@@ -50,6 +56,13 @@
           <Property Name="state" Type="varchar" MaxLength="45" />
           <Property Name="zip" Type="varchar" MaxLength="45" />
           <Property Name="primary" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="contacttype">
+          <Key>
+            <PropertyRef Name="contacttypeid" />
+          </Key>
+          <Property Name="contacttypeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typename" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="individuals">
           <Key>
@@ -112,6 +125,7 @@
         <EntityType Name="social_media_individual">
           <Key>
             <PropertyRef Name="sm_ind_id" />
+            <PropertyRef Name="indid" />
           </Key>
           <Property Name="sm_ind_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="indid" Type="int" Nullable="false" />
@@ -122,12 +136,23 @@
         <EntityType Name="social_media_organization">
           <Key>
             <PropertyRef Name="sm_org_id" />
+            <PropertyRef Name="orgid" />
           </Key>
           <Property Name="sm_org_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="orgid" Type="int" Nullable="false" />
           <Property Name="sm_type" Type="int" Nullable="false" />
           <Property Name="sm_link" Type="blob" Nullable="false" />
           <Property Name="sm_title" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="45" />
+          <Property Name="password" Type="varchar" MaxLength="45" />
+          <Property Name="accessflags" Type="utinyint" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" />
         </EntityType>
         <Association Name="fk_actions_organization">
           <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
@@ -276,8 +301,10 @@
         <EntityContainer Name="SunshineDataModelStoreContainer">
           <EntitySet Name="actions_individual" EntityType="Self.actions_individual" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="actions_organization" EntityType="Self.actions_organization" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="actiontype" EntityType="Self.actiontype" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="addresses_individual" EntityType="Self.addresses_individual" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="addresses_organization" EntityType="Self.addresses_organization" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="contacttype" EntityType="Self.contacttype" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="individuals" EntityType="Self.individuals" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="officers" EntityType="Self.officers" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="organizations" EntityType="Self.organizations" Schema="sunshinedata" store:Type="Tables" />
@@ -286,6 +313,7 @@
           <EntitySet Name="sm_types" EntityType="Self.sm_types" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="social_media_individual" EntityType="Self.social_media_individual" Schema="sunshinedata" store:Type="Tables" />
           <EntitySet Name="social_media_organization" EntityType="Self.social_media_organization" Schema="sunshinedata" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="sunshinedata" store:Type="Tables" />
           <AssociationSet Name="fk_actions_organization" Association="Self.fk_actions_organization">
             <End Role="organizations" EntitySet="organizations" />
             <End Role="actions_organization" EntitySet="actions_organization" />
@@ -611,6 +639,9 @@
             <End Role="sm_types" EntitySet="sm_types" />
             <End Role="social_media_individual" EntitySet="social_media_individual" />
           </AssociationSet>
+          <EntitySet Name="actiontypes" EntityType="SunshineDataModel.actiontype" />
+          <EntitySet Name="contacttypes" EntityType="SunshineDataModel.contacttype" />
+          <EntitySet Name="users" EntityType="SunshineDataModel.user" />
         </EntityContainer>
         <EntityType Name="sm_types">
           <Key>
@@ -624,6 +655,7 @@
         <EntityType Name="social_media_individual">
           <Key>
             <PropertyRef Name="sm_ind_id" />
+            <PropertyRef Name="indid" />
           </Key>
           <Property Name="sm_ind_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="indid" Type="Int32" Nullable="false" />
@@ -636,6 +668,7 @@
         <EntityType Name="social_media_organization">
           <Key>
             <PropertyRef Name="sm_org_id" />
+            <PropertyRef Name="orgid" />
           </Key>
           <Property Name="sm_org_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="orgid" Type="Int32" Nullable="false" />
@@ -693,6 +726,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="actiontype">
+          <Key>
+            <PropertyRef Name="actionType1" />
+          </Key>
+          <Property Name="actionType1" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="contacttype">
+          <Key>
+            <PropertyRef Name="contacttypeid" />
+          </Key>
+          <Property Name="contacttypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typename" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="accessflags" Type="Byte" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -826,6 +882,32 @@
                 <ScalarProperty Name="sm_type" ColumnName="sm_type" />
                 <ScalarProperty Name="orgid" ColumnName="orgid" />
                 <ScalarProperty Name="sm_org_id" ColumnName="sm_org_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="actiontypes">
+            <EntityTypeMapping TypeName="SunshineDataModel.actiontype">
+              <MappingFragment StoreEntitySet="actiontype">
+                <ScalarProperty Name="actionType1" ColumnName="actionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contacttypes">
+            <EntityTypeMapping TypeName="SunshineDataModel.contacttype">
+              <MappingFragment StoreEntitySet="contacttype">
+                <ScalarProperty Name="typename" ColumnName="typename" />
+                <ScalarProperty Name="contacttypeid" ColumnName="contacttypeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="SunshineDataModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="accessflags" ColumnName="accessflags" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

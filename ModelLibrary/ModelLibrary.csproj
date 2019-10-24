@@ -88,10 +88,16 @@
     <Compile Include="actions_organization.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
+    <Compile Include="actiontype.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
     <Compile Include="addresses_individual.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="addresses_organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="contacttype.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="IAction.cs" />
@@ -138,22 +144,7 @@
       <DependentUpon>SunshineData.edmx</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
-      <DependentUpon>UsersModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UsersModel.Context.cs">
-      <DependentUpon>UsersModel.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="UsersModel.cs">
-      <DependentUpon>UsersModel.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="UsersModel.Designer.cs">
-      <DependentUpon>UsersModel.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+      <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -167,23 +158,9 @@
       <DependentUpon>SunshineData.edmx</DependentUpon>
       <LastGenOutput>SunshineData.cs</LastGenOutput>
     </Content>
-    <Content Include="UsersModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UsersModel.edmx</DependentUpon>
-      <LastGenOutput>UsersModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="UsersModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UsersModel.edmx</DependentUpon>
-      <LastGenOutput>UsersModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="UsersModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UsersModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="packages.config" />
     <EntityDeploy Include="SunshineData.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -191,9 +168,6 @@
     </EntityDeploy>
     <None Include="SunshineData.edmx.diagram">
       <DependentUpon>SunshineData.edmx</DependentUpon>
-    </None>
-    <None Include="UsersModel.edmx.diagram">
-      <DependentUpon>UsersModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

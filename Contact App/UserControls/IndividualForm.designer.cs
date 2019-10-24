@@ -35,10 +35,8 @@
             this.txtNotes = new System.Windows.Forms.TextBox();
             this.groupNotes = new System.Windows.Forms.GroupBox();
             this.groupSocial = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.btnAddSocial = new System.Windows.Forms.Button();
-            this.txtSocialMedia = new System.Windows.Forms.TextBox();
+            this.btnAddSM = new System.Windows.Forms.Button();
+            this.flpSocial = new System.Windows.Forms.FlowLayoutPanel();
             this.txtSrc = new System.Windows.Forms.TextBox();
             this.cmbState = new System.Windows.Forms.ComboBox();
             this.groupPrimAddress = new System.Windows.Forms.GroupBox();
@@ -46,6 +44,8 @@
             this.wtrStreetAddress = new Contact_App.WaterMarkTextBox();
             this.wtrCity = new Contact_App.WaterMarkTextBox();
             this.groupBasic = new System.Windows.Forms.GroupBox();
+            this.btnAddPhone = new Contact_App.RoundButton();
+            this.flpPhoneNumbers = new System.Windows.Forms.FlowLayoutPanel();
             this.wtrPhone = new Contact_App.WaterMarkTextBox();
             this.wtrID = new Contact_App.WaterMarkTextBox();
             this.wtrFirstName = new Contact_App.WaterMarkTextBox();
@@ -62,7 +62,6 @@
             this.groupFinancial.SuspendLayout();
             this.groupNotes.SuspendLayout();
             this.groupSocial.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupPrimAddress.SuspendLayout();
             this.groupBasic.SuspendLayout();
             this.groupSecondAddress.SuspendLayout();
@@ -74,10 +73,10 @@
             this.groupFinancial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(222)))), ((int)(((byte)(173)))));
             this.groupFinancial.Controls.Add(this.rdoFinNo);
             this.groupFinancial.Controls.Add(this.rdoFinYes);
-            this.groupFinancial.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupFinancial.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupFinancial.Location = new System.Drawing.Point(767, 13);
             this.groupFinancial.Name = "groupFinancial";
-            this.groupFinancial.Size = new System.Drawing.Size(356, 100);
+            this.groupFinancial.Size = new System.Drawing.Size(131, 67);
             this.groupFinancial.TabIndex = 12;
             this.groupFinancial.TabStop = false;
             this.groupFinancial.Text = "Financial Support";
@@ -85,9 +84,9 @@
             // rdoFinNo
             // 
             this.rdoFinNo.AutoSize = true;
-            this.rdoFinNo.Location = new System.Drawing.Point(219, 49);
+            this.rdoFinNo.Location = new System.Drawing.Point(80, 27);
             this.rdoFinNo.Name = "rdoFinNo";
-            this.rdoFinNo.Size = new System.Drawing.Size(61, 34);
+            this.rdoFinNo.Size = new System.Drawing.Size(41, 17);
             this.rdoFinNo.TabIndex = 199;
             this.rdoFinNo.TabStop = true;
             this.rdoFinNo.Text = "No";
@@ -96,9 +95,9 @@
             // rdoFinYes
             // 
             this.rdoFinYes.AutoSize = true;
-            this.rdoFinYes.Location = new System.Drawing.Point(90, 49);
+            this.rdoFinYes.Location = new System.Drawing.Point(17, 27);
             this.rdoFinYes.Name = "rdoFinYes";
-            this.rdoFinYes.Size = new System.Drawing.Size(62, 34);
+            this.rdoFinYes.Size = new System.Drawing.Size(42, 17);
             this.rdoFinYes.TabIndex = 13;
             this.rdoFinYes.TabStop = true;
             this.rdoFinYes.Text = "Yes";
@@ -121,7 +120,7 @@
             this.groupNotes.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupNotes.BackgroundImage")));
             this.groupNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.groupNotes.Controls.Add(this.txtNotes);
-            this.groupNotes.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupNotes.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupNotes.Location = new System.Drawing.Point(767, 128);
             this.groupNotes.Name = "groupNotes";
             this.groupNotes.Size = new System.Drawing.Size(356, 312);
@@ -132,10 +131,9 @@
             // groupSocial
             // 
             this.groupSocial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(222)))), ((int)(((byte)(173)))));
-            this.groupSocial.Controls.Add(this.groupBox5);
-            this.groupSocial.Controls.Add(this.btnAddSocial);
-            this.groupSocial.Controls.Add(this.txtSocialMedia);
-            this.groupSocial.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupSocial.Controls.Add(this.btnAddSM);
+            this.groupSocial.Controls.Add(this.flpSocial);
+            this.groupSocial.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupSocial.ForeColor = System.Drawing.Color.Black;
             this.groupSocial.Location = new System.Drawing.Point(12, 258);
             this.groupSocial.Name = "groupSocial";
@@ -144,54 +142,31 @@
             this.groupSocial.TabStop = false;
             this.groupSocial.Text = "Social Media";
             // 
-            // groupBox5
+            // btnAddSM
             // 
-            this.groupBox5.Controls.Add(this.linkLabel1);
-            this.groupBox5.Location = new System.Drawing.Point(24, 99);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(340, 59);
-            this.groupBox5.TabIndex = 3;
-            this.groupBox5.TabStop = false;
+            this.btnAddSM.Location = new System.Drawing.Point(10, 22);
+            this.btnAddSM.Name = "btnAddSM";
+            this.btnAddSM.Size = new System.Drawing.Size(75, 23);
+            this.btnAddSM.TabIndex = 1;
+            this.btnAddSM.Text = "Add New";
+            this.btnAddSM.UseVisualStyleBackColor = true;
+            this.btnAddSM.Click += new System.EventHandler(this.btnAddSM_Click);
             // 
-            // linkLabel1
+            // flpSocial
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
-            this.linkLabel1.Location = new System.Drawing.Point(110, 13);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(114, 30);
-            this.linkLabel1.TabIndex = 15;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "linkLabel1";
-            // 
-            // btnAddSocial
-            // 
-            this.btnAddSocial.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddSocial.BackgroundImage")));
-            this.btnAddSocial.Location = new System.Drawing.Point(273, 42);
-            this.btnAddSocial.Name = "btnAddSocial";
-            this.btnAddSocial.Size = new System.Drawing.Size(75, 41);
-            this.btnAddSocial.TabIndex = 2;
-            this.btnAddSocial.Text = "+";
-            this.btnAddSocial.UseVisualStyleBackColor = true;
-            // 
-            // txtSocialMedia
-            // 
-            this.txtSocialMedia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(221)))), ((int)(((byte)(178)))));
-            this.txtSocialMedia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSocialMedia.Location = new System.Drawing.Point(24, 37);
-            this.txtSocialMedia.Multiline = true;
-            this.txtSocialMedia.Name = "txtSocialMedia";
-            this.txtSocialMedia.Size = new System.Drawing.Size(236, 52);
-            this.txtSocialMedia.TabIndex = 14;
+            this.flpSocial.Location = new System.Drawing.Point(10, 58);
+            this.flpSocial.Name = "flpSocial";
+            this.flpSocial.Size = new System.Drawing.Size(377, 172);
+            this.flpSocial.TabIndex = 0;
             // 
             // txtSrc
             // 
             this.txtSrc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(222)))), ((int)(((byte)(173)))));
-            this.txtSrc.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSrc.Location = new System.Drawing.Point(452, 269);
+            this.txtSrc.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSrc.Location = new System.Drawing.Point(904, 16);
             this.txtSrc.Multiline = true;
             this.txtSrc.Name = "txtSrc";
-            this.txtSrc.Size = new System.Drawing.Size(292, 44);
+            this.txtSrc.Size = new System.Drawing.Size(219, 44);
             this.txtSrc.TabIndex = 235;
             this.txtSrc.Text = "Source ";
             // 
@@ -245,6 +220,8 @@
             // 
             // groupBasic
             // 
+            this.groupBasic.Controls.Add(this.btnAddPhone);
+            this.groupBasic.Controls.Add(this.flpPhoneNumbers);
             this.groupBasic.Controls.Add(this.wtrPhone);
             this.groupBasic.Controls.Add(this.wtrID);
             this.groupBasic.Controls.Add(this.wtrFirstName);
@@ -257,12 +234,34 @@
             this.groupBasic.TabStop = false;
             this.groupBasic.Text = "Basic Information";
             // 
+            // btnAddPhone
+            // 
+            this.btnAddPhone.BackColor = System.Drawing.Color.Transparent;
+            this.btnAddPhone.BackgroundImage = global::Contact_App.Properties.Resources.PlusSign;
+            this.btnAddPhone.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAddPhone.FlatAppearance.BorderSize = 0;
+            this.btnAddPhone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddPhone.Location = new System.Drawing.Point(355, 54);
+            this.btnAddPhone.Name = "btnAddPhone";
+            this.btnAddPhone.Size = new System.Drawing.Size(24, 24);
+            this.btnAddPhone.TabIndex = 244;
+            this.btnAddPhone.UseVisualStyleBackColor = false;
+            this.btnAddPhone.Click += new System.EventHandler(this.btnAddPhone_Click);
+            // 
+            // flpPhoneNumbers
+            // 
+            this.flpPhoneNumbers.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpPhoneNumbers.Location = new System.Drawing.Point(108, 80);
+            this.flpPhoneNumbers.Name = "flpPhoneNumbers";
+            this.flpPhoneNumbers.Size = new System.Drawing.Size(279, 127);
+            this.flpPhoneNumbers.TabIndex = 243;
+            // 
             // wtrPhone
             // 
             this.wtrPhone.Location = new System.Drawing.Point(110, 54);
             this.wtrPhone.Name = "wtrPhone";
             this.wtrPhone.Password = false;
-            this.wtrPhone.Size = new System.Drawing.Size(239, 20);
+            this.wtrPhone.Size = new System.Drawing.Size(165, 20);
             this.wtrPhone.TabIndex = 239;
             this.wtrPhone.Tag = "Primary Phone Number";
             // 
@@ -406,9 +405,6 @@
             this.groupNotes.ResumeLayout(false);
             this.groupNotes.PerformLayout();
             this.groupSocial.ResumeLayout(false);
-            this.groupSocial.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupPrimAddress.ResumeLayout(false);
             this.groupBasic.ResumeLayout(false);
             this.groupSecondAddress.ResumeLayout(false);
@@ -425,10 +421,6 @@
         private System.Windows.Forms.TextBox txtNotes;
         private System.Windows.Forms.GroupBox groupNotes;
         private System.Windows.Forms.GroupBox groupSocial;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Button btnAddSocial;
-        private System.Windows.Forms.TextBox txtSocialMedia;
         private System.Windows.Forms.TextBox txtSrc;
         private Contact_App.WaterMarkTextBox wtrID;
         private Contact_App.WaterMarkTextBox wtrFirstName;
@@ -449,5 +441,9 @@
         private System.Windows.Forms.GroupBox groupActions;
         private System.Windows.Forms.Button btnRemAction;
         private System.Windows.Forms.Button btnAddAction;
+        private Contact_App.RoundButton btnAddPhone;
+        private System.Windows.Forms.FlowLayoutPanel flpPhoneNumbers;
+        private System.Windows.Forms.Button btnAddSM;
+        private System.Windows.Forms.FlowLayoutPanel flpSocial;
     }
 }

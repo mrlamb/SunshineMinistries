@@ -29,6 +29,9 @@
         <AssociationConnector Association="SunshineDataModel.fk_sm_to_org" />
         <AssociationConnector Association="SunshineDataModel.fk_sm_to_sm_type" />
         <AssociationConnector Association="SunshineDataModel.fk_smi_to_sm_type" />
+        <EntityTypeShape EntityType="SunshineDataModel.actiontype" Width="1.5" PointX="0.5" PointY="0.75" />
+        <EntityTypeShape EntityType="SunshineDataModel.contacttype" Width="1.5" PointX="7.5" PointY="0.75" />
+        <EntityTypeShape EntityType="SunshineDataModel.user" Width="1.5" PointX="3.5" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

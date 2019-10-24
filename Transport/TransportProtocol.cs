@@ -26,5 +26,6 @@ namespace Transportation
         UPDATE_ORG_RECORD,
         SEARCH_WITH_TERM,
         SEND_ORG_RECORD,
+        SEND_SOCIAL_MEDIA_TYPES,
     }
 }

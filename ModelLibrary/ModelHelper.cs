@@ -6,6 +6,13 @@ using System.Text;
 //Individual Model Namespace
 namespace ModelLibrary
 {
+    public partial class sm_types
+    {
+        public override string ToString()
+        {
+            return this.sm_type_name;
+        }
+    }
     public partial class individual
     {
         public override string ToString()

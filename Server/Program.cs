@@ -13,7 +13,6 @@ namespace Server
     class Program
     {
         static ConnectionManager manager = new ConnectionManager();
-        static UserEntities UserContext = new UserEntities();
         static sunshinedataEntities Entities = new sunshinedataEntities();
         private const int FormID = 1;
         static void Main(string[] args)
@@ -87,7 +86,7 @@ namespace Server
                     BatchSend(socket , message);
                     break;
                 case TransportProtocol.UPDATE_INDIVIDUAL_RECORD:
-                    UpdateIndividualRecord(message.Message);
+                    UpdateIndividualRecord(socket, message);
                     break;
                 case TransportProtocol.DELETE_RECORD:
                     DeleteRecord(message.Message);
@@ -95,9 +94,19 @@ namespace Server
                 case TransportProtocol.SEARCH_WITH_TERM:
                     Search(socket , message);
                     break;
+                case TransportProtocol.SEND_SOCIAL_MEDIA_TYPES:
+                    SendSocialMediaTypes(socket , message);
+                    break;
                 default:
                     break;
             }
+        }
+
+        private static void SendSocialMediaTypes(Socket socket , MessageObj message)
+        {
+            List<sm_types> list = Entities.sm_types.ToList<sm_types>();
+            socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.SEND_SOCIAL_MEDIA_TYPES ,
+                JsonConvert.SerializeObject(list, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })));
         }
 
         private static void SendOrgRecord(Socket socket , MessageObj message)
@@ -118,9 +127,11 @@ namespace Server
                 organization record = Entities.organizations.First(a => a.orgid == o.orgid);
                 record.name = o.name;
                 record.addresses_organization = o.addresses_organization;
+                record.phonenumbers_organization = o.phonenumbers_organization;
                 record.phone = o.phone;
                 record.financialsupport = o.financialsupport;
                 record.actions_organization = o.actions_organization;
+                record.social_media_organization = o.social_media_organization;
                 record.orgsunshineid = o.orgsunshineid;
                 
 
@@ -131,10 +142,9 @@ namespace Server
                 Entities.organizations.Add(o);
                 Entities.SaveChanges();
             }
-            catch
+            finally
             {
-                //Console.WriteLine(e.ToString());
-                throw;
+                socket.Send(Transport.ConstructMessage(20 , TransportProtocol.STATUS_UPDATE , $"{o.ToString()} saved."));
             }
         }
 
@@ -200,19 +210,19 @@ namespace Server
             {
 
                 u = JsonConvert.DeserializeObject<user>(message.Message);
-                user record = UserContext.users.First(a => a.id == u.id);
+                user record = Entities.users.First(a => a.id == u.id);
                 record.username = u.username;
                 record.email = u.email;
                 record.accessflags = u.accessflags;
                 record.password = u.password;
                 socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.STATUS_UPDATE , $"User: {u.username} updated."));
 
-                UserContext.SaveChanges();
+                Entities.SaveChanges();
             }
             catch (InvalidOperationException)
             {
-                UserContext.users.Add(u);
-                UserContext.SaveChanges();
+                Entities.users.Add(u);
+                Entities.SaveChanges();
                 socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.STATUS_UPDATE , $"User: {u.username} added."));
             }
             catch (Exception e)
@@ -226,7 +236,7 @@ namespace Server
             try
             {
                 socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.SEND_ALL_USERS ,
-                    JsonConvert.SerializeObject(UserContext.users)));
+                    JsonConvert.SerializeObject(Entities.users)));
             }
             catch (Exception e)
             {
@@ -237,7 +247,7 @@ namespace Server
         private static void SendUserOptions(Socket socket , MessageObj message)
         {
             var name = manager.GetUserNameFromSocket(socket);
-            var record = UserContext.users.First(a => a.username == name);
+            var record = Entities.users.First(a => a.username == name);
             if (null != record)
             {
                 socket.Send(Transport.ConstructMessage(message.ReturnTo , TransportProtocol.SEND_USER_OPTIONS , record.accessflags.ToString()));
@@ -253,36 +263,38 @@ namespace Server
 
         }
 
-        private static void UpdateIndividualRecord(string message)
+        private static void UpdateIndividualRecord(Socket socket, MessageObj message)
         {
             individual c = new individual();
             try
             {
 
-                c = JsonConvert.DeserializeObject<individual>(message);
+                c = JsonConvert.DeserializeObject<individual>(message.Message);
                 individual record = Entities.individuals.First(a => a.id == c.id);
                 record.firstname = c.firstname;
                 record.lastname = c.lastname;
                 record.addresses_individual = c.addresses_individual;
                 record.phone = c.phone;
+                record.phonenumbers_individual = c.phonenumbers_individual;
                 record.financialsupport = c.financialsupport;
                 record.actions_individual = c.actions_individual;
+                record.social_media_individual = c.social_media_individual;
                 record.sunshineid = c.sunshineid;
                 record.source = c.source;
 
-                Entities.SaveChanges();
+                
             }
             catch (InvalidOperationException)
             {
                 Entities.individuals.Add(c);
-                Entities.SaveChanges();
+                
             }
-            catch
-            {
-                //Console.WriteLine(e.ToString());
-                throw;
+            finally{
+                Entities.SaveChanges();
+                socket.Send(Transport.ConstructMessage(20 , TransportProtocol.STATUS_UPDATE , $"{c.ToString()} saved."));
             }
 
+            
         }
 
         private static void SendSingleRecord(Socket socket , MessageObj message)
@@ -305,7 +317,7 @@ namespace Server
             {
                 string name = manager.GetUserNameFromSocket(socket);
 
-                user u = UserContext.users.First(a => a.username == name);
+                user u = Entities.users.First(a => a.username == name);
                 if (u.password == message)
                 {
                     socket.Send(Transport.ConstructMessage(FormID , TransportProtocol.AUTHENTICATED));
@@ -324,7 +336,7 @@ namespace Server
 
             manager.SetUserForSocket(socket , v);
 
-            user u = UserContext.users.FirstOrDefault(a => a.username.Equals(v.ToLower()));
+            user u = Entities.users.FirstOrDefault(a => a.username.Equals(v.ToLower()));
             if (null != u)
             {
                 socket.Send(Transport.ConstructMessage(FormID , TransportProtocol.SEND_PASSWORD));

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
+using Contact_App.Forms;
 using Contact_App.Interfaces;
+using Contact_App.UserControls;
 using ModelLibrary;
 using Newtonsoft.Json;
 
@@ -12,6 +15,7 @@ namespace DataInputForms
 
         private List<actions_organization> actions;
         private organization savedRecord, workingRecord;
+        public int RecordID { get { return savedRecord.orgid; } }
 
         //Hate this need a workaround
         private string[] states = {"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Conneticut","Delaware","Florida",
@@ -116,6 +120,18 @@ namespace DataInputForms
                 wtrOrgName.Text = savedRecord.name;
                 wtrPhone.Text = savedRecord.phone;
                 SetFinancialSupport(savedRecord.financialsupport);
+                if (null != savedRecord.phonenumbers_organization)
+                {
+                    foreach (var item in savedRecord.phonenumbers_organization)
+                    {
+                        PhoneAdd pa = new PhoneAdd();
+                        pa.SetText(item.phonenumber);
+                        flpPhoneNumbers.Controls.Add(pa);
+                    }
+                }
+
+
+
                 if (null != savedRecord.actions_organization)
                 {
                     ICollection<IAction> items = new List<IAction>();
@@ -144,15 +160,22 @@ namespace DataInputForms
                     }
                 }
 
-
+                foreach (var item in savedRecord.social_media_organization)
+                {
+                    flpSocial.Controls.Add(
+                        new SocialMediaLink(item.sm_title , Encoding.ASCII.GetString(item.sm_link))
+                        {
+                            SMType = item.sm_type
+                        });
+                }
 
             }
         }
 
         private void SetFinancialSupport(bool? state)
         {
-            rdoFinYes.Checked = (bool) state;
-            rdoFinNo.Checked = (bool) !state;
+            rdoFinYes.Checked = ( bool ) state;
+            rdoFinNo.Checked = ( bool ) !state;
         }
 
         private void lstActions_MouseDoubleClick(object sender , MouseEventArgs e)
@@ -179,6 +202,37 @@ namespace DataInputForms
             workingRecord.name = wtrOrgName.Text;
             workingRecord.orgsunshineid = wtrID.Text;
             workingRecord.phone = wtrPhone.Text;
+
+            workingRecord.phonenumbers_organization.Clear();
+            foreach (var item in flpPhoneNumbers.Controls)
+            {
+                if (item is PhoneAdd)
+                {
+                    workingRecord.phonenumbers_organization.Add(new phonenumbers_organization()
+                    {
+                        ownerID = workingRecord.orgid ,
+                        phonenumber = (item as PhoneAdd).GetText()
+                    });
+                }
+            }
+            workingRecord.social_media_organization.Clear();
+            foreach (var item in flpSocial.Controls)
+            {
+                if (item is SocialMediaLink)
+                {
+                    workingRecord.social_media_organization.Add(new social_media_organization()
+                    {
+                        sm_org_id = workingRecord.orgid ,
+                        sm_title = (item as SocialMediaLink).LinkTitle ,
+                        sm_link = Encoding.ASCII.GetBytes((item as SocialMediaLink).LinkURL) ,
+                        sm_type = (item as SocialMediaLink).SMType
+                        
+                    });
+                }
+            }
+
+
+
             workingRecord.addresses_organization.Clear();
             AddAddressToRecord(workingRecord.addresses_organization , GetPrimaryAddress());
             AddAddressToRecord(workingRecord.addresses_organization , GetSecondaryAddress());
@@ -210,6 +264,21 @@ namespace DataInputForms
             a.primary = false;
 
             return a;
+        }
+
+        private void btnAddPhone_Click(object sender , EventArgs e)
+        {
+            PhoneAdd pa = new PhoneAdd();
+            flpPhoneNumbers.Controls.Add(pa);
+        }
+
+        private void btnAddSM_Click(object sender , EventArgs e)
+        {
+            AddSocialMedia asm = new AddSocialMedia()
+            {
+                Panel = flpSocial
+            };
+            asm.ShowDialog();
         }
 
         private addresses_organization GetPrimaryAddress()

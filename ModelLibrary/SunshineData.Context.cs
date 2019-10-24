@@ -37,5 +37,8 @@ namespace ModelLibrary
         public virtual DbSet<sm_types> sm_types { get; set; }
         public virtual DbSet<social_media_individual> social_media_individual { get; set; }
         public virtual DbSet<social_media_organization> social_media_organization { get; set; }
+        public virtual DbSet<actiontype> actiontypes { get; set; }
+        public virtual DbSet<contacttype> contacttypes { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

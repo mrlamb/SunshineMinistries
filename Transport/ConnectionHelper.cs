@@ -9,6 +9,6 @@ namespace Transportation
     public static partial class Transport
     {
         public static string RemoteIP { get { return remoteIP; } }
-        private static readonly string remoteIP = "192.168.1.127";
+        private static readonly string remoteIP = "10.189.241.55";
     }
 }

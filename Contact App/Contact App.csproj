@@ -108,12 +108,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddSocialMedia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddSocialMedia.Designer.cs">
+      <DependentUpon>AddSocialMedia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IRecordView.cs" />
     <Compile Include="Forms\ActionDetail.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ActionDetail.designer.cs">
       <DependentUpon>ActionDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RoundButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\OptionsSocialMediaTypes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\OptionsSocialMediaTypes.Designer.cs">
+      <DependentUpon>OptionsSocialMediaTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OptionsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\OptionsView.Designer.cs">
+      <DependentUpon>OptionsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PhoneAdd.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\PhoneAdd.Designer.cs">
+      <DependentUpon>PhoneAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\RecordViewTabPage.cs">
       <SubType>Component</SubType>
@@ -153,14 +180,24 @@
     <Compile Include="Forms\UserAccessControl.Designer.cs">
       <DependentUpon>UserAccessControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SocialMediaLink.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\SocialMediaLink.Designer.cs">
+      <DependentUpon>SocialMediaLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\WaterMarkTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\WaterMarkTextBox.designer.cs">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UtilityData.cs" />
     <EmbeddedResource Include="Forms\ActionDetail.resx">
       <DependentUpon>ActionDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddSocialMedia.resx">
+      <DependentUpon>AddSocialMedia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\IndividualForm.resx">
       <DependentUpon>IndividualForm.cs</DependentUpon>
@@ -170,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\OptionsSocialMediaTypes.resx">
+      <DependentUpon>OptionsSocialMediaTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\OrganizationForm.resx">
       <DependentUpon>OrganizationForm.cs</DependentUpon>
@@ -181,6 +221,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserAccessControl.resx">
       <DependentUpon>UserAccessControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\PhoneAdd.resx">
+      <DependentUpon>PhoneAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RecordViewTabPage.resx">
+      <DependentUpon>RecordViewTabPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\SocialMediaLink.resx">
+      <DependentUpon>SocialMediaLink.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WaterMarkTextBox.resx">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
@@ -210,9 +259,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ModelLibrary\ModelLibrary.csproj">
       <Project>{088ece6b-e4b4-4990-94aa-b9671882bd2b}</Project>
       <Name>ModelLibrary</Name>
@@ -224,6 +270,15 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlusSign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedX.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedX2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

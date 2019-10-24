@@ -31,9 +31,13 @@ namespace Contact_App
             if (!DesignMode)
             {
                 if (wtrTextBox.Text != String.Empty)
+                {
                     wtrLabel.Hide();
+                }
                 else
+                {
                     wtrLabel.Text = this.Tag.ToString();
+                }
             }
 
         }

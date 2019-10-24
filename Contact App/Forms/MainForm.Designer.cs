@@ -30,8 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusMainForm = new System.Windows.Forms.StatusStrip();
+            this.tsslMainForm = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.organizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.individualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabDashboard = new System.Windows.Forms.TabPage();
@@ -41,12 +45,11 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.organizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.individualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
+            this.socialMediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusMainForm.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabDashboard.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -55,11 +58,18 @@
             // 
             // statusMainForm
             // 
+            this.statusMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslMainForm});
             this.statusMainForm.Location = new System.Drawing.Point(0, 960);
             this.statusMainForm.Name = "statusMainForm";
             this.statusMainForm.Size = new System.Drawing.Size(1264, 22);
             this.statusMainForm.TabIndex = 21;
             this.statusMainForm.Text = "Waiting to connect...";
+            // 
+            // tsslMainForm
+            // 
+            this.tsslMainForm.Name = "tsslMainForm";
+            this.tsslMainForm.Size = new System.Drawing.Size(0, 17);
             // 
             // menuStrip1
             // 
@@ -80,10 +90,34 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.organizationToolStripMenuItem,
+            this.individualToolStripMenuItem});
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.newToolStripMenuItem.Text = "New";
+            // 
+            // organizationToolStripMenuItem
+            // 
+            this.organizationToolStripMenuItem.Name = "organizationToolStripMenuItem";
+            this.organizationToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.organizationToolStripMenuItem.Text = "Organization";
+            this.organizationToolStripMenuItem.Click += new System.EventHandler(this.organizationToolStripMenuItem_Click);
+            // 
+            // individualToolStripMenuItem
+            // 
+            this.individualToolStripMenuItem.Name = "individualToolStripMenuItem";
+            this.individualToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.individualToolStripMenuItem.Text = "Individual";
+            this.individualToolStripMenuItem.Click += new System.EventHandler(this.individualToolStripMenuItem_Click);
+            // 
             // administrateToolStripMenuItem
             // 
             this.administrateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usersToolStripMenuItem});
+            this.usersToolStripMenuItem,
+            this.socialMediaToolStripMenuItem});
             this.administrateToolStripMenuItem.Name = "administrateToolStripMenuItem";
             this.administrateToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.administrateToolStripMenuItem.Text = "Administrate";
@@ -139,6 +173,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 52);
             this.tabControl.MinimumSize = new System.Drawing.Size(200, 200);
             this.tabControl.Name = "tabControl";
+            this.tabControl.Padding = new System.Drawing.Point(16, 3);
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1264, 908);
             this.tabControl.TabIndex = 23;
@@ -180,28 +215,17 @@
             this.toolStripButton2.Text = "toolStripButton2";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
-            // newToolStripMenuItem
+            // toolStripButtonSearch
             // 
-            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.organizationToolStripMenuItem,
-            this.individualToolStripMenuItem});
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newToolStripMenuItem.Text = "New";
-            // 
-            // organizationToolStripMenuItem
-            // 
-            this.organizationToolStripMenuItem.Name = "organizationToolStripMenuItem";
-            this.organizationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.organizationToolStripMenuItem.Text = "Organization";
-            this.organizationToolStripMenuItem.Click += new System.EventHandler(this.organizationToolStripMenuItem_Click);
-            // 
-            // individualToolStripMenuItem
-            // 
-            this.individualToolStripMenuItem.Name = "individualToolStripMenuItem";
-            this.individualToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.individualToolStripMenuItem.Text = "Individual";
-            this.individualToolStripMenuItem.Click += new System.EventHandler(this.individualToolStripMenuItem_Click);
+            this.toolStripButtonSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSearch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSearch.Image")));
+            this.toolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSearch.Margin = new System.Windows.Forms.Padding(0, 1, 10, 2);
+            this.toolStripButtonSearch.Name = "toolStripButtonSearch";
+            this.toolStripButtonSearch.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSearch.Text = "toolStripButtonSearch";
+            this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
             // 
             // toolStripTextBox
             // 
@@ -218,17 +242,12 @@
             this.toolStripLabelSearch.Size = new System.Drawing.Size(72, 22);
             this.toolStripLabelSearch.Text = "Search";
             // 
-            // toolStripButtonSearch
+            // socialMediaToolStripMenuItem
             // 
-            this.toolStripButtonSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSearch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSearch.Image")));
-            this.toolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSearch.Margin = new System.Windows.Forms.Padding(0, 1, 10, 2);
-            this.toolStripButtonSearch.Name = "toolStripButtonSearch";
-            this.toolStripButtonSearch.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonSearch.Text = "toolStripButtonSearch";
-            this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
+            this.socialMediaToolStripMenuItem.Name = "socialMediaToolStripMenuItem";
+            this.socialMediaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.socialMediaToolStripMenuItem.Text = "Social Media";
+            this.socialMediaToolStripMenuItem.Click += new System.EventHandler(this.socialMediaToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -247,6 +266,8 @@
             this.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.Text = "Contacts App";
             this.Load += new System.EventHandler(this.MainForm_OnLoad);
+            this.statusMainForm.ResumeLayout(false);
+            this.statusMainForm.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabDashboard.ResumeLayout(false);
@@ -277,6 +298,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSearch;
+        private System.Windows.Forms.ToolStripStatusLabel tsslMainForm;
+        private System.Windows.Forms.ToolStripMenuItem socialMediaToolStripMenuItem;
     }
 }
 

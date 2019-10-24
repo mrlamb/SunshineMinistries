@@ -16,6 +16,7 @@ namespace Contact_App
         public byte ID { get; set; }
         private IRecordView uc;
         private object savedContact;
+        public int RecordID { get { return uc.RecordID; } }
 
         public RecordViewTabPage(IRecordView uc)
         {
@@ -68,6 +69,13 @@ namespace Contact_App
             }
             savedContact = uc.GetData();
             return savedContact; 
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.ResumeLayout(false);
+
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using Newtonsoft.Json;
 using ModelLibrary;
+using Contact_App.UserControls;
 
 namespace Contact_App
 {
@@ -38,7 +39,11 @@ namespace Contact_App
                         break;
                     //A request to update the status bar was sent (for user feedback)
                     case TransportProtocol.STATUS_UPDATE:
-
+                        Invoke(new EventHandler(delegate { tsslMainForm.Text = mo.Message; }));
+                        break;
+                    //A request to update the social media types came in
+                    case TransportProtocol.SEND_SOCIAL_MEDIA_TYPES:
+                        UtilityData.SocialMediaTypes = JsonConvert.DeserializeObject<List<sm_types>>(mo.Message);
                         break;
                     default:
                         break;
@@ -86,6 +91,8 @@ namespace Contact_App
             //Set our event handler for receiving messages
             Transport.messageReceivedEvent += MessageReceivedEventHandler;
 
+            //Populate Utility Data
+            Program.stateObject.workSocket.Send(Transport.ConstructMessage(FormID , TransportProtocol.SEND_SOCIAL_MEDIA_TYPES));
             //Show Administrate if User Level Allows
             if ((Program.UserOptions & Program.UserAccessOptions.UserControl) == Program.UserAccessOptions.UserControl)
             {
@@ -109,10 +116,32 @@ namespace Contact_App
                 RecordViewTabPage icp;
                 if (lstRecordSelector.Items[index] is individual)
                 {
+                    foreach (TabPage item in tabControl.TabPages)
+                    {
+                        if (item is RecordViewTabPage)
+                        {
+                            if ((item as RecordViewTabPage).RecordID == (lstRecordSelector.Items[index] as individual).id)
+                            {
+                                tabControl.SelectedTab = item;
+                                return;
+                            } 
+                        }
+                    }
                     icp = new RecordViewTabPage(new DataInputForms.IndividualForm()); 
                 }
                 else
                 {
+                    foreach (TabPage item in tabControl.TabPages)
+                    {
+                        if (item is RecordViewTabPage)
+                        {
+                            if ((item as RecordViewTabPage).RecordID == (lstRecordSelector.Items[index] as organization).orgid)
+                            {
+                                tabControl.SelectedTab = item;
+                                return;
+                            } 
+                        }
+                    }
                     icp = new RecordViewTabPage(new DataInputForms.OrganizationForm());
                 }
 
@@ -145,9 +174,10 @@ namespace Contact_App
         private void toolStripButton1_Click(object sender , EventArgs e)
         {
 
-
+            //Old Add New Button
         }
 
+        //Save button
         private void toolStripButton2_Click(object sender , EventArgs e)
         {
             if (tabControl.SelectedTab is RecordViewTabPage)
@@ -169,8 +199,13 @@ namespace Contact_App
 
         private void tabControl_DrawItem(object sender , DrawItemEventArgs e)
         {
-            e.Graphics.DrawString("x" , e.Font , Brushes.Black , e.Bounds.Right - 10 , e.Bounds.Top + 4);
-            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text , e.Font , Brushes.Black , e.Bounds.Left + 3 , e.Bounds.Top + 4);
+            if (e.Index == 0)
+            {
+                e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text , e.Font , Brushes.Black , e.Bounds.Left + 3 , e.Bounds.Top + 4);
+                return;
+            }
+            e.Graphics.DrawString("x" , e.Font , Brushes.Black , e.Bounds.Right - 16 , e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.tabControl.TabPages[e.Index].Text, e.Font , Brushes.Black , e.Bounds.Left + 3 , e.Bounds.Top + 4);
             e.DrawFocusRectangle();
         }
 
@@ -178,7 +213,7 @@ namespace Contact_App
         {
 
             Rectangle r = tabControl.GetTabRect(this.tabControl.SelectedIndex);
-            Rectangle closeButton = new Rectangle(r.Right - 10, r.Top + 4, 9, 7);
+            Rectangle closeButton = new Rectangle(r.Right - 16, r.Top + 4, 9, 7);
             if (closeButton.Contains(e.Location))
             {
                 this.tabControl.TabPages.Remove(this.tabControl.SelectedTab);
@@ -208,6 +243,16 @@ namespace Contact_App
                 Program.stateObject.workSocket.Send(Transport.ConstructMessage(
                     this.FormID , TransportProtocol.SEARCH_WITH_TERM , toolStripTextBox.Text));
             }
+        }
+
+        private void socialMediaToolStripMenuItem_Click(object sender , EventArgs e)
+        {
+            TabPage t = new TabPage();
+            t.Text = "Social Media Types";
+            t.Controls.Add(new OptionsSocialMediaTypes());
+            tabControl.TabPages.Add(t);
+            tabControl.SelectedTab = t;
+
         }
     }
 }

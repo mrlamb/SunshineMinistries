@@ -12,12 +12,8 @@ namespace ModelLibrary
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class actiontype
     {
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public byte accessflags { get; set; }
-        public string email { get; set; }
+        public string actionType1 { get; set; }
     }
 }

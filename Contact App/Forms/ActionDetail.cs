@@ -31,7 +31,7 @@ namespace DataInputForms
         {
             if (null == myAction)
             {
-                myAction = new ModelLibrary.IndividualsModel.action();
+                myAction = new actions_individual();
 
             }
             
