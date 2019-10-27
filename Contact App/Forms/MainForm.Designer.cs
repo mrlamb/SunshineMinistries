@@ -44,11 +44,12 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
-            this.toolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusMainForm.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabDashboard.SuspendLayout();
@@ -75,7 +76,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.administrateToolStripMenuItem});
+            this.administrateToolStripMenuItem,
+            this.reportsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 3);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1264, 24);
@@ -202,6 +204,21 @@
             this.toolStrip1.TabIndex = 24;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripTextBox
+            // 
+            this.toolStripTextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripTextBox.Margin = new System.Windows.Forms.Padding(1, 0, 5, 0);
+            this.toolStripTextBox.Name = "toolStripTextBox";
+            this.toolStripTextBox.Size = new System.Drawing.Size(150, 25);
+            // 
+            // toolStripLabelSearch
+            // 
+            this.toolStripLabelSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabelSearch.Name = "toolStripLabelSearch";
+            this.toolStripLabelSearch.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.toolStripLabelSearch.Size = new System.Drawing.Size(72, 22);
+            this.toolStripLabelSearch.Text = "Search";
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -234,20 +251,12 @@
             this.toolStripButtonSearch.Text = "toolStripButtonSearch";
             this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
             // 
-            // toolStripTextBox
+            // reportsToolStripMenuItem
             // 
-            this.toolStripTextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripTextBox.Margin = new System.Windows.Forms.Padding(1, 0, 5, 0);
-            this.toolStripTextBox.Name = "toolStripTextBox";
-            this.toolStripTextBox.Size = new System.Drawing.Size(150, 25);
-            // 
-            // toolStripLabelSearch
-            // 
-            this.toolStripLabelSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabelSearch.Name = "toolStripLabelSearch";
-            this.toolStripLabelSearch.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.toolStripLabelSearch.Size = new System.Drawing.Size(72, 22);
-            this.toolStripLabelSearch.Text = "Search";
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.reportsToolStripMenuItem.Text = "Reports";
+            this.reportsToolStripMenuItem.Click += new System.EventHandler(this.reportsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -302,6 +311,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelSearch;
         private System.Windows.Forms.ToolStripStatusLabel tsslMainForm;
         private System.Windows.Forms.ToolStripMenuItem socialMediaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
     }
 }
 

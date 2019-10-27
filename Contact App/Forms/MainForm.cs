@@ -268,5 +268,14 @@ namespace Contact_App
             tabControl.SelectedTab = t;
 
         }
+
+        private void reportsToolStripMenuItem_Click(object sender , EventArgs e)
+        {
+            TabPage t = new TabPage();
+            t.Text = "Reports";
+            t.Controls.Add(new ReportTab());
+            tabControl.TabPages.Add(t);
+            tabControl.SelectedTab = t;
+        }
     }
 }

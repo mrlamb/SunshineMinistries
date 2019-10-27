@@ -115,6 +115,7 @@
     <Compile Include="Forms\AddSocialMedia.Designer.cs">
       <DependentUpon>AddSocialMedia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IFilter.cs" />
     <Compile Include="Interfaces\IRecordView.cs" />
     <Compile Include="Forms\ActionDetail.cs">
       <SubType>Form</SubType>
@@ -124,6 +125,18 @@
     </Compile>
     <Compile Include="RoundButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\FilterBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FilterBase.Designer.cs">
+      <DependentUpon>FilterBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FilterWhere.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FilterWhere.Designer.cs">
+      <DependentUpon>FilterWhere.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\OptionsSocialMediaTypes.cs">
       <SubType>UserControl</SubType>
@@ -181,6 +194,12 @@
     <Compile Include="Forms\UserAccessControl.Designer.cs">
       <DependentUpon>UserAccessControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ReportTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ReportTab.Designer.cs">
+      <DependentUpon>ReportTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SocialMediaLink.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddSocialMedia.resx">
       <DependentUpon>AddSocialMedia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\FilterWhere.resx">
+      <DependentUpon>FilterWhere.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\IndividualForm.resx">
       <DependentUpon>IndividualForm.cs</DependentUpon>
@@ -228,6 +250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\RecordViewTabPage.resx">
       <DependentUpon>RecordViewTabPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ReportTab.resx">
+      <DependentUpon>ReportTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SocialMediaLink.resx">
       <DependentUpon>SocialMediaLink.cs</DependentUpon>
