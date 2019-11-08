@@ -105,12 +105,18 @@
     <Compile Include="contacttype.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\IDataAccess.cs" />
+    <Compile Include="DataAccess\UserDataAccess.cs" />
+    <Compile Include="Internal\DataAccess\DataAccess.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="IAuthentication.cs" />
     <Compile Include="individual.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="KnownTypesBinder.cs" />
     <Compile Include="ModelHelper.cs" />
+    <Compile Include="Models\UserAccessOptions.cs" />
+    <Compile Include="Models\UserCredentials.cs" />
     <Compile Include="officer.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
@@ -124,6 +130,7 @@
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="sm_types.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
@@ -178,6 +185,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

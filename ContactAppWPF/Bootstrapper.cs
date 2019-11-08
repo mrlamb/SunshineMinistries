@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using ContactAppWPF.Helpers;
 using ContactAppWPF.ViewModels;
+using ModelLibrary;
 
 namespace ContactAppWPF
 {
@@ -17,7 +19,12 @@ namespace ContactAppWPF
         public Bootstrapper()
         {
             Initialize();
-          
+
+            ConventionManager.AddElementConvention<PasswordBox>(
+           PasswordBoxHelper.BoundPasswordProperty ,
+           "Password" ,
+           "PasswordChanged");
+
         }
 
         protected override void Configure()
@@ -27,6 +34,8 @@ namespace ContactAppWPF
             _container
                 .Singleton<IWindowManager , WindowManager>()
                 .Singleton<IEventAggregator , EventAggregator>();
+
+            _container.PerRequest<IAuthentication , Authentication>();
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

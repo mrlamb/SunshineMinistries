@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ModelLibrary.Models;
+using System.Data.Entity;
+using ModelLibrary.DataAccess;
 
 namespace ModelLibrary
 {
-    public static class Authentication
+    public class Authentication : IAuthentication
     {
         public static readonly string AUTHENTICATION_FAILED = "Invalid login credentials.";
         public static readonly string AUTHENTICATION_SUCCESS = "Login successful.";
+        public static readonly string AUTHENTICATION_IN_PROGRESS = "Attempting Login...";
 
-        public static bool TryAuthenticateUser(string userName , string userPassword, out user user)
+        public UserCredentials Authenticate(string userName , string userPassword)
         {
-            using (var context = new sunshinedataEntities())
+            UserDataAccess uda = new UserDataAccess();
+            var u = uda.GetUserByUsername(userName);
+            if (null != u)
             {
-                user = context.users.FirstOrDefault(a => a.username == userName);
-                if (user != null)
+                if (u.password == userPassword)
                 {
-                    return user.password == userPassword;
-                }
-                else
-                {
-                    return false;
+                    return new UserCredentials()
+                    {
+                        UserAccessOptions = ( UserAccessOptions ) u.accessflags ,
+                        UserName = u.username
+                    };
                 }
             }
+            return null;
         }
     }
 }
