@@ -35,15 +35,16 @@
         </EntityType>
         <EntityType Name="addresses_individual">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="contactid" />
-            <PropertyRef Name="primary" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="contactid" Type="int" Nullable="false" />
           <Property Name="streetAddress" Type="varchar" MaxLength="45" />
           <Property Name="city" Type="varchar" MaxLength="45" />
           <Property Name="state" Type="varchar" MaxLength="45" />
           <Property Name="zip" Type="varchar" MaxLength="45" />
-          <Property Name="primary" Type="bool" Nullable="false" />
+          <Property Name="primary" Type="bool" />
         </EntityType>
         <EntityType Name="addresses_organization">
           <Key>
@@ -178,18 +179,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_addresses_individual">
-          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
-          <End Role="addresses_individual" Type="Self.addresses_individual" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="individuals">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="addresses_individual">
-              <PropertyRef Name="contactid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_addresses_organization">
           <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
           <End Role="addresses_organization" Type="Self.addresses_organization" Multiplicity="*" />
@@ -199,6 +188,18 @@
             </Principal>
             <Dependent Role="addresses_organization">
               <PropertyRef Name="orgid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_addresses_to_individual">
+          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
+          <End Role="addresses_individual" Type="Self.addresses_individual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="individuals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="addresses_individual">
+              <PropertyRef Name="contactid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -322,13 +323,13 @@
             <End Role="individuals" EntitySet="individuals" />
             <End Role="actions_individual" EntitySet="actions_individual" />
           </AssociationSet>
-          <AssociationSet Name="fk_addresses_individual" Association="Self.fk_addresses_individual">
-            <End Role="individuals" EntitySet="individuals" />
-            <End Role="addresses_individual" EntitySet="addresses_individual" />
-          </AssociationSet>
           <AssociationSet Name="fk_addresses_organization" Association="Self.fk_addresses_organization">
             <End Role="organizations" EntitySet="organizations" />
             <End Role="addresses_organization" EntitySet="addresses_organization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_addresses_to_individual" Association="Self.fk_addresses_to_individual">
+            <End Role="individuals" EntitySet="individuals" />
+            <End Role="addresses_individual" EntitySet="addresses_individual" />
           </AssociationSet>
           <AssociationSet Name="fk_officers_to_ind" Association="Self.fk_officers_to_ind">
             <End Role="individuals" EntitySet="individuals" />
@@ -377,7 +378,6 @@
           <Property Name="completedBy" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="Notes" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="date" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="individual" Relationship="Self.fk_actions_to_Ind" FromRole="actions_individual" ToRole="individuals" />
         </EntityType>
         <EntityType Name="actions_organization">
           <Key>
@@ -393,16 +393,17 @@
         </EntityType>
         <EntityType Name="addresses_individual">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="contactid" />
-            <PropertyRef Name="primary" />
           </Key>
           <Property Name="contactid" Type="Int32" Nullable="false" />
           <Property Name="streetAddress" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="city" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="zip" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="primary" Type="Boolean" Nullable="false" />
+          <Property Name="primary" Type="Boolean" Nullable="true" />
           <NavigationProperty Name="individual" Relationship="Self.fk_addresses_individual" FromRole="addresses_individual" ToRole="individuals" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="addresses_organization">
           <Key>
@@ -780,6 +781,7 @@
           <EntitySetMapping Name="addresses_individual">
             <EntityTypeMapping TypeName="SunshineDataModel.addresses_individual">
               <MappingFragment StoreEntitySet="addresses_individual">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="contactid" ColumnName="contactid" />
                 <ScalarProperty Name="streetAddress" ColumnName="streetAddress" />
                 <ScalarProperty Name="city" ColumnName="city" />

@@ -90,6 +90,14 @@ namespace ModelLibrary
         }
     }
 
+    public partial class addresses_individual
+    {
+        public override string ToString()
+        {
+            return $"{streetAddress} {city}, {state} {zip}"; 
+        }
+    }
+
     public partial class actions_organization : IAction
     {
         public actions_organization()

@@ -16,14 +16,16 @@ namespace Contact_App.UserControls
 {
     public partial class ReportTab : UserControl
     {
+        private MainForm parent;
         class DraggableTreeNode : TreeNode
         {
             public PropertyInfo PInfo { get; set; }
             
         }
-        public ReportTab()
+        public ReportTab(MainForm parent)
         {
             InitializeComponent();
+            this.parent = parent;
         }
 
         private void ReportTab_Load(object sender , EventArgs e)
@@ -173,6 +175,56 @@ namespace Contact_App.UserControls
         private void btnOrderBy_Click(object sender , EventArgs e)
         {
 
+        }
+
+        private void btnGenerateReport_Click(object sender , EventArgs e)
+        {
+            parent.StatusMessageText = "";
+            if (flpColumns.Controls.Count == 0)
+            {
+                parent.StatusMessageText = "No columns selected for report.";
+                return;
+            }
+            else
+            {
+                var columnNames = new List<string>();
+                foreach (var item in flpColumns.Controls)
+                {
+                    if (item is Button)
+                    {
+                        columnNames.Add((item as Button).Text);
+                    }
+                }
+                var query = Controller.QueryBuilder.BuildQueryItem(columnNames.ToArray(), null);
+                var results = Controller.QueryBuilder.ExecuteQueries(query);
+
+                TabPage t = new TabPage();
+                t.Text = wtrReportTitle.Text;
+                ReportView rv = new ReportView();
+                rv.Parent = this;
+                rv.SetTitle(wtrReportTitle.Text);
+                rv.CreateRows(results);
+                t.Controls.Add(rv);
+                parent.AddTab(t);
+                parent.SelectTab(t);
+
+            }
+        }
+
+        private void tvColumns_DoubleClick(object sender , EventArgs e)
+        {
+            if (tvColumns.SelectedNode is DraggableTreeNode)
+            {
+                DraggableTreeNode dtn = (DraggableTreeNode)tvColumns.SelectedNode;
+                Button btn = new Button()
+                {
+                    AutoSize = true,
+                    Text = $"{dtn.PInfo.ReflectedType.Name}.{dtn.PInfo.Name}"
+                };
+                btn.Click += new EventHandler(delegate { btn.Dispose(); });
+                flpColumns.Controls.Add(btn);
+
+            }
         }
     }
 }

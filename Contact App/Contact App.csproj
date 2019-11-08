@@ -83,6 +83,10 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ObjectListView, Version=2.9.1.1072, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.Official.2.9.1\lib\net20\ObjectListView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
       <Private>True</Private>
@@ -94,6 +98,10 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -108,7 +116,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\QueryableItem.cs" />
     <Compile Include="Controller\QueryBuilder.cs" />
+    <Compile Include="Controller\Report.cs" />
     <Compile Include="Forms\AddSocialMedia.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +147,12 @@
     </Compile>
     <Compile Include="UserControls\FilterWhere.Designer.cs">
       <DependentUpon>FilterWhere.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FrontPageWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FrontPageWidget.Designer.cs">
+      <DependentUpon>FrontPageWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\OptionsSocialMediaTypes.cs">
       <SubType>UserControl</SubType>
@@ -200,6 +216,12 @@
     <Compile Include="UserControls\ReportTab.Designer.cs">
       <DependentUpon>ReportTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ReportView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ReportView.Designer.cs">
+      <DependentUpon>ReportView.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SocialMediaLink.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -212,6 +234,12 @@
     <Compile Include="UserControls\WaterMarkTextBox.designer.cs">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\WidgetReportReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\WidgetReportReturn.Designer.cs">
+      <DependentUpon>WidgetReportReturn.cs</DependentUpon>
+    </Compile>
     <Compile Include="UtilityData.cs" />
     <EmbeddedResource Include="Forms\ActionDetail.resx">
       <DependentUpon>ActionDetail.cs</DependentUpon>
@@ -221,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FilterWhere.resx">
       <DependentUpon>FilterWhere.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\FrontPageWidget.resx">
+      <DependentUpon>FrontPageWidget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\IndividualForm.resx">
       <DependentUpon>IndividualForm.cs</DependentUpon>
@@ -254,11 +285,17 @@
     <EmbeddedResource Include="UserControls\ReportTab.resx">
       <DependentUpon>ReportTab.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ReportView.resx">
+      <DependentUpon>ReportView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SocialMediaLink.resx">
       <DependentUpon>SocialMediaLink.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WaterMarkTextBox.resx">
       <DependentUpon>WaterMarkTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\WidgetReportReturn.resx">
+      <DependentUpon>WidgetReportReturn.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />

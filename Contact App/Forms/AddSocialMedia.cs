@@ -40,8 +40,13 @@ namespace Contact_App.Forms
                 return;
             }
 
+            if (null == cmbSMTypes.SelectedItem)
+            {
+                cmbSMTypes.SelectedIndex = cmbSMTypes.FindStringExact(cmbSMTypes.Text);
+            }
+
             SocialMediaLink sml = new SocialMediaLink(txtName.Text.Length != 0 ?
-               txtName.Text : cmbSMTypes.SelectedItem.ToString() , txtLink.Text)
+               txtName.Text : cmbSMTypes.Text  , txtLink.Text)
             {
                 SMType = (cmbSMTypes.SelectedItem as sm_types).sm_type_id
             };

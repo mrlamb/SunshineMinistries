@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8b67a563456e41ef9aab90ddca0282c6" Name="Diagram1">
-        <EntityTypeShape EntityType="SunshineDataModel.actions_individual" Width="1.5" PointX="6" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SunshineDataModel.actions_individual" Width="1.5" PointX="8" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.actions_organization" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.addresses_individual" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.addresses_organization" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />

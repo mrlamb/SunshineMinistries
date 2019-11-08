@@ -19,7 +19,8 @@ namespace ModelLibrary
         public string city { get; set; }
         public string state { get; set; }
         public string zip { get; set; }
-        public bool primary { get; set; }
+        public Nullable<bool> primary { get; set; }
+        public int id { get; set; }
     
         public virtual individual individual { get; set; }
     }

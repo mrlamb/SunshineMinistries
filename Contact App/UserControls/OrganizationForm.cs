@@ -106,15 +106,15 @@ namespace DataInputForms
             ad.ShowDialog();
         }
 
-        public void SetData(object o)
+        public void SetData()
         {
-            savedRecord = ( organization ) o;
+            
             workingRecord = JsonConvert.DeserializeObject<organization>(JsonConvert.SerializeObject(savedRecord));
 
 
             if (this.InvokeRequired)
             {
-                this.Invoke(new EventHandler(delegate { SetData(savedRecord); }));
+                this.Invoke(new EventHandler(delegate { SetData(); }));
             }
             else
             {

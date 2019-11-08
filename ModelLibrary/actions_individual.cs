@@ -19,7 +19,5 @@ namespace ModelLibrary
         public string completedBy { get; set; }
         public byte[] Notes { get; set; }
         public System.DateTime date { get; set; }
-    
-        public virtual individual individual { get; set; }
     }
 }

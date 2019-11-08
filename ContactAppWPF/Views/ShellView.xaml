@@ -1,0 +1,48 @@
+﻿<Window x:Class="ContactAppWPF.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ContactAppWPF.Views"
+        xmlns:cal="http://www.caliburnproject.org"
+        mc:Ignorable="d" FontSize="14"
+        Title="Sunshine Ministries" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        
+        <!-- Row 2-->
+        <Image Source="../Media/sunshine.png" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+        <!-- ROW 3-->
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="User Name:" VerticalAlignment="Center" />
+        <TextBox x:Name="UserName" Grid.Row="3" Grid.Column="3" Margin="10" MinWidth="100"/>
+        
+        <!-- Row 4-->
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="Password:" VerticalAlignment="Center" />
+        <PasswordBox cal:Message.Attach="[Event PasswordChanged] =  [Action OnPasswordChanged($source)]"
+                     Grid.Row="4" Grid.Column="3" Margin="10"/>
+
+        <!-- Row 5-->
+        <Button x:Name="AuthenticateUser" Grid.Row="5" Grid.Column="2" Content="Login" Margin="5"/>
+        
+        <!-- Row 6-->
+        <TextBlock x:Name="ErrorMessage" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+    </Grid>
+</Window>

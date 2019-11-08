@@ -7,13 +7,18 @@ using System.Net.Sockets;
 using Newtonsoft.Json;
 using ModelLibrary;
 using Contact_App.UserControls;
+using System.Linq.Dynamic;
 using System.Linq;
 using Contact_App.Controller;
+using System.Collections;
+using System.Reflection;
+using BrightIdeasSoftware;
 
 namespace Contact_App
 {
     public partial class MainForm : Form
     {
+        public string StatusMessageText { get { return tsslMainForm.Text; } set { tsslMainForm.Text = value; } }
         private sunshinedataEntities Entities = new sunshinedataEntities();
         public MainForm()
         {
@@ -43,11 +48,12 @@ namespace Contact_App
                         {
                             throw e;
                         }
-                    }else
+                    }
+                    else
                     {
                         result[i] = tmpResult;
                     }
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -70,13 +76,29 @@ namespace Contact_App
             {
                 administrateToolStripMenuItem.Visible = true;
             }
+            comboBox1.Items.Add(new Report()
+            {
+                Title = "Sample Report" ,
+                Queries = QueryBuilder.BuildQueryItem(new string[]
+                {
+                    "individual.firstname", "individual.lastname", "individual.addresses_individual"
+                } , null)
+            });
+            comboBox1.Items.Add(new Report()
+            {
+                Title = "Sample Report 2" ,
+                Queries = QueryBuilder.BuildQueryItem(new string[]
+                {
+                    "individual.firstname", "individual.lastname", "individual.phone"
+                } , null)
+            });
 
         }
 
         //Really misnamed, currently just sends a request to the server for the whole contact list.
         private void btnSearch_Click(object sender , EventArgs e)
         {
-            
+
             lstSearchResults.DataSource = Entities.individuals.ToList();
         }
 
@@ -127,7 +149,7 @@ namespace Contact_App
                 tabControl.TabPages.Add(icp);
                 tabControl.SelectedTab = icp;
 
-            
+
             }
         }
 
@@ -273,9 +295,37 @@ namespace Contact_App
         {
             TabPage t = new TabPage();
             t.Text = "Reports";
-            t.Controls.Add(new ReportTab());
+            t.Controls.Add(new ReportTab(this));
             tabControl.TabPages.Add(t);
             tabControl.SelectedTab = t;
         }
+
+        public void AddTab(TabPage tp)
+        {
+            tabControl.Controls.Add(tp);
+        }
+
+        public void SelectTab(TabPage tp)
+        {
+            tabControl.SelectedTab = tp;
+        }
+
+        private void comboBox1_ControlAdded(object sender , ControlEventArgs e)
+        {
+            
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender , EventArgs e)
+        {
+            Report r = (Report) comboBox1.SelectedItem;
+            var results = QueryBuilder.ExecuteQueries(r.Queries);
+
+            ReportView rv = new ReportView();
+            rv.SetTitle(r.Title);
+            rv.CreateRows(results);
+            gboReportView.Controls.Clear();
+            gboReportView.Controls.Add(rv);
+        }
     }
 }
+
