@@ -7,8 +7,11 @@ using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ContactAppWPF.Helpers;
+using ContactAppWPF.Models;
 using ContactAppWPF.ViewModels;
 using ModelLibrary;
+using ModelLibrary.DataAccess;
+using ModelLibrary.Models;
 
 namespace ContactAppWPF
 {
@@ -33,9 +36,18 @@ namespace ContactAppWPF
 
             _container
                 .Singleton<IWindowManager , WindowManager>()
-                .Singleton<IEventAggregator , EventAggregator>();
+                .Singleton<IEventAggregator , EventAggregator>()
+                .Singleton<UserCredentials>()
+                .Singleton<SearchAggregator>()
+                .Singleton<StateListHelper>()
+                .Singleton<ReportModel>();
 
-            _container.PerRequest<IAuthentication , Authentication>();
+            _container.PerRequest<IAuthentication , Authentication>()
+                .PerRequest<OrgTypeDataAccess>()
+                .PerRequest<IndividualDataAccess>()
+                .PerRequest<OrganizationDataAccess>()
+                .PerRequest<UserDataAccess>()
+                .PerRequest<ActionTypesDataAccess>();
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

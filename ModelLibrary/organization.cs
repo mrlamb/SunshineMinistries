@@ -22,14 +22,17 @@ namespace ModelLibrary
             this.officers = new HashSet<officer>();
             this.phonenumbers_organization = new HashSet<phonenumbers_organization>();
             this.social_media_organization = new HashSet<social_media_organization>();
+            this.individuals = new HashSet<individual>();
         }
     
         public int orgid { get; set; }
         public string orgsunshineid { get; set; }
         public string name { get; set; }
         public string phone { get; set; }
-        public Nullable<bool> financialsupport { get; set; }
+        public bool financialsupport { get; set; }
         public byte[] notes { get; set; }
+        public Nullable<int> org_type { get; set; }
+        public string nickname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<actions_organization> actions_organization { get; set; }
@@ -41,5 +44,8 @@ namespace ModelLibrary
         public virtual ICollection<phonenumbers_organization> phonenumbers_organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<social_media_organization> social_media_organization { get; set; }
+        public virtual org_types org_types { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<individual> individuals { get; set; }
     }
 }

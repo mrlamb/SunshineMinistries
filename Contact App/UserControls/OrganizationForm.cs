@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace DataInputForms
 {
-    public partial class OrganizationForm : UserControl, IRecordView, IHasActionList
+    public partial class OrganizationForm : UserControl, IRecordView//, IHasActionList
     {
 
         private List<actions_organization> actions;
@@ -35,7 +35,7 @@ namespace DataInputForms
             cmbState.DataSource = states;
             //Copy array to second array for combo 2
             states2 = new string[states.Length];
-            states.CopyTo(states2 , 0);
+            states.CopyTo(states2, 0);
             //Set second combo box
             cmbState2.DataSource = states2;
             //Set event handler for WtrmarkTextBox.WtrTextChanged 
@@ -57,12 +57,12 @@ namespace DataInputForms
         /// Used in updating the tab controls title with the contents of the WaterMarkTextBoxes for
         /// first name and last name.
         /// </summary>
-        private void TextChangedEventHandler(object sender , EventArgs e)
+        private void TextChangedEventHandler(object sender, EventArgs e)
         {
-            FormNameUpdated?.Invoke(sender , e);
+            FormNameUpdated?.Invoke(sender, e);
         }
 
-        public void InitializeActionList(ICollection<IAction> recordActions)
+        public void InitializeActionList(ICollection<actions_organization> recordActions)
         {
             actions = new List<actions_organization>();
             foreach (actions_organization a in recordActions)
@@ -72,7 +72,7 @@ namespace DataInputForms
             lstActions.DataSource = actions;
         }
 
-        public void SaveActionToList(IAction a)
+        public void SaveActionToList(actions_organization a)
         {
             //This means it's been saved before
             if (a.ownerID != 0)
@@ -91,7 +91,10 @@ namespace DataInputForms
             else
             {
                 a.ownerID = savedRecord.orgid;
-                actions_organization tmp = new actions_organization(a.ownerID, a.actionType, a.completedBy, a.Notes, a.date);
+                actions_organization tmp = new actions_organization()
+                {
+                    ownerID = a.ownerID, actionType = a.actionType, completedBy = a.completedBy, Notes = a.Notes, date = a.date
+                };
                 actions.Add(tmp);
             }
             CurrencyManager cm = (CurrencyManager)BindingContext[actions];
@@ -99,16 +102,16 @@ namespace DataInputForms
             cm.Refresh();
         }
 
-        private void btnAddAction_Click(object sender , EventArgs e)
+        private void btnAddAction_Click(object sender, EventArgs e)
         {
             ActionDetail ad = new ActionDetail();
-            ad.form = this;
-            ad.ShowDialog();
+            //ad.form = this;
+            //ad.ShowDialog();
         }
 
         public void SetData()
         {
-            
+
             workingRecord = JsonConvert.DeserializeObject<organization>(JsonConvert.SerializeObject(savedRecord));
 
 
@@ -135,10 +138,10 @@ namespace DataInputForms
 
                 if (null != savedRecord.actions_organization)
                 {
-                    ICollection<IAction> items = new List<IAction>();
+                    ICollection<actions_organization> items = new List<actions_organization>();
                     foreach (var item in savedRecord.actions_organization)
                     {
-                        items.Add(item);
+                        //items.Add(item);
                     }
                     InitializeActionList(items);
                 }
@@ -164,7 +167,7 @@ namespace DataInputForms
                 foreach (var item in savedRecord.social_media_organization)
                 {
                     flpSocial.Controls.Add(
-                        new SocialMediaLink(item.sm_title , Encoding.ASCII.GetString(item.sm_link))
+                        new SocialMediaLink(item.sm_title, Encoding.ASCII.GetString(item.sm_link))
                         {
                             SMType = item.sm_type
                         });
@@ -175,18 +178,18 @@ namespace DataInputForms
 
         private void SetFinancialSupport(bool? state)
         {
-            rdoFinYes.Checked = ( bool ) state;
-            rdoFinNo.Checked = ( bool ) !state;
+            rdoFinYes.Checked = (bool)state;
+            rdoFinNo.Checked = (bool)!state;
         }
 
-        private void lstActions_MouseDoubleClick(object sender , MouseEventArgs e)
+        private void lstActions_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int index = this.lstActions.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                ActionDetail ad = new ActionDetail(lstActions.SelectedItem as actions_organization);
-                ad.form = this;
-                ad.ShowDialog();
+                //ActionDetail ad = new ActionDetail(lstActions.SelectedItem as actions_organization);
+                //ad.form = this;
+                //ad.ShowDialog();
             }
         }
 
@@ -211,7 +214,7 @@ namespace DataInputForms
                 {
                     workingRecord.phonenumbers_organization.Add(new phonenumbers_organization()
                     {
-                        ownerID = workingRecord.orgid ,
+                        ownerID = workingRecord.orgid,
                         phonenumber = (item as PhoneAdd).GetText()
                     });
                 }
@@ -223,11 +226,11 @@ namespace DataInputForms
                 {
                     workingRecord.social_media_organization.Add(new social_media_organization()
                     {
-                        sm_org_id = workingRecord.orgid ,
-                        sm_title = (item as SocialMediaLink).LinkTitle ,
-                        sm_link = Encoding.ASCII.GetBytes((item as SocialMediaLink).LinkURL) ,
+                        sm_org_id = workingRecord.orgid,
+                        sm_title = (item as SocialMediaLink).LinkTitle,
+                        sm_link = Encoding.ASCII.GetBytes((item as SocialMediaLink).LinkURL),
                         sm_type = (item as SocialMediaLink).SMType
-                        
+
                     });
                 }
             }
@@ -235,8 +238,8 @@ namespace DataInputForms
 
 
             workingRecord.addresses_organization.Clear();
-            AddAddressToRecord(workingRecord.addresses_organization , GetPrimaryAddress());
-            AddAddressToRecord(workingRecord.addresses_organization , GetSecondaryAddress());
+            AddAddressToRecord(workingRecord.addresses_organization, GetPrimaryAddress());
+            AddAddressToRecord(workingRecord.addresses_organization, GetSecondaryAddress());
 
             if (null != workingRecord.actions_organization)
             {
@@ -249,7 +252,7 @@ namespace DataInputForms
             return workingRecord;
         }
 
-        private void AddAddressToRecord(ICollection<addresses_organization> addresses , addresses_organization v)
+        private void AddAddressToRecord(ICollection<addresses_organization> addresses, addresses_organization v)
         {
             addresses.Add(v);
         }
@@ -267,13 +270,13 @@ namespace DataInputForms
             return a;
         }
 
-        private void btnAddPhone_Click(object sender , EventArgs e)
+        private void btnAddPhone_Click(object sender, EventArgs e)
         {
             PhoneAdd pa = new PhoneAdd();
             flpPhoneNumbers.Controls.Add(pa);
         }
 
-        private void btnAddSM_Click(object sender , EventArgs e)
+        private void btnAddSM_Click(object sender, EventArgs e)
         {
             AddSocialMedia asm = new AddSocialMedia()
             {

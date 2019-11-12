@@ -40,5 +40,7 @@ namespace ModelLibrary
         public virtual DbSet<actiontype> actiontypes { get; set; }
         public virtual DbSet<contacttype> contacttypes { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<denomination> denominations { get; set; }
+        public virtual DbSet<org_types> org_types { get; set; }
     }
 }

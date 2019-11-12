@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 
 namespace DataInputForms
 {
-    public partial class IndividualForm : UserControl, IHasActionList, IRecordView
+    public partial class IndividualForm : UserControl, IRecordView//, IHasActionList
     {
         public event EventHandler FormNameUpdated;
 
@@ -107,10 +107,10 @@ namespace DataInputForms
                 SetFinancialSupport(savedRecord.financialsupport);
                 if (null != savedRecord.actions_individual)
                 {
-                    ICollection<IAction> items = new List<IAction>();
+                    ICollection<actions_individual> items = new List<actions_individual>();
                     foreach (var item in savedRecord.actions_individual)
                     {
-                        items.Add(item);
+                        //items.Add(item);
                     }
                     InitializeActionList(items);
                 }
@@ -182,9 +182,9 @@ namespace DataInputForms
             int index = this.lstActions.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                ActionDetail ad = new ActionDetail(lstActions.SelectedItem as actions_individual);
-                ad.form = this;
-                ad.ShowDialog();
+                //ActionDetail ad = new ActionDetail(lstActions.SelectedItem as actions_individual);
+                //ad.form = this;
+                //ad.ShowDialog();
             }
         }
 
@@ -192,7 +192,7 @@ namespace DataInputForms
         /// Initializes the ACTION listbox with the passed in collection of actions.
         /// </summary>
         /// <param name="actions">the passed in collection</param>
-        public void InitializeActionList(ICollection<IAction> recordActions)
+        public void InitializeActionList(ICollection<actions_individual> recordActions)
         {
             
             foreach (actions_individual a in recordActions)
@@ -206,7 +206,7 @@ namespace DataInputForms
         /// Checks if an action already exists in the list, if not it adds it.
         /// </summary>
         /// <param name="a">the action to save or add</param>
-        public void SaveActionToList(IAction a)
+        public void SaveActionToList(actions_individual a)
         {
             //This means it's been saved before
             if (a.ownerID != -1)
@@ -224,8 +224,8 @@ namespace DataInputForms
             }
             else
             {
-                (a as actions_individual).ownerID = savedRecord.id;
-                actions.Add(a as actions_individual);
+                (a).ownerID = savedRecord.id;
+                actions.Add(a);
             }
             CurrencyManager cm = (CurrencyManager)BindingContext[actions];
 
@@ -257,8 +257,8 @@ namespace DataInputForms
         private void btnAddAction_Click(object sender , EventArgs e)
         {
             ActionDetail ad = new ActionDetail();
-            ad.form = this;
-            ad.ShowDialog();
+            //ad.form = this;
+            //ad.ShowDialog();
         }
 
         public object GetData()

@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*Class UserDataAccess
+ * Contains methods to get particular users or lists of users from the underlying datastore
+ * 
+ * 
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +14,7 @@ using ModelLibrary.Internal.DataAccess;
 
 namespace ModelLibrary.DataAccess
 {
-    internal class UserDataAccess : IDataAccess
+    public class UserDataAccess : IDataAccess
     {
         EFDataAccess da = new EFDataAccess();
 
@@ -18,9 +25,28 @@ namespace ModelLibrary.DataAccess
             return output;
         }
 
+        public List<user> GetAllUsers()
+        {
+            var output = da.GetData<user>();
+
+            return output;
+        }
+
         public void SaveData()
         {
             da.SaveData();
+        }
+
+        public List<string> GetUserNames()
+        {
+            var output = new List<string>();
+            foreach (var item in GetAllUsers())
+            {
+                output.Add(item.userfullname);
+            }
+            return output;
+
+
         }
     }
 }

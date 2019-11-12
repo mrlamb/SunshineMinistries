@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="ContactAppWPF.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContactAppWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer>
+        <Grid  SnapsToDevicePixels="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top MENU START-->
+        <StackPanel DockPanel.Dock ="Top" Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="0"  SnapsToDevicePixels="True">
+            <StackPanel Orientation="Horizontal">
+                <Button  x:Name="ShowNewOptions" MinWidth="50" Padding="5" Margin="5" Background="Transparent">
+                    <StackPanel>
+                        <Image Source="/Media/NewFile.png" Height="20" />
+                        <TextBlock Text="New"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="NewIndividual" MinWidth="50" Padding="5" Margin="5" Background="Transparent" Visibility="{Binding NewIndividualVisibility}">
+                    <StackPanel>
+                        <Image Source="/Media/AccountPlus.png" Height="24" />
+                        <TextBlock Text="Individual" FontSize="12"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="NewOrganization" MinWidth="50" Padding="5" Margin="5" Background="Transparent" Visibility="{Binding NewOrganizationVisibility}">
+                    <StackPanel>
+                        <Image Source="/Media/OrgPlus.png" Height="24" />
+                        <TextBlock Text="Org." FontSize="12"/>
+                    </StackPanel>
+                </Button>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Width="2"/>
+                <Button x:Name="Save" MinWidth="50" Padding="5" Margin="5" Background="Transparent" IsEnabled="{Binding SaveEnabled}">
+                    <StackPanel>
+                        <Image Source="/Media/Save.png" Height="24" />
+                        <TextBlock Text="Save" FontSize="12"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,0,0,0"  SnapsToDevicePixels="True">
+                <TextBlock Text="Search" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBox x:Name="SearchTerms" MinWidth="200" MaxHeight="30" VerticalAlignment="Bottom" Margin="5,0,0,5"/>
+                <Button x:Name="ProcessSearch" BorderThickness="0" Background="Transparent" MaxHeight="20" Margin ="0,0,0,5" VerticalAlignment="Bottom" >
+                    <Image Source="/Media/MagnifyingGlass.png" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <!--TOP MENU END-->
+
+        <!-- TOP LEFT CORNER START-->
+        <StackPanel Grid.Column="0" Grid.Row="0" Background="#3D5AFE" Margin="0"  SnapsToDevicePixels="True">
+            <Image Source="/Media/Sunshine.png" MaxWidth="50" VerticalAlignment="Center" Margin="3,10,3,0"/>
+        </StackPanel>
+        <!--TOP LEFT CORNER END-->
+        <!--TOP RIBBON START-->
+            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" SnapsToDevicePixels="True" Background="#3D5AFE"/>
+            <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+                <Grid.Background>
+                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                    <GradientStop Color="#3D5AFE" Offset="0"/>
+                    <GradientStop Color="#FF2E75BE" Offset="1"/>
+                </LinearGradientBrush>
+                </Grid.Background>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Hello, " Foreground="White"/>
+                    <TextBlock Text="{Binding UserName}" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+
+
+        <!-- LEFT RIBBON START-->
+        <StackPanel Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical"  Margin="0" SnapsToDevicePixels="True">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#3D5AFE" Offset="0"/>
+                    <GradientStop Color="#FF2E75BE" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <Button x:Name="OpenReports" MinWidth="50" MinHeight="50" Margin="10,10,10,0" Background="White">
+                <StackPanel>
+                    <Image Source="/Media/NewFile.png" Height="24" />
+                    <TextBlock Text="Reports" FontSize="12" Foreground="Black"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="OpenAdmin" MinWidth="50" MinHeight="50" Margin="10" Background="White" >
+                <StackPanel>
+                    <Image Source="/Media/NewFile.png" Height="24" />
+                    <TextBlock Text="Admin" FontSize="12" Foreground="Black"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="OpenSettings" MinWidth="50" MinHeight="50" Margin="10,0,10,0" Background="White" >
+                <StackPanel>
+                    <Image Source="/Media/NewFile.png" Height="24" />
+                    <TextBlock Text="Settings" FontSize="12" Foreground="Black"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <!-- LEFT RIBBON END-->
+        <!-- MAIN SECTION -->
+
+        
+            <ContentControl x:Name="ActiveItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2"/>
+        
+    </Grid>
+    </ScrollViewer>
+</UserControl>

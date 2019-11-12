@@ -29,7 +29,7 @@ namespace ModelLibrary
         public string lastname { get; set; }
         public bool financialsupport { get; set; }
         public string phone { get; set; }
-        public string source { get; set; }
+        public Nullable<int> source { get; set; }
         public string sunshineid { get; set; }
         public byte[] notes { get; set; }
     
@@ -43,5 +43,6 @@ namespace ModelLibrary
         public virtual ICollection<phonenumbers_individual> phonenumbers_individual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<social_media_individual> social_media_individual { get; set; }
+        public virtual organization organization { get; set; }
     }
 }

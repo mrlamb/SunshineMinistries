@@ -105,22 +105,33 @@
     <Compile Include="contacttype.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\ActionTypesDataAccess.cs" />
     <Compile Include="DataAccess\IDataAccess.cs" />
+    <Compile Include="DataAccess\IndividualDataAccess.cs" />
+    <Compile Include="DataAccess\OrgTypeDataAccess.cs" />
     <Compile Include="DataAccess\UserDataAccess.cs" />
-    <Compile Include="Internal\DataAccess\DataAccess.cs" />
-    <Compile Include="IAction.cs" />
-    <Compile Include="IAuthentication.cs" />
+    <Compile Include="denomination.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
     <Compile Include="individual.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
-    <Compile Include="KnownTypesBinder.cs" />
+    <Compile Include="Internal\DataAccess\EFDataAccess.cs" />
+    <Compile Include="IAuthentication.cs" />
     <Compile Include="ModelHelper.cs" />
+    <Compile Include="Models\IAction.cs" />
+    <Compile Include="Models\LastActionReportReturnedEntity.cs" />
+    <Compile Include="Models\ReturnedEntity.cs" />
     <Compile Include="Models\UserAccessOptions.cs" />
     <Compile Include="Models\UserCredentials.cs" />
+    <Compile Include="DataAccess\OrganizationDataAccess.cs" />
     <Compile Include="officer.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="organization.cs">
+      <DependentUpon>SunshineData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="org_types.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="phonenumbers_individual.cs">
@@ -131,6 +142,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="SearchAggregator.cs" />
     <Compile Include="sm_types.cs">
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>

@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="SunshineDataModel.actions_organization" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.addresses_individual" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.addresses_organization" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SunshineDataModel.individual" Width="1.5" PointX="3.75" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SunshineDataModel.individual" Width="1.5" PointX="0.875" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.officer" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.organization" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SunshineDataModel.phonenumbers_individual" Width="1.5" PointX="6" PointY="17.75" IsExpanded="true" />
@@ -32,6 +32,10 @@
         <EntityTypeShape EntityType="SunshineDataModel.actiontype" Width="1.5" PointX="0.5" PointY="0.75" />
         <EntityTypeShape EntityType="SunshineDataModel.contacttype" Width="1.5" PointX="7.5" PointY="0.75" />
         <EntityTypeShape EntityType="SunshineDataModel.user" Width="1.5" PointX="3.5" PointY="8.75" />
+        <EntityTypeShape EntityType="SunshineDataModel.denomination" Width="1.5" PointX="6.375" PointY="8.75" />
+        <EntityTypeShape EntityType="SunshineDataModel.org_types" Width="1.5" PointX="0.75" PointY="10.25" />
+        <AssociationConnector Association="SunshineDataModel.org_to_orgType" />
+        <AssociationConnector Association="SunshineDataModel.source_to_org" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

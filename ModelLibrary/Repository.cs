@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace ModelLibrary
 {
-    internal static class Repository
+    public static class Repository
     {
         private static sunshinedataEntities _context;
 
-        public static sunshinedataEntities Context
+        internal static sunshinedataEntities Context
         {
-            get { return _context; }
-            
+            get
+            {
+                
+                return _context;
+            }
+
         }
 
         static Repository()
@@ -21,5 +25,31 @@ namespace ModelLibrary
             _context = new sunshinedataEntities();
         }
 
+        public static bool HasChanges()
+        {
+            return _context.ChangeTracker.HasChanges();
+        }
+
+        public static void SaveChanges()
+        {
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static void CancelChanges()
+        {
+            _context = new sunshinedataEntities();
+        }
+
+        public static void Reload()
+        {
+            _context = new sunshinedataEntities();
+        }
     }
 }

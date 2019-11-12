@@ -18,6 +18,7 @@ namespace ModelLibrary
         public string actionType { get; set; }
         public string completedBy { get; set; }
         public byte[] Notes { get; set; }
-        public System.DateTime date { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public int id { get; set; }
     }
 }

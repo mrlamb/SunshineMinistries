@@ -5,19 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using ContactAppWPF.EventModels;
 using ModelLibrary;
+using ModelLibrary.Models;
 
 namespace ContactAppWPF.ViewModels
 {
     public class LoginViewModel : Screen
     {
+        private UserCredentials _user;
         private string _errorMessage;
         private string _userName;
         private string _userPassword;
         private IAuthentication _authentication;
-        public LoginViewModel(IAuthentication authentication)
+        private IEventAggregator _events;
+        public LoginViewModel(IAuthentication authentication , UserCredentials user, IEventAggregator events)
         {
             _authentication = authentication;
+            _user = user;
+            _events = events;
         }
         public string UserName
         {
@@ -38,7 +44,8 @@ namespace ContactAppWPF.ViewModels
             {
                 return _userPassword;
             }
-            set {
+            set
+            {
                 _userPassword = value;
                 NotifyOfPropertyChange(() => UserPassword);
                 NotifyOfPropertyChange(() => CanAuthenticateUser);
@@ -55,7 +62,7 @@ namespace ContactAppWPF.ViewModels
             {
                 _errorMessage = value;
                 NotifyOfPropertyChange(() => ErrorMessage);
-                
+
             }
         }
 
@@ -78,10 +85,11 @@ namespace ContactAppWPF.ViewModels
 
             try
             {
-                var result = _authentication.Authenticate(UserName , UserPassword);
-                if (null != result)
+                _user = _authentication.Authenticate(UserName , UserPassword);
+                if (null != _user)
                 {
                     ErrorMessage = Authentication.AUTHENTICATION_SUCCESS;
+                    _events.PublishOnUIThread(new LogOnEvent());
                 }
                 else
                 {
@@ -90,14 +98,8 @@ namespace ContactAppWPF.ViewModels
             }
             catch (Exception E)
             {
-
                 ErrorMessage = E.Message;
             }
-
-
-            
         }
-
-
     }
 }
