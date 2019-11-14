@@ -16,7 +16,7 @@ namespace ModelLibrary
     {
         public int ownerID { get; set; }
         public string phonenumber { get; set; }
-        public Nullable<bool> primary { get; set; }
+        public int id { get; set; }
     
         public virtual individual individual { get; set; }
     }

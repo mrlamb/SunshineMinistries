@@ -33,6 +33,7 @@ namespace ModelLibrary
         public byte[] notes { get; set; }
         public Nullable<int> org_type { get; set; }
         public string nickname { get; set; }
+        public string denomination { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<actions_organization> actions_organization { get; set; }

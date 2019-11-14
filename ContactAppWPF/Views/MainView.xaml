@@ -6,6 +6,14 @@
              xmlns:local="clr-namespace:ContactAppWPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <Control.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="SteelBlue" Offset="0"/>
+            <GradientStop Color="White" Offset="0.5"/>
+            <GradientStop Color="AntiqueWhite" Offset="1"/>
+            
+        </LinearGradientBrush>
+    </Control.Background>
     <ScrollViewer>
         <Grid  SnapsToDevicePixels="True">
         <Grid.ColumnDefinitions>
@@ -23,26 +31,26 @@
         <!-- Top MENU START-->
         <StackPanel DockPanel.Dock ="Top" Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="0"  SnapsToDevicePixels="True">
             <StackPanel Orientation="Horizontal">
-                <Button  x:Name="ShowNewOptions" MinWidth="50" Padding="5" Margin="5" Background="Transparent">
+                <Button  x:Name="ShowNewOptions" MinWidth="50" Padding="5" Margin="5" Background="white">
                     <StackPanel>
                         <Image Source="/Media/NewFile.png" Height="20" />
                         <TextBlock Text="New"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="NewIndividual" MinWidth="50" Padding="5" Margin="5" Background="Transparent" Visibility="{Binding NewIndividualVisibility}">
+                <Button x:Name="NewIndividual" MinWidth="50" Padding="5" Margin="5" Background="White" Visibility="{Binding NewIndividualVisibility}">
                     <StackPanel>
                         <Image Source="/Media/AccountPlus.png" Height="24" />
                         <TextBlock Text="Individual" FontSize="12"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="NewOrganization" MinWidth="50" Padding="5" Margin="5" Background="Transparent" Visibility="{Binding NewOrganizationVisibility}">
+                <Button x:Name="NewOrganization" MinWidth="50" Padding="5" Margin="5" Background="White" Visibility="{Binding NewOrganizationVisibility}">
                     <StackPanel>
                         <Image Source="/Media/OrgPlus.png" Height="24" />
                         <TextBlock Text="Org." FontSize="12"/>
                     </StackPanel>
                 </Button>
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Width="2"/>
-                <Button x:Name="Save" MinWidth="50" Padding="5" Margin="5" Background="Transparent" IsEnabled="{Binding SaveEnabled}">
+                <Button x:Name="Save" MinWidth="50" Padding="5" Margin="5" Background="White" IsEnabled="{Binding SaveEnabled}">
                     <StackPanel>
                         <Image Source="/Media/Save.png" Height="24" />
                         <TextBlock Text="Save" FontSize="12"/>
@@ -60,34 +68,23 @@
         <!--TOP MENU END-->
 
         <!-- TOP LEFT CORNER START-->
-        <StackPanel Grid.Column="0" Grid.Row="0" Background="#3D5AFE" Margin="0"  SnapsToDevicePixels="True">
+        <StackPanel Grid.Column="0" Grid.Row="0" Background="Transparent" Margin="0"  SnapsToDevicePixels="True">
             <Image Source="/Media/Sunshine.png" MaxWidth="50" VerticalAlignment="Center" Margin="3,10,3,0"/>
         </StackPanel>
         <!--TOP LEFT CORNER END-->
         <!--TOP RIBBON START-->
-            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" SnapsToDevicePixels="True" Background="#3D5AFE"/>
+            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" SnapsToDevicePixels="True" Background="Transparent"/>
             <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
-                <Grid.Background>
-                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                    <GradientStop Color="#3D5AFE" Offset="0"/>
-                    <GradientStop Color="#FF2E75BE" Offset="1"/>
-                </LinearGradientBrush>
-                </Grid.Background>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Hello, " Foreground="White"/>
-                    <TextBlock Text="{Binding UserName}" Foreground="White"/>
+                    <TextBlock Text="Hello, " />
+                    <TextBlock Text="{Binding UserName}" />
                 </StackPanel>
             </Grid>
 
 
         <!-- LEFT RIBBON START-->
         <StackPanel Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical"  Margin="0" SnapsToDevicePixels="True">
-            <StackPanel.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#3D5AFE" Offset="0"/>
-                    <GradientStop Color="#FF2E75BE" Offset="1"/>
-                </LinearGradientBrush>
-            </StackPanel.Background>
+            
             <Button x:Name="OpenReports" MinWidth="50" MinHeight="50" Margin="10,10,10,0" Background="White">
                 <StackPanel>
                     <Image Source="/Media/NewFile.png" Height="24" />

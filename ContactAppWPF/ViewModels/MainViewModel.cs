@@ -13,10 +13,10 @@ using ModelLibrary.Models;
 
 namespace ContactAppWPF.ViewModels
 {
-    public class MainViewModel : Conductor<object>, IHandle<SearchResultsSelectedItemChanged>
+    public class MainViewModel : Conductor<object>, IHandle<RepositoryHasChanges>
     {
+        private object _activeItem;
         private SimpleContainer _container;
-        private IDetailView _dvvm;
         private IEventAggregator _events;
         private Visibility _newIndividualVisibility = Visibility.Collapsed;
         private Visibility _newOrganizationVisibility = Visibility.Collapsed;
@@ -35,25 +35,11 @@ namespace ContactAppWPF.ViewModels
             _container = container;
 
         }
-
-        private object _activeItem;
-
         public object ContentView
         {
             get { return _activeItem; }
             set { _activeItem = value;
                 NotifyOfPropertyChange(() => ContentView); }
-        }
-
-
-        public IDetailView DetailView
-        {
-            get { return _dvvm; }
-            set
-            {
-                _dvvm = value;
-                NotifyOfPropertyChange(() => DetailView);
-            }
         }
 
         public Visibility NewIndividualVisibility
@@ -89,7 +75,7 @@ namespace ContactAppWPF.ViewModels
         public bool SaveEnabled
         {
             //TODO FIGURE OUT HOW TO CHECK DYNAMICALLY
-            get { return true; }
+            get { return Repository.HasChanges(); }
         }
 
         public SearchResultsViewModel SearchResultsVM
@@ -108,38 +94,10 @@ namespace ContactAppWPF.ViewModels
         {
             get { return _userCredentials.FullName; }
         }
-        public void Handle(SearchResultsSelectedItemChanged message)
+
+        public void Handle(RepositoryHasChanges message)
         {
-            //TODO Check if Existing VM There, dispose of it and save changes
-            if (DetailView != null)
-            {
-                DeactivateItem(DetailView, true);
-                if (DetailView.Deactivated)
-                {
-                    DetailView = null;
-                }
-
-            }
-
-            if (DetailView == null)
-            {
-                if (message.Entity?.Type == typeof(individual))
-                {
-                    DetailView = _container.GetInstance<IndividualDetailViewModel>();
-                    DetailView.Entity = message.Entity;
-                    ActivateItem(DetailView);
-                }
-                else if (message.Entity?.Type == typeof(organization))
-                {
-                    DetailView = _container.GetInstance<OrganizationDetailViewModel>();
-                    DetailView.Entity = message.Entity;
-                    ActivateItem(DetailView);
-                }
-                {
-                    //Entity was null
-                    return;
-                }
-            }
+            NotifyOfPropertyChange(() => SaveEnabled);
         }
 
         public void NewIndividual()
@@ -147,9 +105,9 @@ namespace ContactAppWPF.ViewModels
             ReportsVM = null;
             NewIndividualVisibility = Visibility.Collapsed;
             NewOrganizationVisibility = Visibility.Collapsed;
-            DetailView = _container.GetInstance<IndividualDetailViewModel>();
+            ContentView = _container.GetInstance<IndividualDetailViewModel>();
             individual i = new individual();
-            DetailView.Entity = new ModelLibrary.Models.ReturnedEntity()
+            (ContentView as IndividualDetailViewModel).Entity = new ModelLibrary.Models.ReturnedEntity()
             {
                 Entity = i
             };
@@ -162,9 +120,9 @@ namespace ContactAppWPF.ViewModels
             ReportsVM = null;
             NewIndividualVisibility = Visibility.Collapsed;
             NewOrganizationVisibility = Visibility.Collapsed;
-            DetailView = _container.GetInstance<OrganizationDetailViewModel>();
+            ContentView = _container.GetInstance<OrganizationDetailViewModel>();
             organization o = new organization();
-            DetailView.Entity = new ReturnedEntity()
+            (ContentView as OrganizationDetailViewModel).Entity = new ReturnedEntity()
             {
                 Entity = o
             };
@@ -174,29 +132,8 @@ namespace ContactAppWPF.ViewModels
 
         public void OpenReports()
         {
-            if (DetailView != null)
-            {
-                DeactivateItem(DetailView, true);
-                if (!DetailView.Deactivated)
-                {
-                    return;
-                }
-                else
-                {
-                    DetailView = null;
-                }
-
-            }
-            if (SearchResultsVM != null)
-            {
-                DeactivateItem(SearchResultsVM, true);
-                SearchResultsVM = null;
-            }
-
             ReportsVM = _container.GetInstance<ReportsViewModel>();
             ActivateItem(ReportsVM);
-            
-            
         }
 
         public void ProcessSearch()
@@ -204,8 +141,6 @@ namespace ContactAppWPF.ViewModels
             _sa.SearchTerms = SearchTerms;
             ContentView = _container.GetInstance<SearchResultsViewModel>();
             ActivateItem(ContentView);
-            
-
         }
 
         public void Save()
@@ -213,7 +148,7 @@ namespace ContactAppWPF.ViewModels
             try
             {
                 Repository.SaveChanges();
-                _events.PublishOnUIThread(new SearchResultsInvalidated(DetailView.Entity));
+                NotifyOfPropertyChange(() => SaveEnabled);
             }
             catch (Exception e)
             {

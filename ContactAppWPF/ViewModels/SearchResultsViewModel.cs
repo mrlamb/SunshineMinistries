@@ -24,7 +24,7 @@ namespace ContactAppWPF.ViewModels
         private IEventAggregator _eventAggregator;
         private IDetailView _detailView;
         private Visibility _dataGridVisibility;
-        private bool delayPublish;
+        
 
         private int _selectedIndex = -1;
 

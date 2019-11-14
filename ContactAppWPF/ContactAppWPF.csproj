@@ -121,6 +121,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EventModels\LogOnEvent.cs" />
+    <Compile Include="EventModels\RepositoryHasChanges.cs" />
     <Compile Include="EventModels\ResetSearchToLastIndex.cs" />
     <Compile Include="EventModels\SearchResultsInvalidated.cs" />
     <Compile Include="EventModels\SearchResultsSelectedItemChanged.cs" />

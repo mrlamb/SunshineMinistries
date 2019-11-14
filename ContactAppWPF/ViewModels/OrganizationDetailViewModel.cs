@@ -120,6 +120,7 @@ namespace ContactAppWPF.ViewModels
             set
             {
                 _organization.financialsupport = value;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => FinancialSupport);
             }
         }
@@ -130,6 +131,7 @@ namespace ContactAppWPF.ViewModels
             set
             {
                 _organization.nickname = value;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => NickName);
             }
         }
@@ -140,6 +142,7 @@ namespace ContactAppWPF.ViewModels
             set
             {
                 _organization.name = value;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => OrgName);
             }
         }
@@ -156,6 +159,7 @@ namespace ContactAppWPF.ViewModels
             {
                 _orgTypesSelectedItem = value;
                 _organization.org_type = value.id;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => DenominationVisibility);
             }
         }
@@ -166,6 +170,7 @@ namespace ContactAppWPF.ViewModels
             set
             {
                 _organization.phone = value;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => Phone);
             }
         }
@@ -231,17 +236,20 @@ namespace ContactAppWPF.ViewModels
             set
             {
                 _organization.orgsunshineid = value;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => SunshineId);
             }
         }
 
         public void ActionCompletedByChanged(SelectionChangedEventArgs item)
         {
+            _events.PublishOnUIThread(new RepositoryHasChanges());
             SelectedAction.completedBy = item.AddedItems[0].ToString();
         }
 
         public void ActionTypeChanged(SelectionChangedEventArgs item)
         {
+            _events.PublishOnUIThread(new RepositoryHasChanges());
             SelectedAction.actionType = item.AddedItems[0].ToString();
         }
         public void AddAddress()
@@ -256,6 +264,7 @@ namespace ContactAppWPF.ViewModels
             }
             else
             {
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 add.orgid = _organization.orgid;
                 _organization.addresses_organization.Add(add);
                 NotifyOfPropertyChange(() => Addresses);
@@ -282,53 +291,14 @@ namespace ContactAppWPF.ViewModels
             }
             else
             {
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _organization.phonenumbers_organization.Add(pn);
                 NotifyOfPropertyChange(() => PhoneNumbers);
                 ClearPhoneNumber();
             }
         }
 
-        public override void CanClose(Action<bool> callback)
-        {
-            if (Repository.HasChanges())
-            {
-                var result = MessageBox.Show($"You have unsaved changes, save first?", $"Save?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                switch (result)
-                {
-                    case MessageBoxResult.None:
-                    case MessageBoxResult.No:
-                        Repository.CancelChanges();
-                        _events.PublishOnUIThread(new SearchResultsInvalidated(_entity));
-                        Deactivated = true;
-                        callback(true);
-                        return;
-
-                    case MessageBoxResult.Yes:
-                        try
-                        {
-                            Repository.SaveChanges();
-                            Deactivated = true;
-                            _events.PublishOnUIThread(new SearchResultsInvalidated(_entity));
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Unable to save.");
-                            return;
-                        }
-                        callback(true);
-                        return;
-
-                    default:
-                        callback(false);
-                        break;
-                }
-            }
-            else
-            {
-                Deactivated = true;
-                callback(true);
-            }
-        }
+        
         public void ClearAddress()
         {
             SelectedAddress = null;
@@ -344,6 +314,7 @@ namespace ContactAppWPF.ViewModels
 
         public void OnAddAction(object sender, EventArgs args)
         {
+            _events.PublishOnUIThread(new RepositoryHasChanges());
             actions_organization action = (actions_organization)(args as InitializingNewItemEventArgs).NewItem;
             action.completedBy = _user.FullName;
             action.date = DateTime.Now;
@@ -354,6 +325,7 @@ namespace ContactAppWPF.ViewModels
         {
             if (null != SelectedAddress)
             {
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _organization.addresses_organization.Remove(SelectedAddress);
                 SelectedAddress = new addresses_organization();
                 NotifyOfPropertyChange(() => Addresses);
@@ -365,6 +337,7 @@ namespace ContactAppWPF.ViewModels
         {
             if (null != PhoneSelectedItem)
             {
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _organization.phonenumbers_organization.Remove(PhoneSelectedItem);
                 PhoneSelectedItem = null;
                 NotifyOfPropertyChange(() => PhoneNumbers);

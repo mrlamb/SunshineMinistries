@@ -195,7 +195,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding DataContext.ActionCompletedBy, RelativeSource={RelativeSource AncestorType=local:IndividualDetailView}}"
+                                    <ComboBox ItemsSource="{Binding DataContext.ActionCompletedBy, RelativeSource={RelativeSource AncestorType=local:OrganizationDetailView}}"
                                         cal:Message.Attach="[Event SelectionChanged] = [Action ActionCompletedByChanged($eventArgs)]" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
@@ -208,7 +208,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding DataContext.ActionTypeList, RelativeSource={RelativeSource AncestorType=local:IndividualDetailView}}"
+                                    <ComboBox ItemsSource="{Binding DataContext.ActionTypeList, RelativeSource={RelativeSource AncestorType=local:OrganizationDetailView}}"
                                               cal:Message.Attach="[Event SelectionChanged] = [Action ActionTypeChanged($eventArgs)]" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>

@@ -115,24 +115,25 @@
           <Property Name="notes" Type="blob" />
           <Property Name="org_type" Type="int" />
           <Property Name="nickname" Type="varchar" MaxLength="45" />
+          <Property Name="denomination" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="phonenumbers_individual">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="ownerID" />
-            <PropertyRef Name="phonenumber" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ownerID" Type="int" Nullable="false" />
-          <Property Name="phonenumber" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="primary" Type="bool" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="phonenumbers_organization">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="ownerID" />
-            <PropertyRef Name="phonenumber" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ownerID" Type="int" Nullable="false" />
-          <Property Name="phonenumber" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="primary" Type="bool" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="sm_types">
           <Key>
@@ -246,30 +247,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_phone_individual">
-          <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
-          <End Role="phonenumbers_individual" Type="Self.phonenumbers_individual" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="individuals">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="phonenumbers_individual">
-              <PropertyRef Name="ownerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_phone_org">
-          <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
-          <End Role="phonenumbers_organization" Type="Self.phonenumbers_organization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="organizations">
-              <PropertyRef Name="orgid" />
-            </Principal>
-            <Dependent Role="phonenumbers_organization">
-              <PropertyRef Name="ownerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_sm_to_ind">
           <End Role="individuals" Type="Self.individuals" Multiplicity="1" />
           <End Role="social_media_individual" Type="Self.social_media_individual" Multiplicity="*" />
@@ -330,6 +307,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="phone_to_org">
+          <End Role="organizations" Type="Self.organizations" Multiplicity="1" />
+          <End Role="phonenumbers_organization" Type="Self.phonenumbers_organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizations">
+              <PropertyRef Name="orgid" />
+            </Principal>
+            <Dependent Role="phonenumbers_organization">
+              <PropertyRef Name="ownerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="source_to_org">
           <End Role="organizations" Type="Self.organizations" Multiplicity="0..1" />
           <End Role="individuals" Type="Self.individuals" Multiplicity="*" />
@@ -384,14 +373,6 @@
             <End Role="organizations" EntitySet="organizations" />
             <End Role="officers" EntitySet="officers" />
           </AssociationSet>
-          <AssociationSet Name="fk_phone_individual" Association="Self.fk_phone_individual">
-            <End Role="individuals" EntitySet="individuals" />
-            <End Role="phonenumbers_individual" EntitySet="phonenumbers_individual" />
-          </AssociationSet>
-          <AssociationSet Name="fk_phone_org" Association="Self.fk_phone_org">
-            <End Role="organizations" EntitySet="organizations" />
-            <End Role="phonenumbers_organization" EntitySet="phonenumbers_organization" />
-          </AssociationSet>
           <AssociationSet Name="fk_sm_to_ind" Association="Self.fk_sm_to_ind">
             <End Role="individuals" EntitySet="individuals" />
             <End Role="social_media_individual" EntitySet="social_media_individual" />
@@ -411,6 +392,10 @@
           <AssociationSet Name="org_to_orgType" Association="Self.org_to_orgType">
             <End Role="org_types" EntitySet="org_types" />
             <End Role="organizations" EntitySet="organizations" />
+          </AssociationSet>
+          <AssociationSet Name="phone_to_org" Association="Self.phone_to_org">
+            <End Role="organizations" EntitySet="organizations" />
+            <End Role="phonenumbers_organization" EntitySet="phonenumbers_organization" />
           </AssociationSet>
           <AssociationSet Name="source_to_org" Association="Self.source_to_org">
             <End Role="organizations" EntitySet="organizations" />
@@ -522,26 +507,27 @@
           <NavigationProperty Name="org_types" Relationship="SunshineDataModel.org_to_orgType" FromRole="organization" ToRole="org_types" />
           <NavigationProperty Name="individuals" Relationship="SunshineDataModel.source_to_org" FromRole="organization" ToRole="individual" />
           <Property Name="nickname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="denomination" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="phonenumbers_individual">
           <Key>
             <PropertyRef Name="ownerID" />
-            <PropertyRef Name="phonenumber" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="ownerID" Type="Int32" Nullable="false" />
-          <Property Name="phonenumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="primary" Type="Boolean" />
+          <Property Name="phonenumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="individual" Relationship="Self.fk_phone_individual" FromRole="phonenumbers_individual" ToRole="individuals" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="phonenumbers_organization">
           <Key>
             <PropertyRef Name="ownerID" />
-            <PropertyRef Name="phonenumber" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="ownerID" Type="Int32" Nullable="false" />
-          <Property Name="phonenumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="primary" Type="Boolean" />
+          <Property Name="phonenumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="organization" Relationship="Self.fk_phone_org" FromRole="phonenumbers_organization" ToRole="organizations" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="fk_actions_to_Ind">
           <End Role="individuals" Type="Self.individual" Multiplicity="1" />
@@ -942,6 +928,7 @@
           <EntitySetMapping Name="organizations">
             <EntityTypeMapping TypeName="SunshineDataModel.organization">
               <MappingFragment StoreEntitySet="organizations">
+                <ScalarProperty Name="denomination" ColumnName="denomination" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
                 <ScalarProperty Name="org_type" ColumnName="org_type" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
@@ -956,18 +943,18 @@
           <EntitySetMapping Name="phonenumbers_individual">
             <EntityTypeMapping TypeName="SunshineDataModel.phonenumbers_individual">
               <MappingFragment StoreEntitySet="phonenumbers_individual">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ownerID" ColumnName="ownerID" />
                 <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
-                <ScalarProperty Name="primary" ColumnName="primary" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="phonenumbers_organization">
             <EntityTypeMapping TypeName="SunshineDataModel.phonenumbers_organization">
               <MappingFragment StoreEntitySet="phonenumbers_organization">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ownerID" ColumnName="ownerID" />
                 <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
-                <ScalarProperty Name="primary" ColumnName="primary" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
