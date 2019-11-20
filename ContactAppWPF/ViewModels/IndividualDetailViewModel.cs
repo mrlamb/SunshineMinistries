@@ -125,6 +125,17 @@ namespace ContactAppWPF.ViewModels
             }
         }
 
+        public string Notes
+        {
+            get { return _individual.DecodedNotes; }
+            set
+            {
+                _individual.DecodedNotes = value;
+                NotifyOfPropertyChange(() => Notes);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
+            }
+        }
+
         public string Phone
         {
             get { return _individual.phone; }
@@ -158,6 +169,10 @@ namespace ContactAppWPF.ViewModels
             set
             {
                 _phoneSelectedItemPN = value;
+                if (PhoneSelectedItem != null)
+                {
+                    PhoneSelectedItem.phonenumber = value;
+                }
                 NotifyOfPropertyChange(() => PhoneSelectedItemPN);
             }
         }
@@ -204,17 +219,18 @@ namespace ContactAppWPF.ViewModels
 
         public void ActionCompletedByChanged(SelectionChangedEventArgs item)
         {
-            _events.PublishOnUIThread(new RepositoryHasChanges());
             SelectedAction.completedBy = item.AddedItems[0].ToString();
+            _events.PublishOnUIThread(new RepositoryHasChanges());
         }
 
         public void ActionTypeChanged(SelectionChangedEventArgs item)
         {
-            _events.PublishOnUIThread(new RepositoryHasChanges());
             SelectedAction.actionType = item.AddedItems[0].ToString();
+            _events.PublishOnUIThread(new RepositoryHasChanges());
         }
         public void AddAddress()
         {
+            //TODO THIS ISN'T RIGHT
             var add = SelectedAddress;
 
             if (_individual.addresses_individual.Any(a => a.streetAddress == add.streetAddress) &&
@@ -225,11 +241,11 @@ namespace ContactAppWPF.ViewModels
             }
             else
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 add.contactid = _individual.id;
                 _individual.addresses_individual.Add(add);
                 NotifyOfPropertyChange(() => Addresses);
                 ClearAddress();
+                _events.PublishOnUIThread(new RepositoryHasChanges());
             }
         }
 
@@ -252,14 +268,14 @@ namespace ContactAppWPF.ViewModels
             }
             else
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _individual.phonenumbers_individual.Add(pn);
                 NotifyOfPropertyChange(() => PhoneNumbers);
                 ClearPhoneNumber();
+                _events.PublishOnUIThread(new RepositoryHasChanges());
             }
         }
 
-       
+
         public void ClearAddress()
         {
             SelectedAddress = null;
@@ -286,11 +302,11 @@ namespace ContactAppWPF.ViewModels
         {
             if (null != SelectedAddress)
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _individual.addresses_individual.Remove(SelectedAddress);
                 SelectedAddress = new addresses_individual();
                 NotifyOfPropertyChange(() => Addresses);
                 ClearAddress();
+                _events.PublishOnUIThread(new RepositoryHasChanges());
             }
         }
 
@@ -298,10 +314,10 @@ namespace ContactAppWPF.ViewModels
         {
             if (null != PhoneSelectedItem)
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _individual.phonenumbers_individual.Remove(PhoneSelectedItem);
                 PhoneSelectedItem = null;
                 NotifyOfPropertyChange(() => PhoneNumbers);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
             }
         }
     }

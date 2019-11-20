@@ -23,4 +23,25 @@ namespace ModelLibrary
             set { Notes = Encoding.ASCII.GetBytes(value); }
         }
     }
+
+
+    public partial class organization
+    {
+        public string DecodedNotes
+        {
+            get { return notes != null ? Encoding.ASCII.GetString(notes) : null; }
+            set { notes = Encoding.ASCII.GetBytes(value); }
+        }
+    }
+
+    public partial class individual
+    {
+        public string DecodedNotes
+        {
+            get { return notes != null ? Encoding.ASCII.GetString(notes) : null; }
+            set { notes = Encoding.ASCII.GetBytes(value); }
+        }
+    }
 }
+
+

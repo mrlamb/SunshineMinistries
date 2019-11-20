@@ -33,8 +33,8 @@
         <Expander IsExpanded="{Binding BasicInformationCheck, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Padding="5"  BorderBrush="Black" BorderThickness="1">
             <Expander.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="AliceBlue" Offset="0.5"/>
-                    <GradientStop Color="Aqua" Offset="1"/>
+                    <GradientStop Color="Transparent" Offset="0.5"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
                 </LinearGradientBrush>
             </Expander.Background>
             <Expander.Header>
@@ -112,7 +112,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <TextBlock Visibility="{Binding DenominationVisibility}" Text="Denomination" Grid.Column="4" Grid.Row="1" VerticalAlignment="Center"/>
-                <ComboBox Visibility="{Binding DenominationVisibility}" x:Name="Denominations" Grid.Column="5" Grid.Row="1" Margin="5"/>
+                <ComboBox Visibility="{Binding DenominationVisibility}" x:Name="Denominations" Grid.Column="5" Grid.Row="1" Margin="5" SelectedItem="{Binding DenomSelectedItem}"/>
                 <TextBlock Text="Nickname" Grid.Column="4" Grid.Row="2" VerticalAlignment="Center"/>
                 <TextBox x:Name="Nickname" Grid.Column="5" Grid.Row="2" MinWidth="100" Margin="3,3"/>
                 
@@ -160,8 +160,8 @@
             </Expander.Header>
             <Expander.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="PaleGreen" Offset="0.5"/>
-                    <GradientStop Color="LightGreen" Offset="1"/>
+                    <GradientStop Color="Transparent" Offset="0.5"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
                 </LinearGradientBrush>
             </Expander.Background>
             <Grid>
@@ -183,7 +183,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding Path=date}"/>
+                                    <DatePicker SelectedDate="{Binding Path=date}" cal:Message.Attach="[Event CalendarClosed] = [Action OnActionDateChanged()]" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
@@ -228,6 +228,22 @@
                     </DataGrid.Columns>
 
                 </DataGrid>
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Padding="5" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="More Information" FontSize="14"/>
+            </Expander.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Notes" Grid.Column="0" Grid.Row="0"/>
+                <TextBox x:Name="Notes" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" AcceptsTab="True" MinWidth="200" MinHeight="60" Margin="5,0"/>
             </Grid>
         </Expander>
     </Grid>

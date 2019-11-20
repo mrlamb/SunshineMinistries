@@ -20,7 +20,9 @@ namespace ModelLibrary.DataAccess
                     GetOrganizationsByZip(parameter).Union(
                         GetOrganizationsByCity(parameter).Union(
                             GetOrganizationsByState(parameter).Union(
-                                GetOrganizationsByType(parameter)))))).ToList();
+                                GetOrganizationsByType(parameter).Union(
+                                    GetOrganizationsByDenomination(parameter).Union(
+                                        GetOrganizationsByNickname(parameter)))))))).ToList();
             return output;
         }
 
@@ -30,16 +32,24 @@ namespace ModelLibrary.DataAccess
             return output;
         }
 
+        private List<organization> GetOrganizationsByNickname(string parameter)
+        {
+            var output = da.GetData<organization>("nickname.Contains(@0)", new object[] { parameter });
+
+            return output;
+        }
+
         private List<organization> GetOrganizationsBySunshineId(string parameter)
         {
             var output = da.GetData<organization>("orgsunshineid = @0", new object[] { parameter });
             return output;
         }
 
-        //private List<organization> GetOrganizationsByDenomination(string parameter)
-        //{
-
-        //}
+        private List<organization> GetOrganizationsByDenomination(string parameter)
+        {
+            var output = da.GetData<organization>("denomination.Contains(@0)", new object[] { parameter });
+            return output;
+        }
 
         private List<organization> GetOrganizationsByType(string parameter)
         {

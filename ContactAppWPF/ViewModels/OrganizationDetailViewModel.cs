@@ -19,6 +19,7 @@ namespace ContactAppWPF.ViewModels
         private List<string> _actionCompletedByList = new List<string>();
         private List<string> _actionTypeList = new List<string>();
         private ReturnedEntity _entity;
+        private BindableCollection<string> _denominations;
         private IEventAggregator _events;
         private organization _organization = new organization();
         private BindableCollection<org_types> _orgTypes;
@@ -32,8 +33,9 @@ namespace ContactAppWPF.ViewModels
 
         public OrganizationDetailViewModel(IEventAggregator eventAggregator, StateListHelper stateListHelper,
             UserDataAccess userDataAccess, UserCredentials userCredentials, ActionTypesDataAccess actionTypesDataAccess,
-            OrgTypeDataAccess orgTypeDataAccess)
+            OrgTypeDataAccess orgTypeDataAccess, DenominationTypesDataAccess denominationTypeDataAccess)
         {
+            _denominations = new BindableCollection<string>(denominationTypeDataAccess.GetDenominations());
             _orgTypes = new BindableCollection<org_types>(orgTypeDataAccess.GetTypes());
             _actionTypeList = actionTypesDataAccess.GetActionTypes();
             _user = userCredentials;
@@ -76,6 +78,21 @@ namespace ContactAppWPF.ViewModels
 
         public new bool Deactivated { get; private set; }
 
+        public BindableCollection<string> Denominations
+        {
+            get { return _denominations; }
+        }
+
+        public string DenomSelectedItem
+        {
+            get { return _organization.denomination; }
+            set
+            {
+                _organization.denomination = value;
+                _events.PublishOnUIThread(new RepositoryHasChanges());
+            }
+        }
+
         public Visibility DenominationVisibility
         {
             get
@@ -97,7 +114,7 @@ namespace ContactAppWPF.ViewModels
                 SelectedAddress = _organization.addresses_organization.FirstOrDefault(a => a.primary == true);
                 if (_organization.org_type != null)
                 {
-                    OrgTypesSelectedItem = _orgTypes.First(a => a.id == _organization.org_type); 
+                    OrgTypesSelectedItem = _orgTypes.First(a => a.id == _organization.org_type);
                 }
                 NotifyOfPropertyChange(() => BasicInformationCheck);
                 NotifyOfPropertyChange(() => ActionsExpanded);
@@ -111,6 +128,7 @@ namespace ContactAppWPF.ViewModels
                 NotifyOfPropertyChange(() => Actions);
                 NotifyOfPropertyChange(() => ActionCompletedBy);
                 NotifyOfPropertyChange(() => OrgTypesSelectedItem);
+                NotifyOfPropertyChange(() => DenomSelectedItem);
             }
         }
 
@@ -133,6 +151,17 @@ namespace ContactAppWPF.ViewModels
                 _organization.nickname = value;
                 _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => NickName);
+            }
+        }
+
+        public string Notes
+        {
+            get { return _organization.DecodedNotes; }
+            set
+            {
+                _organization.DecodedNotes = value;
+                NotifyOfPropertyChange(() => Notes);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
             }
         }
 
@@ -159,6 +188,10 @@ namespace ContactAppWPF.ViewModels
             {
                 _orgTypesSelectedItem = value;
                 _organization.org_type = value.id;
+                if (value.type != "Church")
+                {
+                    _organization.denomination = "";
+                }
                 _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => DenominationVisibility);
             }
@@ -243,14 +276,14 @@ namespace ContactAppWPF.ViewModels
 
         public void ActionCompletedByChanged(SelectionChangedEventArgs item)
         {
-            _events.PublishOnUIThread(new RepositoryHasChanges());
             SelectedAction.completedBy = item.AddedItems[0].ToString();
+            _events.PublishOnUIThread(new RepositoryHasChanges());
         }
 
         public void ActionTypeChanged(SelectionChangedEventArgs item)
         {
-            _events.PublishOnUIThread(new RepositoryHasChanges());
             SelectedAction.actionType = item.AddedItems[0].ToString();
+            _events.PublishOnUIThread(new RepositoryHasChanges());
         }
         public void AddAddress()
         {
@@ -264,10 +297,10 @@ namespace ContactAppWPF.ViewModels
             }
             else
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 add.orgid = _organization.orgid;
                 _organization.addresses_organization.Add(add);
                 NotifyOfPropertyChange(() => Addresses);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 ClearAddress();
             }
         }
@@ -291,14 +324,14 @@ namespace ContactAppWPF.ViewModels
             }
             else
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _organization.phonenumbers_organization.Add(pn);
                 NotifyOfPropertyChange(() => PhoneNumbers);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 ClearPhoneNumber();
             }
         }
 
-        
+
         public void ClearAddress()
         {
             SelectedAddress = null;
@@ -312,23 +345,28 @@ namespace ContactAppWPF.ViewModels
             PhoneSelectedItem = null;
         }
 
-        public void OnAddAction(object sender, EventArgs args)
+        public void OnActionDateChanged()
         {
             _events.PublishOnUIThread(new RepositoryHasChanges());
+        }
+
+        public void OnAddAction(object sender, EventArgs args)
+        {
             actions_organization action = (actions_organization)(args as InitializingNewItemEventArgs).NewItem;
             action.completedBy = _user.FullName;
             action.date = DateTime.Now;
             _organization.actions_organization.Add(action);
+            _events.PublishOnUIThread(new RepositoryHasChanges());
         }
 
         public void RemoveAddress()
         {
             if (null != SelectedAddress)
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _organization.addresses_organization.Remove(SelectedAddress);
                 SelectedAddress = new addresses_organization();
                 NotifyOfPropertyChange(() => Addresses);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
                 ClearAddress();
             }
         }
@@ -337,10 +375,11 @@ namespace ContactAppWPF.ViewModels
         {
             if (null != PhoneSelectedItem)
             {
-                _events.PublishOnUIThread(new RepositoryHasChanges());
                 _organization.phonenumbers_organization.Remove(PhoneSelectedItem);
                 PhoneSelectedItem = null;
                 NotifyOfPropertyChange(() => PhoneNumbers);
+                _events.PublishOnUIThread(new RepositoryHasChanges());
+
             }
         }
     }

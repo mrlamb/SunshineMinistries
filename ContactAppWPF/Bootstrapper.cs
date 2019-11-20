@@ -47,7 +47,8 @@ namespace ContactAppWPF
                 .PerRequest<IndividualDataAccess>()
                 .PerRequest<OrganizationDataAccess>()
                 .PerRequest<UserDataAccess>()
-                .PerRequest<ActionTypesDataAccess>();
+                .PerRequest<ActionTypesDataAccess>()
+                .PerRequest<DenominationTypesDataAccess>();
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

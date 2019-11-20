@@ -15,7 +15,7 @@ using System.Windows.Threading;
 
 namespace ContactAppWPF.ViewModels
 {
-    public class SearchResultsViewModel : Conductor<IDetailView>
+    public class SearchResultsViewModel : Conductor<IDetailView>, IHandle<SearchResultsInvalidated>
     {
         private SearchAggregator _sa;
         private SimpleContainer _container;
@@ -164,6 +164,14 @@ namespace ContactAppWPF.ViewModels
             catch
             {
                 Console.WriteLine();
+            }
+        }
+
+        public void Handle(SearchResultsInvalidated message)
+        {
+            if (_selectedItem != null)
+            {
+                RefreshResults(_selectedItem);
             }
         }
     }

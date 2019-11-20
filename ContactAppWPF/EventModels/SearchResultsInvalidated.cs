@@ -9,11 +9,5 @@ namespace ContactAppWPF.EventModels
 {
     public class SearchResultsInvalidated
     {
-        public ReturnedEntity Entity;
-
-        public SearchResultsInvalidated(ReturnedEntity entity)
-        {
-            Entity = entity;
-        }
     }
 }

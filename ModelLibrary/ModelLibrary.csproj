@@ -106,6 +106,7 @@
       <DependentUpon>SunshineData.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\ActionTypesDataAccess.cs" />
+    <Compile Include="DataAccess\DenominationTypeDataAccess.cs" />
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="DataAccess\IndividualDataAccess.cs" />
     <Compile Include="DataAccess\OrgTypeDataAccess.cs" />

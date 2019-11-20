@@ -113,6 +113,7 @@ namespace ContactAppWPF.ViewModels
             };
             var ida = _container.GetInstance<IndividualDataAccess>();
             ida.Add(i);
+            ActivateItem(ContentView);
         }
 
         public void NewOrganization()
@@ -128,6 +129,7 @@ namespace ContactAppWPF.ViewModels
             };
             var oda = _container.GetInstance<OrganizationDataAccess>();
             oda.Add(o);
+            ActivateItem(ContentView);
         }
 
         public void OpenReports()
@@ -149,6 +151,7 @@ namespace ContactAppWPF.ViewModels
             {
                 Repository.SaveChanges();
                 NotifyOfPropertyChange(() => SaveEnabled);
+                _events.PublishOnUIThread(new SearchResultsInvalidated());
             }
             catch (Exception e)
             {
