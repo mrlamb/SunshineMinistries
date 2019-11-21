@@ -17,16 +17,32 @@ namespace ContactAppWPF.ViewModels
 {
     public class SearchResultsViewModel : Conductor<IDetailView>, IHandle<SearchResultsInvalidated>
     {
-        private SearchAggregator _sa;
         private SimpleContainer _container;
-        private BindableCollection<ReturnedEntity> _entities;
-        private ReturnedEntity _selectedItem;
-        private IEventAggregator _eventAggregator;
-        private IDetailView _detailView;
         private Visibility _dataGridVisibility;
-        
-
+        private IDetailView _detailView;
+        private BindableCollection<ReturnedEntity> _entities;
+        private IEventAggregator _eventAggregator;
+        private SearchAggregator _sa;
         private int _selectedIndex = -1;
+        private ReturnedEntity _selectedItem;
+        public SearchResultsViewModel(SearchAggregator searchAggregator, IEventAggregator eventAggregator, SimpleContainer container)
+        {
+            _container = container;
+            _eventAggregator = eventAggregator;
+            _sa = searchAggregator;
+            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllBySearchTerm());
+            _eventAggregator.Subscribe(this);
+        }
+
+        public Visibility DataGridVisibility
+        {
+            get { return _dataGridVisibility; }
+            set
+            {
+                _dataGridVisibility = value;
+                NotifyOfPropertyChange(() => DataGridVisibility);
+            }
+        }
 
         public BindableCollection<ReturnedEntity> Entities
         {
@@ -35,6 +51,16 @@ namespace ContactAppWPF.ViewModels
             {
                 _entities = value;
                 NotifyOfPropertyChange(() => Entities);
+            }
+        }
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                _selectedIndex = value;
+                NotifyOfPropertyChange(() => SelectedIndex);
             }
         }
 
@@ -121,35 +147,12 @@ namespace ContactAppWPF.ViewModels
             }
 
         }
-
-
-        public int SelectedIndex
+        public void Handle(SearchResultsInvalidated message)
         {
-            get { return _selectedIndex; }
-            set
+            if (_selectedItem != null)
             {
-                _selectedIndex = value;
-                NotifyOfPropertyChange(() => SelectedIndex);
+                RefreshResults(_selectedItem);
             }
-        }
-
-        public Visibility DataGridVisibility
-        {
-            get { return _dataGridVisibility; }
-            set
-            {
-                _dataGridVisibility = value;
-                NotifyOfPropertyChange(() => DataGridVisibility);
-            }
-        }
-
-        public SearchResultsViewModel(SearchAggregator searchAggregator, IEventAggregator eventAggregator, SimpleContainer container)
-        {
-            _container = container;
-            _eventAggregator = eventAggregator;
-            _sa = searchAggregator;
-            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllBySearchTerm());
-            _eventAggregator.Subscribe(this);
         }
 
         public void RefreshResults(ReturnedEntity entity)
@@ -164,14 +167,6 @@ namespace ContactAppWPF.ViewModels
             catch
             {
                 Console.WriteLine();
-            }
-        }
-
-        public void Handle(SearchResultsInvalidated message)
-        {
-            if (_selectedItem != null)
-            {
-                RefreshResults(_selectedItem);
             }
         }
     }

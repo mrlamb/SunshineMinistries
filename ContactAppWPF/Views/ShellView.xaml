@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ContactAppWPF.Views"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d" FontSize="14"
-        Title="Sunshine Ministries" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}">
+        Title="Sunshine Ministries" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}" Icon="/ContactAppWPF;component/Media/sunshine.png">
     <Grid>
         <ContentControl x:Name="ActiveItem" Margin="5"/>
     </Grid>

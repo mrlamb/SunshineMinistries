@@ -17,9 +17,12 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid Name="myDataGrid" ItemsSource="{Binding ReportEntities}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+        <Button cal:Message.Attach="[Event Click] = [Action OnExportClicked]" Grid.Column="1" Grid.Row="0" Content="Export to CSV" Margin="0,0,0,5"/>
+        <DataGrid Name="myDataGrid" ItemsSource="{Binding ReportEntities}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
+                  CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" MaxHeight="300" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Type"  Binding="{Binding Type}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Name"  Binding="{Binding FullName}" IsReadOnly="True"/>
@@ -49,6 +52,7 @@
             </DataGrid.Columns>
 
         </DataGrid>
+        <ContentControl x:Name="ActiveItem" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
 
     </Grid>
 </UserControl>

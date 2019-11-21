@@ -24,15 +24,18 @@ namespace ContactAppWPF.ViewModels
         private SearchAggregator _sa;
         private SearchResultsViewModel _srvm;
         private UserCredentials _userCredentials;
+        private IWindowManager _wm;
 
         public MainViewModel(SimpleContainer container, SearchAggregator searchAggregator, IEventAggregator eventAggregator,
-            UserCredentials userCredentials)
+            UserCredentials userCredentials, IWindowManager windowManager)
         {
+            _wm = windowManager;
             _userCredentials = userCredentials;
             _events = eventAggregator;
             _events.Subscribe(this);
             _sa = searchAggregator;
             _container = container;
+            ActivateItem(_container.GetInstance<FrontPageViewModel>());
 
         }
         public object ContentView
@@ -95,6 +98,11 @@ namespace ContactAppWPF.ViewModels
             get { return _userCredentials.FullName; }
         }
 
+        public void GoHome()
+        {
+            ActivateItem(_container.GetInstance<FrontPageViewModel>());
+        }
+
         public void Handle(RepositoryHasChanges message)
         {
             NotifyOfPropertyChange(() => SaveEnabled);
@@ -136,6 +144,11 @@ namespace ContactAppWPF.ViewModels
         {
             ReportsVM = _container.GetInstance<ReportsViewModel>();
             ActivateItem(ReportsVM);
+        }
+
+        public void OpenSettings()
+        {
+            _wm.ShowDialog(_container.GetInstance<SettingsViewModel>());
         }
 
         public void ProcessSearch()

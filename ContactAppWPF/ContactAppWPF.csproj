@@ -82,6 +82,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -130,6 +131,7 @@
     <Compile Include="Models\CSVExporter.cs" />
     <Compile Include="Models\ReportExporter.cs" />
     <Compile Include="Models\ReportModel.cs" />
+    <Compile Include="ViewModels\FrontPageViewModel.cs" />
     <Compile Include="ViewModels\IDetailView.cs" />
     <Compile Include="ViewModels\IndividualDetailViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -138,8 +140,14 @@
     <Compile Include="ViewModels\RecentActionReportViewModel.cs" />
     <Compile Include="ViewModels\ReportsViewModel.cs" />
     <Compile Include="ViewModels\ReturnedEntity_entity.cs" />
+    <Compile Include="ViewModels\SearchResultsFrontPageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsGeneralViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\FrontPageView.xaml.cs">
+      <DependentUpon>FrontPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\IndividualDetailView.xaml.cs">
       <DependentUpon>IndividualDetailView.xaml</DependentUpon>
     </Compile>
@@ -158,8 +166,17 @@
     <Compile Include="Views\ReportsView.xaml.cs">
       <DependentUpon>ReportsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SearchResultsFrontPageView.xaml.cs">
+      <DependentUpon>SearchResultsFrontPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsGeneralView.xaml.cs">
+      <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -195,6 +212,10 @@
     <Folder Include="CustomControls\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\FrontPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\IndividualDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,7 +240,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SearchResultsFrontPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsGeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,50 +1,71 @@
 ﻿using Caliburn.Micro;
-using ContactAppWPF.Models;
+using ContactAppWPF.EventModels;
 using ModelLibrary;
-using ModelLibrary.DataAccess;
 using ModelLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace ContactAppWPF.ViewModels
 {
-    public class RecentActionReportViewModel : Conductor<object>
+    public class SearchResultsFrontPageViewModel : Conductor<IDetailView>, IHandle<SearchResultsInvalidated>
     {
-
-        private IDetailView _detailView;
         private SimpleContainer _container;
-        private ReportModel _rm;
-        private ReturnedEntity _selectedItem;
+        private Visibility _dataGridVisibility;
+        private IDetailView _detailView;
         private BindableCollection<ReturnedEntity> _entities;
+        private IEventAggregator _eventAggregator;
         private SearchAggregator _sa;
-
-        public RecentActionReportViewModel(ReportModel reportModel, SearchAggregator searchAggregator, SimpleContainer simpleContainer)
+        private int _selectedIndex = -1;
+        private ReturnedEntity _selectedItem;
+        public SearchResultsFrontPageViewModel(SearchAggregator searchAggregator, IEventAggregator eventAggregator, SimpleContainer container)
         {
-            _container = simpleContainer;
+            _container = container;
+            _eventAggregator = eventAggregator;
             _sa = searchAggregator;
-            GetRecords();
-            
-
-            _rm = reportModel;
+            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllByNoActions());
+            _eventAggregator.Subscribe(this);
         }
 
-        private void GetRecords()
+        public Visibility DataGridVisibility
         {
-            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllByHasAction());
-            NotifyOfPropertyChange(() => ReportEntities);
+            get { return _dataGridVisibility; }
+            set
+            {
+                _dataGridVisibility = value;
+                NotifyOfPropertyChange(() => DataGridVisibility);
+            }
         }
 
-        public BindableCollection<ReturnedEntity> ReportEntities
+        public BindableCollection<ReturnedEntity> Entities
         {
             get { return _entities; }
+            set
+            {
+                _entities = value;
+                NotifyOfPropertyChange(() => Entities);
+            }
         }
+
+        public int ResultsTotal
+        {
+            get { return _entities.Count; }
+        }
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                _selectedIndex = value;
+                NotifyOfPropertyChange(() => SelectedIndex);
+            }
+        }
+
         public ReturnedEntity SelectedItem
         {
             get { return _selectedItem; }
@@ -126,37 +147,29 @@ namespace ContactAppWPF.ViewModels
                 }
                 ActivateItem(_detailView);
             }
+
         }
-private void RefreshResults(ReturnedEntity selectedItem)
+        public void Handle(SearchResultsInvalidated message)
+        {
+            if (_selectedItem != null)
+            {
+                RefreshResults(_selectedItem);
+            }
+        }
+
+        public void RefreshResults(ReturnedEntity entity)
         {
             Repository.Reload();
-            GetRecords();
+            Entities = new BindableCollection<ReturnedEntity>(_sa.GetAllByNoActions());
             try
             {
-                SelectedItem = _entities?.First(a => a.Type == selectedItem.Type &&
-                a.Id == selectedItem.Id);
+                SelectedItem = Entities?.First(a => a.Type == entity.Type &&
+                a.Id == entity.Id);
             }
             catch
             {
                 Console.WriteLine();
             }
-        }
-
-        public void OnExportClicked()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Type,Name,Action Summary,Notes");
-            foreach (ReturnedEntity item in ReportEntities)
-            {
-                sb.AppendLine(
-                    $"{item.Type},{item.FullName},{item.Action.actionType} completed by {item.Action.completedBy} on {item.Action.date.Value.ToShortDateString()},\"{item.Action.DecodedNotes}\"");
-            }
-            ReportExporter exporter = new CSVExporter()
-            {
-                Data = sb.ToString()
-            };
-            exporter.Export();
-            
         }
     }
 }

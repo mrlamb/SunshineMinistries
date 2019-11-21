@@ -16,5 +16,6 @@ namespace ModelLibrary.Models
         public string LastAction { get; set; }
         public Type Type { get; set; }
         public string TypeString { get; set; }
+        public IAction Action { get; set; }
     }
 }

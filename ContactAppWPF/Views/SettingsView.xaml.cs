@@ -1,7 +1,5 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,22 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ContactAppWPF.Views
 {
     /// <summary>
-    /// Interaction logic for RecentActionReportView.xaml
+    /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class RecentActionReportView : UserControl
+    public partial class SettingsView : Window
     {
-        public RecentActionReportView()
+        public SettingsView()
         {
             InitializeComponent();
             
         }
-
-        
     }
 }

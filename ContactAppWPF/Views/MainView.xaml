@@ -34,7 +34,7 @@
                 <Button  x:Name="ShowNewOptions" MinWidth="50" Padding="5" Margin="5" Background="white">
                     <StackPanel>
                         <Image Source="/Media/NewFile.png" Height="20" />
-                        <TextBlock Text="New"/>
+                        <TextBlock Text="New" FontSize="12"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="NewIndividual" MinWidth="50" Padding="5" Margin="5" Background="White" Visibility="{Binding NewIndividualVisibility}">
@@ -69,17 +69,14 @@
 
         <!-- TOP LEFT CORNER START-->
         <StackPanel Grid.Column="0" Grid.Row="0" Background="Transparent" Margin="0"  SnapsToDevicePixels="True">
-            <Image Source="/Media/Sunshine.png" MaxWidth="50" VerticalAlignment="Center" Margin="3,10,3,0"/>
+                <Button x:Name="GoHome" Background="Transparent" BorderThickness="0">
+                    <Image Source="/Media/Sunshine.png" MaxWidth="50" VerticalAlignment="Center" />
+                </Button>
         </StackPanel>
         <!--TOP LEFT CORNER END-->
         <!--TOP RIBBON START-->
             <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" SnapsToDevicePixels="True" Background="Transparent"/>
-            <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Hello, " />
-                    <TextBlock Text="{Binding UserName}" />
-                </StackPanel>
-            </Grid>
+            
 
 
         <!-- LEFT RIBBON START-->

@@ -121,7 +121,6 @@
     <Compile Include="IAuthentication.cs" />
     <Compile Include="ModelHelper.cs" />
     <Compile Include="Models\IAction.cs" />
-    <Compile Include="Models\LastActionReportReturnedEntity.cs" />
     <Compile Include="Models\ReturnedEntity.cs" />
     <Compile Include="Models\UserAccessOptions.cs" />
     <Compile Include="Models\UserCredentials.cs" />
