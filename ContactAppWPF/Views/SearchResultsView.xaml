@@ -28,8 +28,9 @@
         </Grid.RowDefinitions>
         <Expander Grid.Row="0" Grid.Column="0" BorderBrush="Black" IsExpanded="True" Padding="5"  Background="Transparent" >
             <Expander.Header>
-                <StackPanel>
-                    <Label Content="Search Results" FontSize="14" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding ResultsTotal}"/>
+                    <TextBlock Text=" result(s)"/>
                 </StackPanel>
             </Expander.Header>
             <StackPanel>

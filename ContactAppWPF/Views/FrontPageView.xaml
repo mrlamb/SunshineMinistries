@@ -8,7 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            
             <ColumnDefinition Width="*"/>
+            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -22,7 +24,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1" >
             <TextBlock Text="Welcome to your contact management system! Use the search bar above to search for specific contacts. Run available reports by clicking the reports button to the left. Below you will find a list of contacts which currently have no actions." 
-                       MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth}" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                       MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}" TextWrapping="Wrap" Margin="0,5,0,5"/>
         </StackPanel>
         <ContentControl x:Name="ActiveItem" Grid.Row="2"/>
 

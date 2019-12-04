@@ -118,15 +118,15 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock Text="Street" Grid.Column="4" Grid.Row="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    <TextBox x:Name="SelectedAddress_streetAddress" Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="3" MinWidth="100" Margin="3,3"/>
+                <TextBox x:Name="SelectedAddressStreet" Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="3" MinWidth="100" Margin="3,3" />
                     <TextBlock Text="City" Grid.Column="4" Grid.Row="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    <TextBox x:Name="SelectedAddress_city" Grid.Column="5" Grid.Row="2" MinWidth="100" Margin="3,3"/>
+                <TextBox x:Name="SelectedAddressCity" Grid.Column="5" Grid.Row="2" MinWidth="100" Margin="3,3" />
                     <TextBlock Text="State" Grid.Column="6" Grid.Row="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     <ComboBox x:Name="States" Grid.Column="7" Grid.Row="2" Margin="3,3" MinWidth="100" SelectedItem="{Binding SelectedState}"/>
-                    <CheckBox Grid.Column="6" Grid.Row="3" x:Name="SelectedAddress_primary" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <CheckBox Grid.Column="6" Grid.Row="3" x:Name="SelectedAddressPrimary" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Column="7" Grid.Row="3" Text="Primary" VerticalAlignment="Center"/>
                     <TextBlock  Text="Zip Code" Grid.Column="4" Grid.Row="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    <TextBox x:Name="SelectedAddress_zip" Grid.Column="5" Grid.Row="3" Margin="3,3"/>
+                    <TextBox x:Name="SelectedAddressZip" Grid.Column="5" Grid.Row="3" Margin="3,3"/>
                     <Button x:Name="AddAddress" Grid.Column="8" Grid.Row="1" Margin="3,3">
                         <TextBlock Text="Add" FontSize="10" Margin="3"/>
                     </Button>

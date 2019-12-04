@@ -54,6 +54,11 @@ namespace ContactAppWPF.ViewModels
             }
         }
 
+        public int ResultsTotal
+        {
+            get { return _entities.Count; }
+        }
+
         public int SelectedIndex
         {
             get { return _selectedIndex; }

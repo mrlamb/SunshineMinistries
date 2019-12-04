@@ -25,6 +25,10 @@ namespace ContactAppWPF.ViewModels
         private addresses_individual _selectedAddress;
         private string _selectedState;
         private UserCredentials _user;
+        private string _selectedAddressStreet;
+        private string _selectedAddressCity;
+        private string _selectedAddressZip;
+        private bool? _selectedAddressPrimary;
 
         public IndividualDetailViewModel(IEventAggregator eventAggregator, StateListHelper stateListHelper,
             UserDataAccess userDataAccess, UserCredentials userCredentials, ActionTypesDataAccess actionTypesDataAccess)
@@ -190,8 +194,70 @@ namespace ContactAppWPF.ViewModels
             {
                 _selectedAddress = value;
                 SelectedState = _selectedAddress != null ? _selectedAddress.state != null ? _selectedAddress.state : "Missouri" : "Missouri";
+                SelectedAddressStreet = _selectedAddress?.streetAddress;
+                SelectedAddressCity = _selectedAddress?.city;
+                SelectedAddressZip = _selectedAddress?.zip;
+                SelectedAddressPrimary = _selectedAddress?.primary;
                 NotifyOfPropertyChange(() => SelectedAddress);
                 NotifyOfPropertyChange(() => SelectedState);
+                NotifyOfPropertyChange(() => SelectedAddressStreet);
+                NotifyOfPropertyChange(() => SelectedAddressCity);
+                NotifyOfPropertyChange(() => SelectedAddressZip);
+                NotifyOfPropertyChange(() => SelectedAddressPrimary);
+            }
+        }
+
+        public string SelectedAddressCity
+        {
+            get { return _selectedAddressCity; }
+            set
+            {
+                _selectedAddressCity = value;
+                if (SelectedAddress != null)
+                {
+                    SelectedAddress.city = value;
+                }
+                NotifyOfPropertyChange(() => SelectedAddressCity);
+            }
+        }
+        public string SelectedAddressZip
+        {
+            get { return _selectedAddressZip; }
+            set
+            {
+                _selectedAddressZip = value;
+                if (SelectedAddress != null)
+                {
+                    SelectedAddress.zip = value;
+                }
+                NotifyOfPropertyChange(() => SelectedAddressZip);
+            }
+        }
+        public string SelectedAddressStreet
+        {
+            get { return _selectedAddressStreet; }
+            set
+            {
+                _selectedAddressStreet = value;
+                if (SelectedAddress != null)
+                {
+                    SelectedAddress.streetAddress = value;
+                }
+                NotifyOfPropertyChange(() => SelectedAddressStreet);
+            }
+        }
+
+        public bool? SelectedAddressPrimary
+        {
+            get { return _selectedAddressPrimary; }
+            set
+            {
+                _selectedAddressPrimary = value;
+                if (SelectedAddress != null)
+                {
+                    SelectedAddress.primary = value;
+                }
+                NotifyOfPropertyChange(() => SelectedAddressPrimary);
             }
         }
 
@@ -232,6 +298,16 @@ namespace ContactAppWPF.ViewModels
         {
             //TODO THIS ISN'T RIGHT
             var add = SelectedAddress;
+            if (add == null)
+            {
+                add = new addresses_individual();
+                add.streetAddress = SelectedAddressStreet;
+                add.city = SelectedAddressCity;
+                add.zip = SelectedAddressZip;
+                add.state = SelectedState;
+
+
+            }
 
             if (_individual.addresses_individual.Any(a => a.streetAddress == add.streetAddress) &&
                 _individual.addresses_individual.Any(a => a.city == add.city) &&
@@ -280,8 +356,7 @@ namespace ContactAppWPF.ViewModels
         {
             SelectedAddress = null;
             NotifyOfPropertyChange(() => SelectedAddress);
-            SelectedAddress = new addresses_individual();
-            NotifyOfPropertyChange(() => SelectedAddress);
+
         }
 
         public void ClearPhoneNumber()
@@ -319,6 +394,16 @@ namespace ContactAppWPF.ViewModels
                 NotifyOfPropertyChange(() => PhoneNumbers);
                 _events.PublishOnUIThread(new RepositoryHasChanges());
             }
+        }
+
+        public void OnTextChanged(string text)
+        {
+            if (_selectedAddress != null)
+            {
+                return;
+            }
+            _selectedAddress = new addresses_individual();
+            NotifyOfPropertyChange(() => SelectedAddress);
         }
     }
 }
