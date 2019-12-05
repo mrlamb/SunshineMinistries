@@ -5,22 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactAppWPF.Views"
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="400" Topmost="True" 
+        Title="Settings" Height="450" Width="400"  
         >
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <ListBox SelectedItem="{Binding ListSelectedItem}" BorderThickness="1" Margin="5" Grid.Column="0" Grid.Row="0" MinHeight="100">
-            <ListBoxItem Content="General"/>
-        </ListBox>
-        <ContentControl x:Name="ActiveItem" Grid.Column="1" Grid.Row="0"/>
-        <Button x:Name="TryClose" Content="Close" Grid.Column="0" Grid.Row="1"/>
+        <StackPanel Margin="5">
+            <TextBlock Text="Font Family"/>
+            <ComboBox x:Name="fontSelector" 
+             ItemsSource="{x:Static Fonts.SystemFontFamilies}" Grid.Column="0" Grid.Row="0" SelectedItem="{Binding FontSelectedItem}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5">
+            <TextBlock>Font Size</TextBlock>
+            <ComboBox x:Name="Sizes" SelectedItem="{Binding FontSizeSelectedItem}"/>
+        </StackPanel>
+        <Button x:Name="Save" Grid.Row="1" Grid.Column="0" Content="Save" Margin="5"/>
+        <Button x:Name="TryClose" Grid.Row="1" Grid.Column="1" Content="Close" Margin="5"/>
     </Grid>
 </Window>

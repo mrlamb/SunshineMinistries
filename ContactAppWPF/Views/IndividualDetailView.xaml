@@ -38,7 +38,7 @@
                 </LinearGradientBrush>
             </Expander.Background>
             <Expander.Header>
-                <TextBlock Text="Basic Information" FontSize="14"/>
+                <TextBlock Text="Basic Information" />
             </Expander.Header>
                  <Grid>
                     <Grid.ColumnDefinitions>
@@ -141,7 +141,7 @@
         </Expander>
         <Expander IsExpanded="{Binding ActionsExpanded, Mode=OneWay}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6" Padding="5" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,0">
             <Expander.Header>
-                <TextBlock Text="Actions" FontSize="14"/>
+                <TextBlock Text="Actions" />
             </Expander.Header>
             <Expander.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -217,7 +217,7 @@
         </Expander>
         <Expander Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Padding="5" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,0">
             <Expander.Header>
-                <TextBlock Text="More Information" FontSize="14"/>
+                <TextBlock Text="More Information" />
             </Expander.Header>
             <Grid>
                 <Grid.ColumnDefinitions>

@@ -4,44 +4,68 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace ContactAppWPF.ViewModels
 {
-    class SettingsViewModel : Conductor<object>
+    class SettingsViewModel : Screen
     {
-        private SimpleContainer _container;
-        private string _listSelectedItem;
+        private FontFamily _fontSelectedItem;
+        private FontStyle _fontSelectedItemFace;
+        private BindableCollection<double> _sizes;
+        private double _fontSizeSelectedItem;
 
-        public SettingsViewModel(SimpleContainer simpleContainer)
+        public SettingsViewModel()
         {
-            _container = simpleContainer;
-            ListSelectedItem = "General";
-            
+            _sizes = new BindableCollection<double>(new double[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 26, 27, 28, 29 });
+            FontSizeSelectedItem = Application.Current.MainWindow.FontSize;
+            FontSelectedItem = Application.Current.MainWindow.FontFamily;
+            FontSelectedItemFace = Application.Current.MainWindow.FontStyle;
         }
 
-        public string ListSelectedItem
+        public FontFamily FontSelectedItem
         {
-         
-
-            get { return _listSelectedItem; }
+            get { return _fontSelectedItem; }
             set
             {
-                
-                _listSelectedItem = value;
-                SetContentView(ListSelectedItem);
+                _fontSelectedItem = value;
+                NotifyOfPropertyChange(() => FontSelectedItem);
             }
         }
 
-        private void SetContentView(string listSelectedItem)
+        public FontStyle FontSelectedItemFace
         {
-            switch (listSelectedItem)
+            get { return _fontSelectedItemFace; }
+            set
             {
-                case "General":
-                    ActivateItem(_container.GetInstance<SettingsGeneralViewModel>());
-                    break;
-                default:
-                    break;
+                _fontSelectedItemFace = value;
+                NotifyOfPropertyChange(() => FontSelectedItemFace);
             }
         }
+
+        public double FontSizeSelectedItem
+        {
+            get { return _fontSizeSelectedItem; }
+            set
+            {
+                _fontSizeSelectedItem = value;
+                NotifyOfPropertyChange(() => FontSizeSelectedItem);
+            }
+        }
+
+        public BindableCollection<double> Sizes
+        {
+            get { return _sizes; }
+        }
+
+        public void Save()
+        {
+            Application.Current.MainWindow.FontSize = FontSizeSelectedItem;
+            Application.Current.MainWindow.FontFamily = FontSelectedItem;
+        }
+
+        
+
     }
 }
