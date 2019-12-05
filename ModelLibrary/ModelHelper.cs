@@ -1,6 +1,7 @@
 ﻿using ModelLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,11 +37,15 @@ namespace ModelLibrary
 
     public partial class individual
     {
+        
+
         public string DecodedNotes
         {
             get { return notes != null ? Encoding.ASCII.GetString(notes) : null; }
             set { notes = Encoding.ASCII.GetBytes(value); }
         }
+
+        
     }
 }
 

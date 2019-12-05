@@ -32,6 +32,8 @@ namespace ModelLibrary
         public Nullable<int> source { get; set; }
         public string sunshineid { get; set; }
         public byte[] notes { get; set; }
+        public Nullable<int> sunshineidnumber { get; set; }
+        public string sunshineidchar { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<actions_individual> actions_individual { get; set; }

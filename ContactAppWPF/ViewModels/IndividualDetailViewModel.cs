@@ -6,13 +6,14 @@ using ModelLibrary.DataAccess;
 using ModelLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace ContactAppWPF.ViewModels
 {
-    public class IndividualDetailViewModel : Screen, IDetailView
+    public class IndividualDetailViewModel : Screen, IDetailView, IDataErrorInfo
     {
         private List<string> _actionCompletedByList = new List<string>();
         private List<string> _actionTypeList = new List<string>();
@@ -29,9 +30,12 @@ namespace ContactAppWPF.ViewModels
         private string _selectedAddressCity;
         private string _selectedAddressZip;
         private bool? _selectedAddressPrimary;
+        private string _sunshineID;
+        private SunshineIDHelper _sunshineIDHelper;
 
         public IndividualDetailViewModel(IEventAggregator eventAggregator, StateListHelper stateListHelper,
-            UserDataAccess userDataAccess, UserCredentials userCredentials, ActionTypesDataAccess actionTypesDataAccess)
+            UserDataAccess userDataAccess, UserCredentials userCredentials, ActionTypesDataAccess actionTypesDataAccess, 
+            SunshineIDHelper sunshineIDHelper)
         {
             _actionTypeList = actionTypesDataAccess.GetActionTypes();
             _user = userCredentials;
@@ -39,6 +43,7 @@ namespace ContactAppWPF.ViewModels
             States = new BindableCollection<string>(stateListHelper.States);
             _events = eventAggregator;
             Deactivated = false;
+            _sunshineIDHelper = sunshineIDHelper;
         }
 
         public BindableCollection<string> ActionCompletedBy
@@ -80,6 +85,11 @@ namespace ContactAppWPF.ViewModels
             {
                 _entity = value;
                 _individual = (individual)value.Entity;
+                _sunshineID = _individual.sunshineid;
+                if (_sunshineID == null)
+                {
+                    SunshineId = _sunshineIDHelper.GetNextIndividualID();
+                }
                 SelectedAddress = _individual.addresses_individual.FirstOrDefault(a => a.primary == true);
                 NotifyOfPropertyChange(() => BasicInformationCheck);
                 NotifyOfPropertyChange(() => ActionsExpanded);
@@ -274,12 +284,54 @@ namespace ContactAppWPF.ViewModels
         public BindableCollection<string> States { get; private set; }
         public string SunshineId
         {
-            get { return _individual.sunshineid; }
+            get { return _sunshineID; }
             set
             {
-                _individual.sunshineid = value;
+                if (value.Length > 0)
+                {
+                    _individual.sunshineidchar = value.First().ToString();
+                }
+                if (value.Length > 1)
+                {
+                    try
+                    {
+                        _individual.sunshineidnumber = int.Parse(value.Substring(1));
+                    }
+                    catch
+                    {
+                       Console.WriteLine();
+                    }
+                }
+                _sunshineID = value;
                 _events.PublishOnUIThread(new RepositoryHasChanges());
                 NotifyOfPropertyChange(() => SunshineId);
+                
+            }
+        }
+
+        public string Error => throw new NotImplementedException();
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                switch (columnName)
+                {
+                    case "FirstName":
+                        if (string.IsNullOrEmpty(FirstName)) {
+                            result = "Please enter a first name.";
+                        }
+                        break;
+                    case "LastName":
+                        if (string.IsNullOrEmpty(LastName))
+                        {
+                            result = "Please enter a last name.";
+                        }
+                        break;
+                }
+
+                return result;
             }
         }
 

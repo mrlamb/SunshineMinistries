@@ -41,7 +41,8 @@ namespace ContactAppWPF
                 .Singleton<SearchAggregator>()
                 .Singleton<StateListHelper>()
                 .Singleton<ReportModel>()
-                .Singleton<SettingsHelper>();
+                .Singleton<SettingsHelper>()
+                .Singleton<SunshineIDHelper>();
 
             _container.PerRequest<IAuthentication , Authentication>()
                 .PerRequest<OrgTypeDataAccess>()

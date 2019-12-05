@@ -84,8 +84,10 @@
           <Property Name="financialsupport" Type="bool" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="45" />
           <Property Name="source" Type="int" />
-          <Property Name="sunshineid" Type="varchar" MaxLength="45" />
           <Property Name="notes" Type="blob" />
+          <Property Name="sunshineidnumber" Type="int" />
+          <Property Name="sunshineidchar" Type="varchar" MaxLength="1" />
+          <Property Name="sunshineid" Type="varchar" MaxLength="45" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="officers">
           <Key>
@@ -473,9 +475,11 @@
           <NavigationProperty Name="officers" Relationship="Self.fk_officers_to_ind" FromRole="individuals" ToRole="officers" />
           <NavigationProperty Name="phonenumbers_individual" Relationship="Self.fk_phone_individual" FromRole="individuals" ToRole="phonenumbers_individual" />
           <NavigationProperty Name="social_media_individual" Relationship="SunshineDataModel.fk_sm_to_ind" FromRole="individual" ToRole="social_media_individual" />
-          <Property Name="sunshineid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="sunshineid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="notes" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="organization" Relationship="SunshineDataModel.source_to_org" FromRole="individual" ToRole="organization" />
+          <Property Name="sunshineidnumber" Type="Int32" />
+          <Property Name="sunshineidchar" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="officer">
           <Key>
@@ -904,6 +908,8 @@
           <EntitySetMapping Name="individuals">
             <EntityTypeMapping TypeName="SunshineDataModel.individual">
               <MappingFragment StoreEntitySet="individuals">
+                <ScalarProperty Name="sunshineidchar" ColumnName="sunshineidchar" />
+                <ScalarProperty Name="sunshineidnumber" ColumnName="sunshineidnumber" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="sunshineid" ColumnName="sunshineid" />
                 <ScalarProperty Name="id" ColumnName="id" />

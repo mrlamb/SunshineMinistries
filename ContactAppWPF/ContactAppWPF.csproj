@@ -129,6 +129,7 @@
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\StateListHelper.cs" />
+    <Compile Include="Helpers\SunshineIDHelper.cs" />
     <Compile Include="Models\CSVExporter.cs" />
     <Compile Include="Models\ReportExporter.cs" />
     <Compile Include="Models\ReportModel.cs" />

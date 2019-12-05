@@ -122,6 +122,23 @@ namespace ContactAppWPF.ViewModels
 
         public void NewIndividual()
         {
+            if (Repository.HasChanges())
+            {
+                var result = MessageBox.Show($"You have unsaved changes, save first?", $"Save?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                switch (result)
+                {
+                    case MessageBoxResult.Cancel:
+                        return;
+                    case MessageBoxResult.Yes:
+                        Save();
+                        break;
+                    case MessageBoxResult.No:
+                        Repository.CancelChanges();
+                        break;
+                    default:
+                        break;
+                }
+            }
             ReportsVM = null;
             NewIndividualVisibility = Visibility.Collapsed;
             NewOrganizationVisibility = Visibility.Collapsed;
@@ -138,6 +155,23 @@ namespace ContactAppWPF.ViewModels
 
         public void NewOrganization()
         {
+            if (Repository.HasChanges())
+            {
+                var result = MessageBox.Show($"You have unsaved changes, save first?", $"Save?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                switch (result)
+                {
+                    case MessageBoxResult.Cancel:
+                        return;
+                    case MessageBoxResult.Yes:
+                        Save();
+                        break;
+                    case MessageBoxResult.No:
+                        Repository.CancelChanges();
+                        break;
+                    default:
+                        break;
+                }
+            }
             ReportsVM = null;
             NewIndividualVisibility = Visibility.Collapsed;
             NewOrganizationVisibility = Visibility.Collapsed;
@@ -154,6 +188,23 @@ namespace ContactAppWPF.ViewModels
 
         public void OpenReports()
         {
+            if (Repository.HasChanges())
+            {
+                var result = MessageBox.Show($"You have unsaved changes, save first?", $"Save?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                switch (result)
+                {
+                    case MessageBoxResult.Cancel:
+                        return;
+                    case MessageBoxResult.Yes:
+                        Save();
+                        break;
+                    case MessageBoxResult.No:
+                        Repository.CancelChanges();
+                        break;
+                    default:
+                        break;
+                }
+            }
             ReportsVM = _container.GetInstance<ReportsViewModel>();
             ActivateItem(ReportsVM);
         }
@@ -165,6 +216,23 @@ namespace ContactAppWPF.ViewModels
 
         public void ProcessSearch()
         {
+            if (Repository.HasChanges())
+            {
+                var result = MessageBox.Show($"You have unsaved changes, save first?", $"Save?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                switch (result)
+                {
+                    case MessageBoxResult.Cancel:
+                        return;
+                    case MessageBoxResult.Yes:
+                        Save();
+                        break;
+                    case MessageBoxResult.No:
+                        Repository.CancelChanges();
+                        break;
+                    default:
+                        break;
+                }
+            }
             _sa.SearchTerms = SearchTerms;
             ContentView = _container.GetInstance<SearchResultsViewModel>();
             ActivateItem(ContentView);
@@ -180,7 +248,7 @@ namespace ContactAppWPF.ViewModels
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Unable to save: {e.Message}");
+                MessageBox.Show($"Unable to save: {e.Message}, Details: { e.InnerException?.InnerException?.Message}");
             }
         }
 
