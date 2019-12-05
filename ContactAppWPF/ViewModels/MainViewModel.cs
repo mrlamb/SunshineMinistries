@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Caliburn.Micro;
 using ContactAppWPF.EventModels;
+using ContactAppWPF.Helpers;
 using ModelLibrary;
 using ModelLibrary.DataAccess;
 using ModelLibrary.Models;
@@ -25,9 +26,10 @@ namespace ContactAppWPF.ViewModels
         private SearchResultsViewModel _srvm;
         private UserCredentials _userCredentials;
         private IWindowManager _wm;
+        private SettingsHelper _settings;
 
         public MainViewModel(SimpleContainer container, SearchAggregator searchAggregator, IEventAggregator eventAggregator,
-            UserCredentials userCredentials, IWindowManager windowManager)
+            UserCredentials userCredentials, IWindowManager windowManager, SettingsHelper settings)
         {
             _wm = windowManager;
             _userCredentials = userCredentials;
@@ -36,8 +38,18 @@ namespace ContactAppWPF.ViewModels
             _sa = searchAggregator;
             _container = container;
             ActivateItem(_container.GetInstance<FrontPageViewModel>());
+            _settings = settings;
+            settings.Read();
+
+            Activated += OnActivate;
 
         }
+        public void OnActivate(object sender, ActivationEventArgs e)
+        {
+            Application.Current.MainWindow.FontFamily = new FontFamily(_settings.AppFont);
+            Application.Current.MainWindow.FontSize = _settings.AppFontSize;
+        }
+
         public object ContentView
         {
             get { return _activeItem; }

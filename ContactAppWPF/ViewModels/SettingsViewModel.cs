@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using ContactAppWPF.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,11 @@ namespace ContactAppWPF.ViewModels
         private FontStyle _fontSelectedItemFace;
         private BindableCollection<double> _sizes;
         private double _fontSizeSelectedItem;
+        private SettingsHelper _settings;
 
-        public SettingsViewModel()
+        public SettingsViewModel(SettingsHelper settings)
         {
+            _settings = settings;
             _sizes = new BindableCollection<double>(new double[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 26, 27, 28, 29 });
             FontSizeSelectedItem = Application.Current.MainWindow.FontSize;
             FontSelectedItem = Application.Current.MainWindow.FontFamily;
@@ -63,6 +66,9 @@ namespace ContactAppWPF.ViewModels
         {
             Application.Current.MainWindow.FontSize = FontSizeSelectedItem;
             Application.Current.MainWindow.FontFamily = FontSelectedItem;
+            _settings.AppFont = FontSelectedItem.Source;
+            _settings.AppFontSize = FontSizeSelectedItem;
+            _settings.Save();
         }
 
         

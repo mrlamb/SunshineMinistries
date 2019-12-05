@@ -127,6 +127,7 @@
     <Compile Include="EventModels\SearchResultsInvalidated.cs" />
     <Compile Include="EventModels\SearchResultsSelectedItemChanged.cs" />
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\StateListHelper.cs" />
     <Compile Include="Models\CSVExporter.cs" />
     <Compile Include="Models\ReportExporter.cs" />

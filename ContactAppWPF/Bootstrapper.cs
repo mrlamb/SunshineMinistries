@@ -40,7 +40,8 @@ namespace ContactAppWPF
                 .Singleton<UserCredentials>()
                 .Singleton<SearchAggregator>()
                 .Singleton<StateListHelper>()
-                .Singleton<ReportModel>();
+                .Singleton<ReportModel>()
+                .Singleton<SettingsHelper>();
 
             _container.PerRequest<IAuthentication , Authentication>()
                 .PerRequest<OrgTypeDataAccess>()
