@@ -13,6 +13,8 @@ namespace ModelLibrary
         private IndividualDataAccess ida = new IndividualDataAccess();
         private OrganizationDataAccess oda = new OrganizationDataAccess();
         public string SearchTerms { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public List<ReturnedEntity> GetAllBySearchTerm()
         {
@@ -86,6 +88,37 @@ namespace ModelLibrary
             return output;
         }
 
+        public IEnumerable<ReturnedEntity> GetAllByHasLapsedAction()
+        {
+            var output = new List<ReturnedEntity>();
+            var individuals = ida.GetIndividuals("").Where(a => a.actions_individual.Count > 0);
+            foreach (var item in individuals.Where(a=> a.actions_individual.All(b=> b.date.Value < DateTime.Now.AddMonths(-13) )))
+            {
+                var re = new ReturnedEntity();
+                re.Entity = item;
+                var LastDate = item.actions_individual.Max(a => a.date);
+                re.Action = item.actions_individual.FirstOrDefault(a => a.date == LastDate);
+                re.FullName = $"{item.firstname} {item.lastname}";
+                re.TypeString = "Individual";
+                output.Add(re);
+
+            }
+
+            var organizations = oda.GetOrganizations("").Where(a => a.actions_organization.Count > 0);
+            foreach (var item in organizations.Where(a => a.actions_organization.All(b=> b.date.Value < DateTime.Now.AddMonths(-13))))
+            {
+                var re = new ReturnedEntity();
+                re.Entity = item;
+                var LastDate = item.actions_organization.Max(a => a.date);
+                re.Action = item.actions_organization.FirstOrDefault(a => a.date == LastDate);
+                re.FullName = item.name;
+                re.TypeString = item.org_type != null ? item.org_types.type : "Organization";
+                output.Add(re);
+
+            }
+            return output;
+        }
+
         public List<ReturnedEntity> GetAllByNoActions()
         {
             var output = new List<ReturnedEntity>();
@@ -146,6 +179,13 @@ namespace ModelLibrary
 
 
             return output;
+        }
+
+        public List<ReturnedEntity> GetAllByHasActionWithinDateRange()
+        {
+            var output = GetAllByHasAction().Where(a => a.Action.date > BeginDate && a.Action.date < EndDate);
+            return output.ToList();
+
         }
 
         public List<ReturnedEntity> GetAllByHasAction()

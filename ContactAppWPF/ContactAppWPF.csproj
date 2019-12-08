@@ -133,24 +133,32 @@
     <Compile Include="Models\CSVExporter.cs" />
     <Compile Include="Models\ReportExporter.cs" />
     <Compile Include="Models\ReportModel.cs" />
+    <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\FrontPageViewModel.cs" />
     <Compile Include="ViewModels\IDetailView.cs" />
     <Compile Include="ViewModels\IndividualDetailViewModel.cs" />
+    <Compile Include="ViewModels\LapsedActionReportViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\OrganizationDetailViewModel.cs" />
     <Compile Include="ViewModels\RecentActionReportViewModel.cs" />
+    <Compile Include="ViewModels\RecordByTypeReportViewModel.cs" />
     <Compile Include="ViewModels\ReportsViewModel.cs" />
-    <Compile Include="ViewModels\ReturnedEntity_entity.cs" />
     <Compile Include="ViewModels\SearchResultsFrontPageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\AdminView.xaml.cs">
+      <DependentUpon>AdminView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrontPageView.xaml.cs">
       <DependentUpon>FrontPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IndividualDetailView.xaml.cs">
       <DependentUpon>IndividualDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LapsedActionReportView.xaml.cs">
+      <DependentUpon>LapsedActionReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -163,6 +171,9 @@
     </Compile>
     <Compile Include="Views\RecentActionReportView.xaml.cs">
       <DependentUpon>RecentActionReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecordByTypeReportView.xaml.cs">
+      <DependentUpon>RecordByTypeReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportsView.xaml.cs">
       <DependentUpon>ReportsView.xaml</DependentUpon>
@@ -210,11 +221,19 @@
     <Folder Include="CustomControls\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FrontPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\IndividualDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LapsedActionReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -231,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RecentActionReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordByTypeReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,21 +1,18 @@
 ﻿using Caliburn.Micro;
 using ContactAppWPF.Models;
 using ModelLibrary;
-using ModelLibrary.DataAccess;
 using ModelLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace ContactAppWPF.ViewModels
 {
-    public class RecentActionReportViewModel : Conductor<object>
+    class RecordByTypeReportViewModel : Conductor<object>
     {
 
         private IDetailView _detailView;
@@ -25,19 +22,19 @@ namespace ContactAppWPF.ViewModels
         private BindableCollection<ReturnedEntity> _entities;
         private SearchAggregator _sa;
 
-        public RecentActionReportViewModel(ReportModel reportModel, SearchAggregator searchAggregator, SimpleContainer simpleContainer)
+        public RecordByTypeReportViewModel(ReportModel reportModel, SearchAggregator searchAggregator, SimpleContainer simpleContainer)
         {
             _container = simpleContainer;
             _sa = searchAggregator;
             GetRecords();
-            
+
 
             _rm = reportModel;
         }
 
         private void GetRecords()
         {
-            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllByHasActionWithinDateRange());
+            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllBySearchTerm());
             NotifyOfPropertyChange(() => ReportEntities);
         }
 
@@ -127,7 +124,7 @@ namespace ContactAppWPF.ViewModels
                 ActivateItem(_detailView);
             }
         }
-private void RefreshResults(ReturnedEntity selectedItem)
+        private void RefreshResults(ReturnedEntity selectedItem)
         {
             Repository.Reload();
             GetRecords();
@@ -145,18 +142,18 @@ private void RefreshResults(ReturnedEntity selectedItem)
         public void OnExportClicked()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Type,Name,Action Summary,Notes");
+            sb.AppendLine($"Type,SunshineID,Name,Address,Last Action");
             foreach (ReturnedEntity item in ReportEntities)
             {
                 sb.AppendLine(
-                    $"{item.Type},{item.FullName},{item.Action.actionType} completed by {item.Action.completedBy} on {item.Action.date.Value.ToShortDateString()},\"{item.Action.DecodedNotes}\"");
+                    $"{item.Type},{item.SunshineId},{item.FullName},{item.FullAddress},{item.LastAction}");
             }
             ReportExporter exporter = new CSVExporter()
             {
                 Data = sb.ToString()
             };
             exporter.Export();
-            
+
         }
     }
 }

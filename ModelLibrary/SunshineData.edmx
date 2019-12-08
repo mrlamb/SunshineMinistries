@@ -110,7 +110,6 @@
             <PropertyRef Name="orgid" />
           </Key>
           <Property Name="orgid" Type="int" Nullable="false" />
-          <Property Name="orgsunshineid" Type="varchar" MaxLength="45" />
           <Property Name="name" Type="varchar" MaxLength="45" />
           <Property Name="phone" Type="varchar" MaxLength="45" />
           <Property Name="financialsupport" Type="bool" Nullable="false" />
@@ -118,6 +117,9 @@
           <Property Name="org_type" Type="int" />
           <Property Name="nickname" Type="varchar" MaxLength="45" />
           <Property Name="denomination" Type="varchar" MaxLength="45" />
+          <Property Name="sunshineidnumeric" Type="int" />
+          <Property Name="sunshineidchar" Type="varchar" MaxLength="1" />
+          <Property Name="orgsunshineid" Type="varchar" MaxLength="45" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="phonenumbers_individual">
           <Key>
@@ -497,7 +499,7 @@
             <PropertyRef Name="orgid" />
           </Key>
           <Property Name="orgid" Type="Int32" Nullable="false" />
-          <Property Name="orgsunshineid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="orgsunshineid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="financialsupport" Type="Boolean" Nullable="false" />
@@ -512,6 +514,8 @@
           <NavigationProperty Name="individuals" Relationship="SunshineDataModel.source_to_org" FromRole="organization" ToRole="individual" />
           <Property Name="nickname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="denomination" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="sunshineidnumeric" Type="Int32" />
+          <Property Name="sunshineidchar" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="phonenumbers_individual">
           <Key>
@@ -934,6 +938,8 @@
           <EntitySetMapping Name="organizations">
             <EntityTypeMapping TypeName="SunshineDataModel.organization">
               <MappingFragment StoreEntitySet="organizations">
+                <ScalarProperty Name="sunshineidchar" ColumnName="sunshineidchar" />
+                <ScalarProperty Name="sunshineidnumeric" ColumnName="sunshineidnumeric" />
                 <ScalarProperty Name="denomination" ColumnName="denomination" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
                 <ScalarProperty Name="org_type" ColumnName="org_type" />

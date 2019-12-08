@@ -1,23 +1,19 @@
 ﻿using Caliburn.Micro;
 using ContactAppWPF.Models;
 using ModelLibrary;
-using ModelLibrary.DataAccess;
 using ModelLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace ContactAppWPF.ViewModels
 {
-    public class RecentActionReportViewModel : Conductor<object>
+    public class LapsedActionReportViewModel : Conductor<object>
     {
-
         private IDetailView _detailView;
         private SimpleContainer _container;
         private ReportModel _rm;
@@ -25,19 +21,19 @@ namespace ContactAppWPF.ViewModels
         private BindableCollection<ReturnedEntity> _entities;
         private SearchAggregator _sa;
 
-        public RecentActionReportViewModel(ReportModel reportModel, SearchAggregator searchAggregator, SimpleContainer simpleContainer)
+        public LapsedActionReportViewModel(ReportModel reportModel, SearchAggregator searchAggregator, SimpleContainer simpleContainer)
         {
             _container = simpleContainer;
             _sa = searchAggregator;
             GetRecords();
-            
+
 
             _rm = reportModel;
         }
 
         private void GetRecords()
         {
-            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllByHasActionWithinDateRange());
+            _entities = new BindableCollection<ReturnedEntity>(_sa.GetAllByHasLapsedAction());
             NotifyOfPropertyChange(() => ReportEntities);
         }
 
@@ -127,7 +123,7 @@ namespace ContactAppWPF.ViewModels
                 ActivateItem(_detailView);
             }
         }
-private void RefreshResults(ReturnedEntity selectedItem)
+        private void RefreshResults(ReturnedEntity selectedItem)
         {
             Repository.Reload();
             GetRecords();
@@ -156,7 +152,8 @@ private void RefreshResults(ReturnedEntity selectedItem)
                 Data = sb.ToString()
             };
             exporter.Export();
-            
+
         }
     }
 }
+

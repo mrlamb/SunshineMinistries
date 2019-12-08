@@ -38,7 +38,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Search Criteria" Grid.Column="0" Grid.Row="0" Margin="5,0"/>
-                <TextBox Grid.Column="1" Grid.Row="0" MinWidth="100"/>
+                <TextBox x:Name="SearchCriteria" IsEnabled="{Binding CriteriaEnabled}" Grid.Column="1" Grid.Row="0" MinWidth="100"/>
             </Grid>
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>

@@ -82,16 +82,10 @@
         <!-- LEFT RIBBON START-->
         <StackPanel Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical"  Margin="0" SnapsToDevicePixels="True">
             
-            <Button x:Name="OpenReports" MinWidth="50" MinHeight="50" Margin="10,10,10,0" Background="White">
+            <Button x:Name="OpenReports" MinWidth="50" MinHeight="50" Margin="10" Background="White">
                 <StackPanel>
                     <Image Source="/Media/NewFile.png" Height="24" />
                     <TextBlock Text="Reports" FontSize="12" Foreground="Black"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="OpenAdmin" MinWidth="50" MinHeight="50" Margin="10" Background="White" >
-                <StackPanel>
-                    <Image Source="/Media/NewFile.png" Height="24" />
-                    <TextBlock Text="Admin" FontSize="12" Foreground="Black"/>
                 </StackPanel>
             </Button>
             <Button x:Name="OpenSettings" MinWidth="50" MinHeight="50" Margin="10,0,10,0" Background="White" >
@@ -100,6 +94,13 @@
                     <TextBlock Text="Settings" FontSize="12" Foreground="Black"/>
                 </StackPanel>
             </Button>
+            <Button x:Name="OpenAdmin" MinWidth="50" MinHeight="50" Margin="10" Background="White" Visibility="{Binding AdminVisibility}">
+                <StackPanel>
+                    <Image Source="/Media/NewFile.png" Height="24" />
+                    <TextBlock Text="Admin" FontSize="12" Foreground="Black"/>
+                </StackPanel>
+            </Button>
+
         </StackPanel>
         <!-- LEFT RIBBON END-->
         <!-- MAIN SECTION -->

@@ -21,12 +21,14 @@ namespace ContactAppWPF.ViewModels
         private IEventAggregator _events;
         private Visibility _newIndividualVisibility = Visibility.Collapsed;
         private Visibility _newOrganizationVisibility = Visibility.Collapsed;
+        private Visibility _adminVisibility;
         private ReportsViewModel _rvm;
         private SearchAggregator _sa;
         private SearchResultsViewModel _srvm;
         private UserCredentials _userCredentials;
         private IWindowManager _wm;
         private SettingsHelper _settings;
+        private AdminViewModel _avm;
 
         public MainViewModel(SimpleContainer container, SearchAggregator searchAggregator, IEventAggregator eventAggregator,
             UserCredentials userCredentials, IWindowManager windowManager, SettingsHelper settings)
@@ -42,7 +44,31 @@ namespace ContactAppWPF.ViewModels
             settings.Read();
 
             Activated += OnActivate;
+            if ((_userCredentials.UserAccessOptions & UserAccessOptions.UserControl) == UserAccessOptions.UserControl)
+            {
+                AdminVisibility = Visibility.Visible;
+            }
+            else
+            {
+                AdminVisibility = Visibility.Collapsed;
+            }
 
+        }
+
+        public AdminViewModel AdminVM
+        {
+            get { return _avm; }
+            set { _avm = value; }
+        }
+
+        public Visibility AdminVisibility
+        {
+            get { return _adminVisibility; }
+            set
+            {
+                _adminVisibility = value;
+                NotifyOfPropertyChange(() => AdminVisibility);
+            }
         }
         public void OnActivate(object sender, ActivationEventArgs e)
         {
@@ -53,8 +79,11 @@ namespace ContactAppWPF.ViewModels
         public object ContentView
         {
             get { return _activeItem; }
-            set { _activeItem = value;
-                NotifyOfPropertyChange(() => ContentView); }
+            set
+            {
+                _activeItem = value;
+                NotifyOfPropertyChange(() => ContentView);
+            }
         }
 
         public Visibility NewIndividualVisibility
@@ -185,6 +214,30 @@ namespace ContactAppWPF.ViewModels
             oda.Add(o);
             ActivateItem(ContentView);
         }
+
+        public void OpenAdmin()
+        {
+            if (Repository.HasChanges())
+            {
+                var result = MessageBox.Show($"You have unsaved changes, save first?", $"Save?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                switch (result)
+                {
+                    case MessageBoxResult.Cancel:
+                        return;
+                    case MessageBoxResult.Yes:
+                        Save();
+                        break;
+                    case MessageBoxResult.No:
+                        Repository.CancelChanges();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            AdminVM = _container.GetInstance<AdminViewModel>();
+            ActivateItem(AdminVM);
+        }
+
 
         public void OpenReports()
         {
